@@ -24,6 +24,7 @@ public class ConfigFileOpener {
 	public ConfigFileOpener (String configFileName) throws FileNotFoundException {
 		Scanner skaner = new Scanner(new File(configFileName));
 		if (!skaner.hasNext()) {
+			skaner.close();
 			throw new FileNotFoundException("nie znaleziono pliku");
 		}
 		liczbaZyc = skaner.nextInt();
@@ -34,7 +35,8 @@ public class ConfigFileOpener {
 		BoardFactory factory = new BoardFactory(skaner);		
 		while (skaner.hasNext()) {
 			listaPoziomow.add(factory.getNextBoard());
-		}		
+		}
+		skaner.close();
 	}
 
 	public int getLiczbaZyc() {

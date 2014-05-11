@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Point;
 
 import jumper.model.Board;
 
@@ -13,13 +14,15 @@ import jumper.model.Board;
  * @author Maurycy
  *
  */
+@SuppressWarnings("serial")
 public class BoardCanvas extends Canvas implements Runnable {
 	
-	Image offScreen = null;
-	Graphics offScreenGraphics = null;	
-	Board board;
-	Thread trener = null;
-	Dimension defaultSize = new Dimension(600, 200);
+	private Image offScreen = null;
+	private Graphics offScreenGraphics = null;	
+	private final Board board;
+	//private Thread trener = null;
+	private Dimension defaultSize = new Dimension(600, 200);
+	
 	/**
 	 * Kostruktor zapisuje tablice z ustawieniami elementów.
 	 * @param board
@@ -32,7 +35,6 @@ public class BoardCanvas extends Canvas implements Runnable {
         super.addNotify();
         offScreen = createImage(defaultSize.width, defaultSize.height);
         offScreenGraphics = offScreen.getGraphics();
-        System.out.println("addNotify");
     }
 	
 	public void paint (Graphics g) {
@@ -42,11 +44,14 @@ public class BoardCanvas extends Canvas implements Runnable {
 	void updateOffscreen() {
 		offScreenGraphics.clearRect(0, 0, offScreen.getWidth(this), offScreen.getHeight(this));
 		offScreenGraphics.setColor(Color.yellow);
-        int szer = getWidth() >> 3;
-        int wys = getWidth() >> 5;
+		// szerkosc platformy
+        int szerPlatf = getWidth() >> 3;
+        // wysokosc platformy
+        int wysPlatf = getWidth() >> 5;
         int skala = getWidth() >> 4;
-        for (int i = 0; i < board.getPolozeniePlatform().size(); i++ ) {
-        	offScreenGraphics.fillRect(board.getPolozeniePlatform().get(i).x*skala , board.getPolozeniePlatform().get(i).y*skala, szer, wys);
+        //rysowanie platform
+        for (Point p : board.getPolozeniePlatform()) {
+        	offScreenGraphics.fillRect(p.x*skala, p.y*skala, szerPlatf, wysPlatf);
         }
     }
 	
@@ -63,7 +68,6 @@ public class BoardCanvas extends Canvas implements Runnable {
 	
 	public void run() {
         while (true) {
-        	System.out.println("run");
         	updateOffscreen();
             repaint();
             modifyLocation();

@@ -1,7 +1,6 @@
 package jumper.gui;
 
 import java.awt.CardLayout;
-import java.io.FileNotFoundException;
 
 import javax.swing.JPanel;
 
@@ -28,7 +27,7 @@ public class FrameComponents extends JPanel{
 	private final MenuPanel menuPanel;
 	private final static String menuPanelName = "menu";
 	
-	public FrameComponents(JPanel mainPanel) throws FileNotFoundException {
+	public FrameComponents(JPanel mainPanel) {
 		
 		cardPanel = mainPanel;
 		menuPanel = new MenuPanel(this);

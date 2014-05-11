@@ -1,33 +1,21 @@
 package jumper.gui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.io.FileNotFoundException;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+@SuppressWarnings("serial")
 public class MainFrame extends JFrame {
 
-	private JPanel cardPanel;
-	private FrameComponents zarzadca;
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
-	/**
-	 * @throws FileNotFoundException 
-	 * 
-	 */
-	public MainFrame () throws FileNotFoundException {
+	public MainFrame () {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(600, 400);
 		setMinimumSize(new Dimension(200, 150));
 		setLayout(new BorderLayout());
 		
-		cardPanel = new JPanel();
-		zarzadca = new FrameComponents(cardPanel);
+		JPanel cardPanel = new JPanel();
+		/*FrameComponents zarzadca = */new FrameComponents(cardPanel);
 		add(cardPanel);
 	}
 

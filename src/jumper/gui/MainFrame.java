@@ -37,6 +37,7 @@ public class MainFrame extends JFrame {
 		cardPanel = new JPanel();
 		zarzadca = new FrameComponents(cardPanel);
 		add(cardPanel);
+		
 
 		
 		

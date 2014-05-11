@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.image.BufferStrategy;
 
 import jumper.model.Board;
 
@@ -33,6 +32,7 @@ public class BoardCanvas extends Canvas implements Runnable {
         super.addNotify();
         offScreen = createImage(defaultSize.width, defaultSize.height);
         offScreenGraphics = offScreen.getGraphics();
+        System.out.println("addNotify");
     }
 	
 	public void paint (Graphics g) {
@@ -63,6 +63,7 @@ public class BoardCanvas extends Canvas implements Runnable {
 	
 	public void run() {
         while (true) {
+        	System.out.println("run");
         	updateOffscreen();
             repaint();
             modifyLocation();

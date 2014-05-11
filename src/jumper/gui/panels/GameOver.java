@@ -17,7 +17,7 @@ public class GameOver extends JumperPanel {
 
 	public GameOver (FrameComponents fc) {
 		super (fc);
-		JButton powrot = new JButton();
+		JButton powrot = new JButton("Przegrales!!!!!!!");
 		powrot.addActionListener(new ActionListener() {
 			
 			@Override
@@ -26,6 +26,7 @@ public class GameOver extends JumperPanel {
 				
 			}
 		});
+		add(powrot);
 	}
 	
 }

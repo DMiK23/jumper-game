@@ -4,6 +4,7 @@ import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -13,7 +14,6 @@ import javax.swing.JPanel;
 
 public class MainFrame extends JFrame {
 
-	private CardLayout layout;
 	private JPanel cardPanel;
 	private FrameComponents zarzadca;
 	/**
@@ -25,9 +25,10 @@ public class MainFrame extends JFrame {
 	 * 
 	 */
 	/**
+	 * @throws FileNotFoundException 
 	 * 
 	 */
-	public MainFrame () {
+	public MainFrame () throws FileNotFoundException {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(600, 400);
 		setMinimumSize(new Dimension(200, 150));

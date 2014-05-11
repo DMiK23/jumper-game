@@ -1,5 +1,7 @@
 package jumper;
 
+import java.io.FileNotFoundException;
+
 import javax.swing.SwingUtilities;
 
 import jumper.gui.MainFrame;
@@ -11,7 +13,12 @@ public class Bootstrapper {
 			
 			@Override
 			public void run() {
-				new MainFrame().setVisible(true);
+				try {
+					new MainFrame().setVisible(true);
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				
 			}
 		});

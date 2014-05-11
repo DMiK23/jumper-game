@@ -27,6 +27,16 @@ public class MenuPanel extends JumperPanel {
 		});
 		add(highscoreButton);
 		
+		JButton newGameButton = new JButton("Nowa Gra");
+		newGameButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				getComponenta().showGamePanel();
+				
+			}
+		});
+		add(newGameButton);
 		
 	}
 }

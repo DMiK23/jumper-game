@@ -6,6 +6,8 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 import jumper.model.Board;
 
@@ -29,6 +31,11 @@ public class BoardCanvas extends Canvas implements Runnable {
 	 */
 	public BoardCanvas (Board board) {
 		this.board = board;
+		addComponentListener(new ComponentAdapter() {
+			public void componentResized(ComponentEvent ce) {
+                BoardCanvas.this.updateOffscrSize();
+            }
+		});
 	}
 	
 	public void addNotify() {
@@ -45,9 +52,9 @@ public class BoardCanvas extends Canvas implements Runnable {
 		offScreenGraphics.clearRect(0, 0, offScreen.getWidth(this), offScreen.getHeight(this));
 		offScreenGraphics.setColor(Color.yellow);
 		// szerkosc platformy
-        int szerPlatf = getWidth() >> 3;
+        int szerPlatf = (getWidth() >> 4)-10 ;
         // wysokosc platformy
-        int wysPlatf = getWidth() >> 5;
+        int wysPlatf = getWidth() >> 6;
         int skala = getWidth() >> 4;
         //rysowanie platform
         for (Point p : board.getPolozeniePlatform()) {

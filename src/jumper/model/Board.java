@@ -89,7 +89,7 @@ public class Board {
 		 */
 		public Board getNextBoard () {
 			int np = skaner.nextInt();
-			long cnp = skaner.nextLong();
+			long cnp = skaner.nextLong()*1000;
 			Point pg = new Point(skaner.nextInt(), skaner.nextInt());
 			BonusTypeEnumerator tb = BonusTypeEnumerator.create(skaner.nextInt());
 			Point pb = new Point(skaner.nextInt(), skaner.nextInt());

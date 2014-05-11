@@ -2,6 +2,7 @@ package jumper.gui.canvas;
 
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferStrategy;
@@ -13,13 +14,13 @@ import jumper.model.Board;
  * @author Maurycy
  *
  */
-public class BoardCanvas extends Canvas {
+public class BoardCanvas extends Canvas implements Runnable {
 	
 	Image offScreen = null;
 	Graphics offScreenGraphics = null;	
 	Board board;
 	Thread trener = null;
-	
+	Dimension defaultSize = new Dimension(600, 200);
 	/**
 	 * Kostruktor zapisuje tablice z ustawieniami elementów.
 	 * @param board
@@ -30,7 +31,7 @@ public class BoardCanvas extends Canvas {
 	
 	public void addNotify() {
         super.addNotify();
-        offScreen = createImage(getWidth(), getHeight());
+        offScreen = createImage(defaultSize.width, defaultSize.height);
         offScreenGraphics = offScreen.getGraphics();
     }
 	

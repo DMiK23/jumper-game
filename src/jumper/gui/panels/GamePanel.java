@@ -36,8 +36,8 @@ public class GamePanel extends JumperPanel {
 		add(gameOverButton, BorderLayout.NORTH); 
 		config = new ConfigFileOpener("config.txt");
 		
-		add(new BoardCanvas(config.getLevelsList().get(0)));
-		
+		add(new BoardCanvas(config.getLevelsList().get(0)), BorderLayout.CENTER);
+		//pack();
 		
 
 	}

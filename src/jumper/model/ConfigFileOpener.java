@@ -24,15 +24,8 @@ public class ConfigFileOpener {
 	public ConfigFileOpener (String configFileName) throws FileNotFoundException {
 		Scanner skaner = new Scanner(new File(configFileName));
 		if (!skaner.hasNext()) {
-			throw new FileNotFoundException("moj");
+			throw new FileNotFoundException("nie znaleziono pliku");
 		}
-		if (skaner.hasNextInt()) {
-			System.out.println("jest Int");
-		}
-		if (!skaner.hasNextInt()) {
-			System.out.println("nie ma Int");
-		}
-		//System.out.println(skaner.next());
 		liczbaZyc = skaner.nextInt();
 		punktyPlatforma = skaner.nextInt();
 		punktyPremia = skaner.nextInt();

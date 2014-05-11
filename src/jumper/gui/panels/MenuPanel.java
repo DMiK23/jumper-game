@@ -21,7 +21,7 @@ public class MenuPanel extends JumperPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				getComponenta().showHighscores();
+				getKomponent().showHighscores();
 				
 			}
 		});
@@ -32,7 +32,7 @@ public class MenuPanel extends JumperPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				getComponenta().showGamePanel();
+				getKomponent().showGamePanel();
 				
 			}
 		});

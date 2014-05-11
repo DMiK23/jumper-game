@@ -19,6 +19,7 @@ public class GamePanel extends JumperPanel {
 	private static final long serialVersionUID = 1L;
 	
 	private final ConfigFileOpener config;
+	private BoardCanvas canvas;
 	
 	public GamePanel (FrameComponents fc) throws FileNotFoundException {
 		super (fc);
@@ -29,14 +30,15 @@ public class GamePanel extends JumperPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				getComponenta().showGameOver();
+				getKomponent().showGameOver();
 				
 			}
 		});
 		add(gameOverButton, BorderLayout.NORTH); 
 		config = new ConfigFileOpener("config.txt");
 		
-		add(new BoardCanvas(config.getLevelsList().get(0)), BorderLayout.CENTER);
+		add(canvas = new BoardCanvas(config.getLevelsList().get(0)), BorderLayout.CENTER);
+		new Thread(canvas).start();
 		//pack();
 		
 

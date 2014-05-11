@@ -16,7 +16,7 @@ public abstract class JumperPanel extends JPanel {
 		this.fc = fc;
 	}
 	
-	protected FrameComponents getComponenta() {
+	protected FrameComponents getKomponent() {
 		return fc;
 	}
 	

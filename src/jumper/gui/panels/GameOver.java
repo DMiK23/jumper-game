@@ -22,7 +22,7 @@ public class GameOver extends JumperPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				getComponenta().showMenu();
+				getKomponent().showMenu();
 				
 			}
 		});

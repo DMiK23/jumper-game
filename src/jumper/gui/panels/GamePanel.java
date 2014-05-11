@@ -30,7 +30,7 @@ public class GamePanel extends JumperPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				getKomponent().showGameOver();
+				getFrameComponents().showGameOver();
 				
 			}
 		});

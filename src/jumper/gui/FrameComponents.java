@@ -18,25 +18,29 @@ public class FrameComponents extends JPanel{
 	
 	private final JPanel cardPanel;
 	private final CardLayout cardLayout;
-	private final Highscores scores;
-	private final GamePanel game;
-	private final GameOver over;
-	private final MenuPanel menu;
+	/* Panele dodane do layoutu */
+	private final Highscores scoresPanel;
+	private final static String scoresPanelName = "wyniki";
+	private final GamePanel gamePanel;
+	private final static String gamePanelName = "gra";
+	private final GameOver gameOverPanel;
+	private final static String gameOverPanelName = "koniec";
+	private final MenuPanel menuPanel;
+	private final static String menuPanelName = "menu";
 	
 	public FrameComponents(JPanel mainPanel) throws FileNotFoundException {
 		
 		cardPanel = mainPanel;
-		menu = new MenuPanel(this);
-		scores = new Highscores(this);
-		game = new GamePanel(this);
-		over = new GameOver(this);
+		menuPanel = new MenuPanel(this);
+		scoresPanel = new Highscores(this);
+		gamePanel = new GamePanel(this);
+		gameOverPanel = new GameOver(this);
 		cardLayout = new CardLayout();
 		cardPanel.setLayout(cardLayout);
-		cardPanel.add(menu, "menu");
-		menu.getClass().getName();
-		cardPanel.add(scores, "wyniki");
-		cardPanel.add(game, "gra");
-		cardPanel.add(over, "koniec");
+		cardPanel.add(menuPanel, menuPanelName);
+		cardPanel.add(scoresPanel, scoresPanelName);
+		cardPanel.add(gamePanel, gamePanelName);
+		cardPanel.add(gameOverPanel, gameOverPanelName);
 	}
 	
 	
@@ -45,19 +49,23 @@ public class FrameComponents extends JPanel{
 	}
 	
 	public void showHighscores () {
-		cardLayout.show(cardPanel, "wyniki");
+		cardLayout.show(cardPanel, scoresPanelName);
+		scoresPanel.putOnTop();
 	}
 	
 	public void showGamePanel () {
-		cardLayout.show(cardPanel, "gra");
+		cardLayout.show(cardPanel, gamePanelName);
+		gamePanel.putOnTop();
 	}
 	
 	public void showGameOver () {
-		cardLayout.show(cardPanel, "koniec");
+		cardLayout.show(cardPanel, gameOverPanelName);
+		gameOverPanel.putOnTop();
 	}
 	
 	public void showMenu () {
-		cardLayout.show(cardPanel, "menu");
+		cardLayout.show(cardPanel, menuPanelName);
+		menuPanel.putOnTop();
 	}
 	
 }

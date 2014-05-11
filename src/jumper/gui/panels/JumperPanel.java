@@ -16,8 +16,15 @@ public abstract class JumperPanel extends JPanel {
 		this.fc = fc;
 	}
 	
-	protected FrameComponents getKomponent() {
+	protected FrameComponents getFrameComponents() {
 		return fc;
+	}
+	
+	/**
+	 * Method called after object is displayed in parent layout.
+	 */
+	public void putOnTop() {
+		// do nothing by default
 	}
 	
 }

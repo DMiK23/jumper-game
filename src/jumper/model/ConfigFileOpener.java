@@ -32,6 +32,7 @@ public class ConfigFileOpener {
 		if (!skaner.hasNextInt()) {
 			System.out.println("nie ma Int");
 		}
+		//System.out.println(skaner.next());
 		liczbaZyc = skaner.nextInt();
 		punktyPlatforma = skaner.nextInt();
 		punktyPremia = skaner.nextInt();

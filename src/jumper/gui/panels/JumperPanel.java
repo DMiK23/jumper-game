@@ -4,6 +4,11 @@ import javax.swing.JPanel;
 
 import jumper.gui.FrameComponents;
 
+/**
+ * Klasa abstrakcyjna po ktorej dziedzicza wszystkie panele.
+ * @author Maurycy
+ *
+ */
 public abstract class JumperPanel extends JPanel {
 
 	/**

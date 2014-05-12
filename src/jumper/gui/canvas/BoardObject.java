@@ -1,5 +1,10 @@
 package jumper.gui.canvas;
 
+/**
+ * Klasa abstrakcyjna po której dziedzicz¹ obiekty planszy.
+ * @author Maurycy
+ *
+ */
 public abstract class BoardObject {
 
 	private int x;

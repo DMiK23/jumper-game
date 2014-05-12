@@ -9,6 +9,11 @@ import jumper.gui.panels.GamePanel;
 import jumper.gui.panels.Highscores;
 import jumper.gui.panels.MenuPanel;
 
+/**
+ * Tworzenie i zarzadzanie kartami w menu.
+ * @author Maurycy
+ *
+ */
 public class FrameComponents extends JPanel{
 	/**
 	 * 

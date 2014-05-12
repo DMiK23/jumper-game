@@ -36,7 +36,7 @@ public class GamePanel extends JumperPanel {
 			config = readCfg;
 		}
 		// guzik - do schowania (pokazywany na koniec planszy)
-		JButton gameOverButton = new JButton("Umrzyj");
+		JButton gameOverButton = new JButton("Zgin");
 		gameOverButton.addActionListener(new ActionListener() {
 			
 			@Override

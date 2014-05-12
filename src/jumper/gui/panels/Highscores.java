@@ -9,6 +9,11 @@ import javax.swing.JTextField;
 
 import jumper.gui.FrameComponents;
 
+/**
+ * Pokazywanie najlepszych wynikow.
+ * @author Maurycy
+ *
+ */
 public class Highscores extends JumperPanel {
 	/**
 	 * 

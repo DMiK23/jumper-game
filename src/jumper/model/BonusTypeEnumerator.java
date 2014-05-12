@@ -1,5 +1,10 @@
 package jumper.model;
 
+/**
+ * Typ bonusu.
+ * @author Maurycy
+ *
+ */
 public enum BonusTypeEnumerator {
 	BETTER_JUMP,
 	ONE_UP,

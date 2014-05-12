@@ -6,8 +6,8 @@ import java.util.Scanner;
 import java.util.Vector;
 
 /**
- * Przechowuje rozklad elementow planszy i gracza.
- * Dany poziom swoj indywidualny numer.
+ * Przechowuje rozklad elementow planszy i gracza dla danego poziomu.
+ * Dany poziom ma swoj indywidualny numer.
  * 
  * @author Maurycy
  *

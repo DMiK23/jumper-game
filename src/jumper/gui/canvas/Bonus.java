@@ -1,5 +1,10 @@
 package jumper.gui.canvas;
 
+/**
+ * Klasa bonusu. Bonus ma nazwe i polozenie.
+ * @author Maurycy
+ *
+ */
 public class Bonus extends BoardObject{
 	
 	private int name;

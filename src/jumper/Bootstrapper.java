@@ -4,6 +4,11 @@ import javax.swing.SwingUtilities;
 
 import jumper.gui.MainFrame;
 
+/**
+ * uruchamia program
+ * @author Maurycy
+ *
+ */
 public class Bootstrapper {
 
 	public static void main(String[] args) {

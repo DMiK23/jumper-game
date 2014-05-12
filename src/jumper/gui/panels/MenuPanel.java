@@ -7,6 +7,11 @@ import javax.swing.JButton;
 
 import jumper.gui.FrameComponents;
 
+/**
+ * Panel zawierajacy menu glowne.
+ * @author Maurycy
+ *
+ */
 public class MenuPanel extends JumperPanel {
 
 	/**

@@ -10,7 +10,7 @@ import jumper.model.Board.BoardFactory;
 
 /**
  * Klasa wczytuje plik konfiguracyjny.
- * Metoda read
+ * Metoda read.
  * @author Maurycy
  *
  */

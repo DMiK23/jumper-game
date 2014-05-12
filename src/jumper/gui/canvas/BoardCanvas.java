@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
@@ -54,12 +55,16 @@ public class BoardCanvas extends Canvas implements Runnable {
 		// szerkosc platformy
         int szerPlatf = (getWidth() >> 4)-10 ;
         // wysokosc platformy
-        int wysPlatf = getWidth() >> 6;
+        int wysPlatf = getHeight() >> 6;
         int skala = getWidth() >> 4;
         //rysowanie platform
         for (Point p : board.getPolozeniePlatform()) {
         	offScreenGraphics.fillRect(p.x*skala, p.y*skala, szerPlatf, wysPlatf);
         }
+        //offScreenGraphics.fillOval(board.getPolozenieBonusu().x*skala, board.getPolozenieBonusu().y*skala, wysPlatf, wysPlatf);
+        //offScreenGraphics.fillOval(board.getPolozenieGracza().x*skala, board.getPolozenieGracza().y*skala, wysPlatf, szerPlatf);
+        offScreenGraphics.drawImage(Toolkit.getDefaultToolkit().getImage("0.gif"), board.getPolozenieGracza().x*skala, board.getPolozenieGracza().y*skala, szerPlatf, szerPlatf, this);
+        offScreenGraphics.drawImage(Toolkit.getDefaultToolkit().getImage("1.gif"), board.getPolozenieBonusu().x*skala, board.getPolozenieBonusu().y*skala, wysPlatf, wysPlatf, this);
     }
 	
 	public void modifyLocation () {

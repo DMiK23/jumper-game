@@ -1,6 +1,7 @@
 package jumper.gui.canvas;
 
 import java.awt.Point;
+import java.awt.Rectangle;
 
 /**
  * Klasa abstrakcyjna po ktorej dziedzicza obiekty planszy.
@@ -26,4 +27,6 @@ public abstract class BoardObject {
 	public int getY() {
 		return p.y;
 	}
+	
+	public abstract Rectangle getBounds();
 }

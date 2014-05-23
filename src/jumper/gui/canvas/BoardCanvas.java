@@ -8,8 +8,6 @@ import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +31,7 @@ public class BoardCanvas extends Canvas implements Runnable {
 	private final Dimension defaultSize = new Dimension(600, 200);
 	private Dimension platformSize;
 	private int skala;
+	private int skalaPlatform;
 	
 	/**
 	 * Kostruktor zapisuje tablice z ustawieniami elementów.
@@ -40,7 +39,7 @@ public class BoardCanvas extends Canvas implements Runnable {
 	 */
 	public BoardCanvas (Board board) {
 		this.board = board;
-		player = new Player(board.getPolozenieGracza());
+		player = new Player(board.getPolozeniePoczatkoweGracza());
 		bonus = new Bonus(board.getPolozenieBonusu(), board.getTypBonusu());
 		platforms = new ArrayList<Platform>(board.getPolozeniePlatform().size());
 		for (Point p : board.getPolozeniePlatform()) {
@@ -74,7 +73,7 @@ public class BoardCanvas extends Canvas implements Runnable {
 		offScreenGraphics.clearRect(0, 0, offScreen.getWidth(this), offScreen.getHeight(this));
 		offScreenGraphics.setColor(Color.yellow);
         for (Platform p : platforms) {
-        	p.paintPlatform(offScreenGraphics, skala, platformSize);
+        	p.paintPlatform(offScreenGraphics, skalaPlatform, platformSize);
         }
         bonus.paintBonus(offScreenGraphics, skala);
         player.paintPlayer(offScreenGraphics, skala);
@@ -106,7 +105,8 @@ public class BoardCanvas extends Canvas implements Runnable {
 	 * oraz tworzy obraz uzywany jako bufor (o dobrych wymiarach).
 	 */
 	public void updateSize() {
-        skala = getWidth() >> 4;
+        skala = getWidth() >> 7;
+        skalaPlatform = getWidth() >> 4;
         platformSize = new Dimension(skala - 10, getHeight() >> 6);
         offScreen = createImage(getWidth(), getHeight());
         offScreenGraphics = offScreen.getGraphics();

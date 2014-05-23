@@ -20,11 +20,10 @@ public class Board {
 
 	private final int numerPoziomu;
 	private final List<Point> polozeniePlatform;
-	private final Point polozenieGracza;
+	private final Point polozeniePoczatkoweGracza;
 	private final BonusTypeEnumerator typBonusu;
 	private final Point polozenieBonusu;
 	private final long czasNaPrzejscie;
-	
 	
 	/**
 	 * 
@@ -38,7 +37,7 @@ public class Board {
 	public Board (int np, List<Point> pp, Point pg, BonusTypeEnumerator tb, Point pb, long cnp) {
 		numerPoziomu = np;
 		polozeniePlatform = pp;
-		polozenieGracza = pg;
+		polozeniePoczatkoweGracza = pg;
 		typBonusu = tb;
 		polozenieBonusu = pb;
 		czasNaPrzejscie = cnp;
@@ -52,8 +51,8 @@ public class Board {
 		return polozeniePlatform;
 	}
 	
-	public Point getPolozenieGracza() {
-		return polozenieGracza;
+	public Point getPolozeniePoczatkoweGracza() {
+		return polozeniePoczatkoweGracza;
 	}
 	
 	public Point getPolozenieBonusu() {

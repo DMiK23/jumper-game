@@ -10,17 +10,12 @@ import javax.swing.JTextField;
 import jumper.gui.FrameComponents;
 
 /**
- * Panel konca gry. Bedzie tu wynik gracza.
+ * Panel konca gry. Pokazuje wynik gracza.
  * @author Maurycy
  *
  */
+@SuppressWarnings("serial")
 public class GameOver extends JumperPanel {
-
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 
 	public GameOver (FrameComponents fc) {
 		super (fc);

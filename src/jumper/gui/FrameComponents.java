@@ -10,19 +10,16 @@ import jumper.gui.panels.Highscores;
 import jumper.gui.panels.MenuPanel;
 
 /**
- * Tworzenie i zarzadzanie kartami w menu.
+ * Tworzenie i zarzadzanie kartami w podanym panelu.
  * @author Maurycy
  *
  */
+@SuppressWarnings("serial")
 public class FrameComponents extends JPanel{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 	
 	private final JPanel cardPanel;
 	private final CardLayout cardLayout;
-	/* Panele dodane do layoutu */
+	/* Panele (i ich nazwy) dodane do layoutu */
 	private final Highscores scoresPanel;
 	private final static String scoresPanelName = "wyniki";
 	private final GamePanel gamePanel;
@@ -32,6 +29,12 @@ public class FrameComponents extends JPanel{
 	private final MenuPanel menuPanel;
 	private final static String menuPanelName = "menu";
 	
+	/**
+	 * Konfiguruje panel gry i zarzadza nim.
+	 * Ustawia CardLayout i dodaje potrzebne panele,
+	 * w tym menu i sama gre.
+	 * @param mainPanel
+	 */
 	public FrameComponents(JPanel mainPanel) {
 		
 		cardPanel = mainPanel;
@@ -47,29 +50,43 @@ public class FrameComponents extends JPanel{
 		cardPanel.add(gameOverPanel, gameOverPanelName);
 	}
 	
-	
+	/**
+	 * 
+	 * @return Panel-rodzic CardLayout-u.
+	 */
 	public JPanel getCardPanel() {
 		return cardPanel;
 	}
 	
+	/**
+	 * Ustawia w widoku panel z najlepszymi wynikami.
+	 */
 	public void showHighscores () {
 		cardLayout.show(cardPanel, scoresPanelName);
 		scoresPanel.putOnTop();
 	}
 	
+	/**
+	 * Ustawia w widoku panel z gra.
+	 */
 	public void showGamePanel () {
 		cardLayout.show(cardPanel, gamePanelName);
 		gamePanel.putOnTop();
 	}
 	
+	/**
+	 * Ustawia w widoku panel informujacy o zakonczeniu gry z wynikiem.
+	 */
 	public void showGameOver () {
 		cardLayout.show(cardPanel, gameOverPanelName);
 		gameOverPanel.putOnTop();
 	}
 	
+	/**
+	 * Ustawia w widoku panel menu.
+	 */
 	public void showMenu () {
 		cardLayout.show(cardPanel, menuPanelName);
 		menuPanel.putOnTop();
 	}
-	
 }

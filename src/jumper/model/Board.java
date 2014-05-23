@@ -9,6 +9,9 @@ import java.util.Vector;
  * Przechowuje rozklad elementow planszy i gracza dla danego poziomu.
  * Dany poziom ma swoj indywidualny numer.
  * 
+ * Polozenia objektow sa wyrazone wielkosciami (0-16;0-16),
+ * gdzie puntk (0,0) to lewy gorny rog, a (16,16) to prawy dolny.
+ * 
  * @author Maurycy
  *
  */

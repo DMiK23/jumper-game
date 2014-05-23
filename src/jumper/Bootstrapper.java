@@ -5,7 +5,7 @@ import javax.swing.SwingUtilities;
 import jumper.gui.MainFrame;
 
 /**
- * uruchamia program
+ * Uruchamia program
  * @author Maurycy
  *
  */

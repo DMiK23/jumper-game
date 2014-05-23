@@ -9,6 +9,8 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 import jumper.model.Board;
 
@@ -23,8 +25,11 @@ public class BoardCanvas extends Canvas implements Runnable {
 	private Image offScreen = null;
 	private Graphics offScreenGraphics = null;	
 	private final Board board;
+	private final List<Platform> platforms;
 	//private Thread trener = null;
-	private Dimension defaultSize = new Dimension(600, 200);
+	private final Dimension defaultSize = new Dimension(600, 200);
+	private Dimension platformSize;
+	private int skala;
 	
 	/**
 	 * Kostruktor zapisuje tablice z ustawieniami elementów.
@@ -32,9 +37,13 @@ public class BoardCanvas extends Canvas implements Runnable {
 	 */
 	public BoardCanvas (Board board) {
 		this.board = board;
+		platforms = new ArrayList<Platform>(board.getPolozeniePlatform().size());
+		for (Point p : board.getPolozeniePlatform()) {
+			platforms.add(new Platform(p.x, p.y));
+		}
 		addComponentListener(new ComponentAdapter() {
 			public void componentResized(ComponentEvent ce) {
-                BoardCanvas.this.updateOffscrSize();
+                BoardCanvas.this.updateSize();
             }
 		});
 	}
@@ -45,6 +54,12 @@ public class BoardCanvas extends Canvas implements Runnable {
         offScreenGraphics = offScreen.getGraphics();
     }
 	
+	@Override
+	public void update(Graphics g) {
+		g.drawImage(offScreen, 0, 0, this);
+	}
+	
+	@Override
 	public void paint (Graphics g) {
 		g.drawImage(offScreen, 0, 0, this);
 	}
@@ -52,33 +67,31 @@ public class BoardCanvas extends Canvas implements Runnable {
 	void updateOffscreen() {
 		offScreenGraphics.clearRect(0, 0, offScreen.getWidth(this), offScreen.getHeight(this));
 		offScreenGraphics.setColor(Color.yellow);
-		// szerkosc platformy
-        int szerPlatf = (getWidth() >> 4)-10 ;
-        // wysokosc platformy
-        int wysPlatf = getHeight() >> 6;
-        int skala = getWidth() >> 4;
-        //rysowanie platform
+        // rysowanie platform
         for (Point p : board.getPolozeniePlatform()) {
-        	offScreenGraphics.fillRect(p.x*skala, p.y*skala, szerPlatf, wysPlatf);
+        	offScreenGraphics.fillRect(p.x*skala, p.y*skala, platformSize.width, platformSize.height);
         }
-        //offScreenGraphics.fillOval(board.getPolozenieBonusu().x*skala, board.getPolozenieBonusu().y*skala, wysPlatf, wysPlatf);
-        //offScreenGraphics.fillOval(board.getPolozenieGracza().x*skala, board.getPolozenieGracza().y*skala, wysPlatf, szerPlatf);
-        offScreenGraphics.drawImage(Toolkit.getDefaultToolkit().getImage("0.gif"), board.getPolozenieGracza().x*skala, board.getPolozenieGracza().y*skala, szerPlatf, szerPlatf, this);
-        offScreenGraphics.drawImage(Toolkit.getDefaultToolkit().getImage("1.gif"), board.getPolozenieBonusu().x*skala, board.getPolozenieBonusu().y*skala, wysPlatf, wysPlatf, this);
+        offScreenGraphics.drawImage(Toolkit.getDefaultToolkit().getImage("0.gif"),
+        		board.getPolozenieGracza().x*skala, board.getPolozenieGracza().y*skala,
+        		platformSize.height, platformSize.width, this);
+        offScreenGraphics.drawImage(Toolkit.getDefaultToolkit().getImage("1.gif"),
+        		board.getPolozenieBonusu().x*skala, board.getPolozenieBonusu().y*skala,
+        		platformSize.height, platformSize.width, this);
     }
-	
+
 	public void modifyLocation () {
 		//TODO
 	}
-	
+
 	void sleep() {
         try {
-            Thread.sleep(10);
+            Thread.sleep(30);
         } catch (InterruptedException ie) {
         }
     }
-	
+
 	public void run() {
+		updateSize();
         while (true) {
         	updateOffscreen();
             repaint();
@@ -87,9 +100,14 @@ public class BoardCanvas extends Canvas implements Runnable {
         }
     }
 	
-	public void updateOffscrSize() {
+	/**
+	 * Przelicza wielkosci zalezne od rozmiarow okna,
+	 * oraz tworzy obraz uzywany jako bufor (o dobrych wymiarach).
+	 */
+	public void updateSize() {
+        skala = getWidth() >> 4;
+        platformSize = new Dimension(skala - 10, getHeight() >> 6);
         offScreen = createImage(getWidth(), getHeight());
         offScreenGraphics = offScreen.getGraphics();
     }
-
 }

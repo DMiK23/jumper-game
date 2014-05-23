@@ -19,7 +19,7 @@ public class MainFrame extends JFrame {
 		setMinimumSize(new Dimension(200, 150));
 		setLayout(new BorderLayout());		
 		JPanel cardPanel = new JPanel();
-		/*FrameComponents zarzadca = */new FrameComponents(cardPanel);
-		add(cardPanel);
+		new FrameComponents(cardPanel);
+		this.add(cardPanel);
 	}
 }

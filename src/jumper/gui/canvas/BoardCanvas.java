@@ -68,15 +68,15 @@ public class BoardCanvas extends Canvas implements Runnable {
 		offScreenGraphics.clearRect(0, 0, offScreen.getWidth(this), offScreen.getHeight(this));
 		offScreenGraphics.setColor(Color.yellow);
         // rysowanie platform
-        for (Point p : board.getPolozeniePlatform()) {
-        	offScreenGraphics.fillRect(p.x*skala, p.y*skala, platformSize.width, platformSize.height);
+        for (Platform p : platforms) {
+        	p.paintPlatform(offScreenGraphics, skala, platformSize);
         }
         offScreenGraphics.drawImage(Toolkit.getDefaultToolkit().getImage("0.gif"),
         		board.getPolozenieGracza().x*skala, board.getPolozenieGracza().y*skala,
-        		platformSize.height, platformSize.width, this);
+        		platformSize.width, platformSize.width, this);
         offScreenGraphics.drawImage(Toolkit.getDefaultToolkit().getImage("1.gif"),
         		board.getPolozenieBonusu().x*skala, board.getPolozenieBonusu().y*skala,
-        		platformSize.height, platformSize.width, this);
+        		platformSize.width, platformSize.width, this);
     }
 
 	public void modifyLocation () {

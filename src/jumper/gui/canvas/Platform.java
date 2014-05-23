@@ -16,6 +16,6 @@ public class Platform extends BoardObject {
 	}
 
 	public void paintPlatform(Graphics g, int skala, Dimension dim) {
-		g.fillRect(getX() * skala, getY() * skala, dim.width, dim.height);
+		g.fillRect(p.x * skala, p.y * skala, dim.width, dim.height);
 	}
 }

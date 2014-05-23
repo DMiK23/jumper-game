@@ -56,5 +56,6 @@ public class GamePanel extends JumperPanel {
 			getFrameComponents().showMenu();
 		}
 		new Thread(canvas).start();
+		canvas.requestFocusInWindow();
 	}
 }

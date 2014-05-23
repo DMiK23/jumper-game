@@ -8,6 +8,8 @@ import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,6 +51,7 @@ public class BoardCanvas extends Canvas implements Runnable {
                 BoardCanvas.this.updateSize();
             }
 		});
+		addKeyListener(player);
 	}
 	
 	public void addNotify() {

@@ -9,7 +9,7 @@ import java.awt.Point;
  */
 public abstract class BoardObject {
 
-	private final Point p;
+	protected final Point p;
 	
 	public BoardObject(int x, int y) {
 		p = new Point(x, y);

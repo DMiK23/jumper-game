@@ -1,6 +1,8 @@
 package jumper.gui;
 
 import java.awt.CardLayout;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
 import javax.swing.JPanel;
 

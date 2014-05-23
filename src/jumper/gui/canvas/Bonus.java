@@ -22,7 +22,7 @@ public class Bonus extends BoardObject {
 
 	public void paintBonus(Graphics g, int skala) {
 		g.drawImage(Toolkit.getDefaultToolkit().getImage("1.gif"),
-				getX() * skala, getY() * skala,
+				p.x * skala, p.y * skala,
 				skala, skala, null);
 	}
 }

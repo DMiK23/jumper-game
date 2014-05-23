@@ -77,7 +77,7 @@ public class Board {
 		
 		/**
 		 * Zapamietuje skaner z ktorego bedzie wczytywac level.
-		 * @param scanner
+		 * @param scanner przechowuje wczytane z pliku konfiguracujnego dane
 		 */
 		public BoardFactory (Scanner scanner) {
 			skaner = scanner;

@@ -28,7 +28,7 @@ public class BoardCanvas extends Canvas implements Runnable {
 	
 	/**
 	 * Kostruktor zapisuje tablice z ustawieniami elementów.
-	 * @param board
+	 * @param board - obiekt przechowujacy parametry poziomu.
 	 */
 	public BoardCanvas (Board board) {
 		this.board = board;

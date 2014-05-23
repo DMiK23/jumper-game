@@ -1,23 +1,28 @@
 package jumper.gui.canvas;
 
+import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.Toolkit;
+
+import jumper.model.BonusTypeEnumerator;
+
 /**
- * Klasa bonusu. Bonus ma nazwe i polozenie.
+ * Klasa bonusu. Bonus ma typ i polozenie.
  * @author Maurycy
  *
  */
-public class Bonus extends BoardObject{
+public class Bonus extends BoardObject {
 	
-	private int name;
+	private final BonusTypeEnumerator type;
 	
-	public Bonus (int x, int y) {
-		super(x,y);
-	}
-	
-	public void setName (int n) {
-		name = n;
-	}
-	public int getName () {
-		return name;
+	public Bonus(Point p, BonusTypeEnumerator type) {
+		super(p);
+		this.type = type;
 	}
 
+	public void paintBonus(Graphics g, int skala) {
+		g.drawImage(Toolkit.getDefaultToolkit().getImage("1.gif"),
+				getX() * skala, getY() * skala,
+				skala, skala, null);
+	}
 }

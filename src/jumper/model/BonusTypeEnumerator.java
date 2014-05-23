@@ -11,7 +11,7 @@ public enum BonusTypeEnumerator {
 	ADD_TIME,
 	ADD_POINTS;	
 	
-	public static BonusTypeEnumerator create (int i) {
+	public static BonusTypeEnumerator create(int i) {
 		switch (i) {
 		case 1: return BETTER_JUMP;
 		case 2: return ONE_UP;

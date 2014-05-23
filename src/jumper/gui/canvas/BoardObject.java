@@ -1,5 +1,7 @@
 package jumper.gui.canvas;
 
+import java.awt.Point;
+
 /**
  * Klasa abstrakcyjna po ktorej dziedzicza obiekty planszy.
  * @author Maurycy
@@ -7,26 +9,21 @@ package jumper.gui.canvas;
  */
 public abstract class BoardObject {
 
-	private int x;
-	private int y;
+	private final Point p;
 	
-	public BoardObject (int x, int y) {
-		this.x = x;
-		this.y = y;
+	public BoardObject(int x, int y) {
+		p = new Point(x, y);
 	}
 	
-	public void setX (int x) {
-		this.x = x;
+	public BoardObject(Point p) {
+		this.p = p;
 	}
 	
-	public void setY (int y) {
-		this.y = y;
-	}
-	public int getX () {
-		return x;
+	public int getX() {
+		return p.x;
 	}
 	
-	public int getY () {
-		return y;
+	public int getY() {
+		return p.y;
 	}
 }

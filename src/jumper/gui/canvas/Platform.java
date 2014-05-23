@@ -2,6 +2,7 @@ package jumper.gui.canvas;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Point;
 
 /**
  * Platforma. Podstawowy element planszy.
@@ -10,8 +11,8 @@ import java.awt.Graphics;
  */
 public class Platform extends BoardObject {
 	
-	public Platform (int x, int y) {
-		super(x, y);
+	public Platform (Point p) {
+		super(p);
 	}
 
 	public void paintPlatform(Graphics g, int skala, Dimension dim) {

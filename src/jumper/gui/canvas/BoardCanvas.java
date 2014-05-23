@@ -6,7 +6,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
-import java.awt.Toolkit;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
@@ -25,6 +24,8 @@ public class BoardCanvas extends Canvas implements Runnable {
 	private Image offScreen = null;
 	private Graphics offScreenGraphics = null;	
 	private final Board board;
+	private final Player player;
+	private final Bonus bonus;
 	private final List<Platform> platforms;
 	//private Thread trener = null;
 	private final Dimension defaultSize = new Dimension(600, 200);
@@ -37,9 +38,11 @@ public class BoardCanvas extends Canvas implements Runnable {
 	 */
 	public BoardCanvas (Board board) {
 		this.board = board;
+		player = new Player(board.getPolozenieGracza());
+		bonus = new Bonus(board.getPolozenieBonusu(), board.getTypBonusu());
 		platforms = new ArrayList<Platform>(board.getPolozeniePlatform().size());
 		for (Point p : board.getPolozeniePlatform()) {
-			platforms.add(new Platform(p.x, p.y));
+			platforms.add(new Platform(p));
 		}
 		addComponentListener(new ComponentAdapter() {
 			public void componentResized(ComponentEvent ce) {
@@ -67,16 +70,11 @@ public class BoardCanvas extends Canvas implements Runnable {
 	void updateOffscreen() {
 		offScreenGraphics.clearRect(0, 0, offScreen.getWidth(this), offScreen.getHeight(this));
 		offScreenGraphics.setColor(Color.yellow);
-        // rysowanie platform
         for (Platform p : platforms) {
         	p.paintPlatform(offScreenGraphics, skala, platformSize);
         }
-        offScreenGraphics.drawImage(Toolkit.getDefaultToolkit().getImage("0.gif"),
-        		board.getPolozenieGracza().x*skala, board.getPolozenieGracza().y*skala,
-        		platformSize.width, platformSize.width, this);
-        offScreenGraphics.drawImage(Toolkit.getDefaultToolkit().getImage("1.gif"),
-        		board.getPolozenieBonusu().x*skala, board.getPolozenieBonusu().y*skala,
-        		platformSize.width, platformSize.width, this);
+        bonus.paintBonus(offScreenGraphics, skala);
+        player.paintPlayer(offScreenGraphics, skala);
     }
 
 	public void modifyLocation () {

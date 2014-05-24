@@ -24,17 +24,15 @@ import jumper.model.Board;
 @SuppressWarnings("serial")
 public class BoardCanvas extends Canvas implements Runnable {
 	
-	private Image offScreen = null;
+	private static final Dimension platformDim = new Dimension(8, 2);
+	private static final Dimension playerDim = new Dimension(2, 2);
+	private static final Dimension bonusDim = new Dimension(1, 1);
 	private Graphics offScreenGraphics = null;	
-	private final Board board;
 	private final Player player;
 	private final Bonus bonus;
 	private final List<Platform> platforms;
-	//private Thread trener = null;
 	private final Dimension defaultSize = new Dimension(600, 200);
-	private Dimension platformSize;
-	private int skala;
-	private int skalaPlatform;
+	private Image offScreen = null;
 	private Thread thread;
 	private boolean gameOver;
 	
@@ -43,13 +41,12 @@ public class BoardCanvas extends Canvas implements Runnable {
 	 * @param board - obiekt przechowujacy parametry poziomu.
 	 */
 	public BoardCanvas (Board board) {
-		this.board = board;
 		gameOver = false;
-		player = new Player(board.getPolozeniePoczatkoweGracza());
-		bonus = new Bonus(board.getPolozenieBonusu(), board.getTypBonusu());
+		player = new Player(board.getPolozeniePoczatkoweGracza(), playerDim);
+		bonus = new Bonus(board.getPolozenieBonusu(), bonusDim, board.getTypBonusu());
 		platforms = new ArrayList<Platform>(board.getPolozeniePlatform().size());
 		for (Point p : board.getPolozeniePlatform()) {
-			platforms.add(new Platform(p));
+			platforms.add(new Platform(p, platformDim));
 		}
 		addComponentListener(new ComponentAdapter() {
 			public void componentResized(ComponentEvent ce) {
@@ -79,10 +76,10 @@ public class BoardCanvas extends Canvas implements Runnable {
 		offScreenGraphics.clearRect(0, 0, offScreen.getWidth(this), offScreen.getHeight(this));
 		offScreenGraphics.setColor(Color.yellow);
         for (Platform p : platforms) {
-        	p.paintPlatform(offScreenGraphics, skalaPlatform, platformSize);
+        	p.paintPlatform(offScreenGraphics);
         }
-        bonus.paintBonus(offScreenGraphics, skalaPlatform);
-        player.paintPlayer(offScreenGraphics, skalaPlatform);
+        bonus.paintBonus(offScreenGraphics);
+        player.paintPlayer(offScreenGraphics);
     }
 
 	public void modifyLocation () {
@@ -113,9 +110,13 @@ public class BoardCanvas extends Canvas implements Runnable {
 	 * oraz tworzy obraz uzywany jako bufor (o dobrych wymiarach).
 	 */
 	public void updateSize() {
-        skala = getWidth() >> 7;
-        skalaPlatform = getWidth() >> 4;
-        platformSize = new Dimension(skalaPlatform - 10, getHeight() >> 6);
+        int w = getWidth() >> 7;
+        bonus.updateScaling(w);
+        player.updateScaling(w);
+        Dimension platformOnScreenDim = new Dimension(platformDim.width * w, platformDim.height * w);
+        for (Platform p : platforms) {
+        	p.updateScaling(platformOnScreenDim, w);
+        }
         offScreen = createImage(getWidth(), getHeight());
         offScreenGraphics = offScreen.getGraphics();
     }

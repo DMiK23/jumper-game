@@ -7,6 +7,7 @@ import jumper.gui.canvas.components.Platform;
 import jumper.gui.canvas.components.Player;
 
 public class CollisionDetector {
+	@SuppressWarnings("unused")
 	private final List<Platform> platforms;
 	private final Player player;
 	private final Bonus bonus;

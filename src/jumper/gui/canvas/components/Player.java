@@ -3,7 +3,6 @@ package jumper.gui.canvas.components;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -14,30 +13,27 @@ import java.awt.event.KeyListener;
  *
  */
 public class Player extends BoardObject implements KeyListener {
-
-	private int ostatniaSkala;
-	private Dimension ostatnieWymiary;
 	
-	public Player (Point p) {
-		super(p);
+	private int lastScale;
+	
+	public Player (Point p, Dimension dim) {
+		super(p, dim);
 	}
 	
-	public void paintPlayer(Graphics g, int skala)
+	public void paintPlayer(Graphics g)
 	{
-		if (ostatniaSkala != skala) {
-			ostatniaSkala = skala;
-			ostatnieWymiary = new Dimension(skala, skala);
-		}
 		g.drawImage(Toolkit.getDefaultToolkit().getImage("0.gif"),
-				p.x * skala, p.y * skala,
-				skala, skala, null);
+				onScreenPoint.x, onScreenPoint.y,
+				onScreenDim.width, onScreenDim.height, null);
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
 		switch (e.getKeyCode()) {
-		case KeyEvent.VK_RIGHT : p.x += 1; break;
-		case KeyEvent.VK_LEFT : p.x -= 1; break;
+		case KeyEvent.VK_RIGHT : setX(getX() + 1); break;
+		case KeyEvent.VK_LEFT  : setX(getX() - 1); break;
+		case KeyEvent.VK_UP  : setY(getY() - 1); break;
+		case KeyEvent.VK_DOWN  : setY(getY() + 1); break;
 		}
 		System.out.println("player got KeyEvent Pressed");
 	}
@@ -53,11 +49,26 @@ public class Player extends BoardObject implements KeyListener {
 		// TODO Auto-generated method stub
 		System.out.println("player got KeyEvent Typed");
 	}
-
+	
 	@Override
-	public Rectangle getBounds() {
-		return new Rectangle(p.x * ostatniaSkala, p.y * ostatniaSkala,
-				ostatnieWymiary.width, ostatnieWymiary.height);
+	public void updateScaling(Dimension newOnScreenDimension, int newScale) {
+		super.updateScaling(newOnScreenDimension, newScale);
+		lastScale = newScale;
+	}
+	
+	@Override
+	public void updateScaling(int newScale) {
+		super.updateScaling(newScale);
+		lastScale = newScale;
 	}
 
+	private void setX(int newX) {
+		p.x = newX < 0 ? 0 : (newX > 127 ? 127 : newX);
+		onScreenPoint.x = p.x * lastScale;
+	}
+	
+	private void setY(int newY) {
+		p.y = newY < 0 ? 0 : (newY > 127 ? 127 : newY);
+		onScreenPoint.y = p.y * lastScale;
+	}
 }

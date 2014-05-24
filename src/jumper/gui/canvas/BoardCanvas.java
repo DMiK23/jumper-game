@@ -115,7 +115,7 @@ public class BoardCanvas extends Canvas implements Runnable {
 	public void updateSize() {
         skala = getWidth() >> 7;
         skalaPlatform = getWidth() >> 4;
-        platformSize = new Dimension(skala - 10, getHeight() >> 6);
+        platformSize = new Dimension(skalaPlatform - 10, getHeight() >> 6);
         offScreen = createImage(getWidth(), getHeight());
         offScreenGraphics = offScreen.getGraphics();
     }

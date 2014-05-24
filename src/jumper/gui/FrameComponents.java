@@ -1,8 +1,6 @@
 package jumper.gui;
 
 import java.awt.CardLayout;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 
 import javax.swing.JPanel;
 
@@ -24,7 +22,7 @@ public class FrameComponents extends JPanel{
 	/* Panele (i ich nazwy) dodane do layoutu */
 	private final Highscores scoresPanel;
 	private final static String scoresPanelName = "wyniki";
-	private final GamePanel gamePanel;
+	private GamePanel gamePanel;
 	private final static String gamePanelName = "gra";
 	private final GameOver gameOverPanel;
 	private final static String gameOverPanelName = "koniec";
@@ -35,7 +33,7 @@ public class FrameComponents extends JPanel{
 	 * Konfiguruje panel gry i zarzadza nim.
 	 * Ustawia CardLayout i dodaje potrzebne panele,
 	 * w tym menu i sama gre.
-	 * @param mainPanel
+	 * @param mainPanel panel zawierajacy CardLayout i pozostale panele gry
 	 */
 	public FrameComponents(JPanel mainPanel) {
 		
@@ -72,6 +70,10 @@ public class FrameComponents extends JPanel{
 	 * Ustawia w widoku panel z gra.
 	 */
 	public void showGamePanel () {
+		cardPanel.remove(gamePanel);
+		gamePanel = new GamePanel(this);
+		cardPanel.add(gamePanel, gamePanelName);
+		cardPanel.validate();
 		cardLayout.show(cardPanel, gamePanelName);
 		gamePanel.putOnTop();
 	}

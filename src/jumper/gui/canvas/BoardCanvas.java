@@ -11,6 +11,9 @@ import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import jumper.gui.canvas.components.Bonus;
+import jumper.gui.canvas.components.Platform;
+import jumper.gui.canvas.components.Player;
 import jumper.model.Board;
 
 /**
@@ -32,13 +35,16 @@ public class BoardCanvas extends Canvas implements Runnable {
 	private Dimension platformSize;
 	private int skala;
 	private int skalaPlatform;
+	private Thread thread;
+	private boolean gameOver;
 	
 	/**
-	 * Kostruktor zapisuje tablice z ustawieniami elementów.
+	 * Tworzy elementy graficzne
 	 * @param board - obiekt przechowujacy parametry poziomu.
 	 */
 	public BoardCanvas (Board board) {
 		this.board = board;
+		gameOver = false;
 		player = new Player(board.getPolozeniePoczatkoweGracza());
 		bonus = new Bonus(board.getPolozenieBonusu(), board.getTypBonusu());
 		platforms = new ArrayList<Platform>(board.getPolozeniePlatform().size());
@@ -75,8 +81,8 @@ public class BoardCanvas extends Canvas implements Runnable {
         for (Platform p : platforms) {
         	p.paintPlatform(offScreenGraphics, skalaPlatform, platformSize);
         }
-        bonus.paintBonus(offScreenGraphics, skala);
-        player.paintPlayer(offScreenGraphics, skala);
+        bonus.paintBonus(offScreenGraphics, skalaPlatform);
+        player.paintPlayer(offScreenGraphics, skalaPlatform);
     }
 
 	public void modifyLocation () {
@@ -93,15 +99,17 @@ public class BoardCanvas extends Canvas implements Runnable {
 	public void run() {
 		updateSize();
         while (true) {
+            modifyLocation();
         	updateOffscreen();
             repaint();
-            modifyLocation();
             sleep();
+            if (gameOver)
+            	return;
         }
     }
 	
 	/**
-	 * Przelicza wielkosci zalezne od rozmiarow okna,
+	 * Przelicza wielkosci zalezne od rozmiarow okna
 	 * oraz tworzy obraz uzywany jako bufor (o dobrych wymiarach).
 	 */
 	public void updateSize() {
@@ -111,4 +119,15 @@ public class BoardCanvas extends Canvas implements Runnable {
         offScreen = createImage(getWidth(), getHeight());
         offScreenGraphics = offScreen.getGraphics();
     }
+
+	public void endGame() {
+		// TODO przekazanie wynikow etc
+		gameOver = true;
+	}
+
+	public void startGame() {
+		thread = new Thread(this);
+		gameOver = false;
+		thread.start();
+	}
 }

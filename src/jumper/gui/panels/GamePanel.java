@@ -16,33 +16,33 @@ import jumper.model.ConfigFileOpener;
 public class GamePanel extends JumperPanel {
 	
 	private final ConfigFileOpener config;
-	private BoardCanvas canvas;
+	private final BoardCanvas canvas;
 	
 	public GamePanel (FrameComponents fc) {
 		super (fc);
-		setLayout(new BorderLayout());
-		
-		// trzeba ustalic jak sie wczytuje plik, chwilowo tutaj wrzuce blad ladowania
+		this.setLayout(new BorderLayout());
 		ConfigFileOpener readCfg = null;
+		BoardCanvas tmpCanvas = null;
 		try {
 			readCfg = new ConfigFileOpener("config.txt");
-			canvas = new BoardCanvas(readCfg.getLevelsList().get(0));
-			add(canvas, BorderLayout.CENTER);
+			tmpCanvas = new BoardCanvas(readCfg.getLevelsList().get(0));
+			add(tmpCanvas, BorderLayout.CENTER);
 		} catch (FileNotFoundException e) {
 			readCfg = null;
 			// informujemy o tym w funkcji putOnTop:
 			// zakladamy ze wtedy config == null
 		} finally {
 			config = readCfg;
+			canvas = tmpCanvas;
 		}
-		// guzik - do schowania (pokazywany na koniec planszy)
+		// TODO guzik - do schowania (pokazywany na koniec planszy)
 		JButton gameOverButton = new JButton("Zgin");
 		gameOverButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				canvas.endGame();
 				getFrameComponents().showGameOver();
-				
 			}
 		});
 		add(gameOverButton, BorderLayout.NORTH); 
@@ -55,7 +55,7 @@ public class GamePanel extends JumperPanel {
 					"Nie uda³o siê wczytaæ pliku konfiguracyjnego!", "B³¹d", ERROR, null);
 			getFrameComponents().showMenu();
 		}
-		new Thread(canvas).start();
 		canvas.requestFocusInWindow();
+		canvas.startGame();
 	}
 }

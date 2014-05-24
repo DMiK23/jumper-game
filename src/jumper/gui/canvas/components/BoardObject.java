@@ -1,4 +1,4 @@
-package jumper.gui.canvas;
+package jumper.gui.canvas.components;
 
 import java.awt.Point;
 import java.awt.Rectangle;

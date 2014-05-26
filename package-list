@@ -1,5 +1,6 @@
 jumper
 jumper.gui
 jumper.gui.canvas
+jumper.gui.canvas.components
 jumper.gui.panels
 jumper.model

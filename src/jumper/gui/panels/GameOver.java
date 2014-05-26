@@ -23,7 +23,7 @@ public class GameOver extends JumperPanel {
 		JTextField wyniki = new JTextField("Punkty: 1234");
 		wyniki.setAlignmentX(CENTER_ALIGNMENT);
 		this.add(wyniki);
-		JButton powrot = new JButton("Przegrales!!!!!!!");
+		JButton powrot = new JButton("Powrot do menu");
 		powrot.addActionListener(new ActionListener() {
 			
 			@Override

@@ -7,6 +7,8 @@ import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import jumper.gui.canvas.CollisionDetector;
+
 /**
  * Gracz.
  * @author Maurycy
@@ -15,9 +17,11 @@ import java.awt.event.KeyListener;
 public class Player extends BoardObject implements KeyListener {
 	
 	private int lastScale;
+	private final CollisionDetector detector;
 	
-	public Player (Point p, Dimension dim) {
+	public Player (Point p, Dimension dim, CollisionDetector det) {
 		super(p, dim);
+		detector = det;
 	}
 	
 	public void paintPlayer(Graphics g)
@@ -30,10 +34,26 @@ public class Player extends BoardObject implements KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		switch (e.getKeyCode()) {
-		case KeyEvent.VK_RIGHT : setX(getX() + 1); break;
-		case KeyEvent.VK_LEFT  : setX(getX() - 1); break;
-		case KeyEvent.VK_UP  : setY(getY() - 1); break;
-		case KeyEvent.VK_DOWN  : setY(getY() + 1); break;
+		case KeyEvent.VK_RIGHT :
+			setX(getX() + 1); 
+			if (detector.collision(this))
+				setX(getX() - 1);
+			break;
+		case KeyEvent.VK_LEFT  :
+			setX(getX() - 1); 
+			if (detector.collision(this))
+				setX(getX() + 1);
+			break;
+		case KeyEvent.VK_UP    :
+			setY(getY() - 1); 
+			if (detector.collision(this))
+				setY(getY() + 1);
+			break;
+		case KeyEvent.VK_DOWN  :
+			setY(getY() + 1); 
+			if (detector.collision(this))
+				setY(getY() - 1);
+			break;
 		}
 		System.out.println("player got KeyEvent Pressed");
 	}

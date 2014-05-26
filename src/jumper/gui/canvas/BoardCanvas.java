@@ -10,10 +10,15 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import javax.swing.SwingUtilities;
 
 import jumper.gui.canvas.components.Bonus;
 import jumper.gui.canvas.components.Platform;
 import jumper.gui.canvas.components.Player;
+import jumper.gui.panels.GamePanel;
 import jumper.model.Board;
 
 /**
@@ -35,19 +40,27 @@ public class BoardCanvas extends Canvas implements Runnable {
 	private Image offScreen = null;
 	private Thread thread;
 	private boolean gameOver;
+	private final GamePanel gameOverListener;
+	private final Timer countDown;
+	private final Board board;
+	private final CollisionDetector detector;
 	
 	/**
 	 * Tworzy elementy graficzne
 	 * @param board - obiekt przechowujacy parametry poziomu.
 	 */
-	public BoardCanvas (Board board) {
-		gameOver = false;
-		player = new Player(board.getPolozeniePoczatkoweGracza(), playerDim);
-		bonus = new Bonus(board.getPolozenieBonusu(), bonusDim, board.getTypBonusu());
-		platforms = new ArrayList<Platform>(board.getPolozeniePlatform().size());
+	public BoardCanvas (final Board board, final GamePanel gameOverListener) {
+		this.board = board;
+		this.gameOver = false;
+		this.gameOverListener = gameOverListener;
+		countDown = new Timer();
+		this.bonus = new Bonus(board.getPolozenieBonusu(), bonusDim, board.getTypBonusu());
+		this.platforms = new ArrayList<Platform>(board.getPolozeniePlatform().size());
 		for (Point p : board.getPolozeniePlatform()) {
 			platforms.add(new Platform(p, platformDim));
 		}
+		this.detector = new CollisionDetector(platforms, bonus);
+		this.player = new Player(board.getPolozeniePoczatkoweGracza(), playerDim, detector);
 		addComponentListener(new ComponentAdapter() {
 			public void componentResized(ComponentEvent ce) {
                 BoardCanvas.this.updateSize();
@@ -83,7 +96,7 @@ public class BoardCanvas extends Canvas implements Runnable {
     }
 
 	public void modifyLocation () {
-		//TODO
+
 	}
 
 	void sleep() {
@@ -95,14 +108,30 @@ public class BoardCanvas extends Canvas implements Runnable {
 
 	public void run() {
 		updateSize();
+		countDown.scheduleAtFixedRate(new TimerTask() {
+			private long counterMs = board.getCzasNaPrzejscie();
+			@Override
+			public void run() {
+				BoardCanvas.this.gameOverListener.setTimer(counterMs-=100);
+			}
+		}, 100, 100);
         while (true) {
             modifyLocation();
         	updateOffscreen();
             repaint();
             sleep();
             if (gameOver)
-            	return;
+            	break;
         }
+        countDown.cancel();
+        SwingUtilities.invokeLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO przekazanie wynikow etc
+				gameOverListener.gameOver();
+			}
+		});
     }
 	
 	/**
@@ -122,7 +151,6 @@ public class BoardCanvas extends Canvas implements Runnable {
     }
 
 	public void endGame() {
-		// TODO przekazanie wynikow etc
 		gameOver = true;
 	}
 

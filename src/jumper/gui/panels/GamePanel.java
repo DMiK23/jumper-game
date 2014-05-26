@@ -1,11 +1,9 @@
 package jumper.gui.panels;
 
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 
-import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import jumper.gui.FrameComponents;
@@ -17,6 +15,7 @@ public class GamePanel extends JumperPanel {
 	
 	private final ConfigFileOpener config;
 	private final BoardCanvas canvas;
+	private JLabel timerLabel;
 	
 	public GamePanel (FrameComponents fc) {
 		super (fc);
@@ -25,7 +24,7 @@ public class GamePanel extends JumperPanel {
 		BoardCanvas tmpCanvas = null;
 		try {
 			readCfg = new ConfigFileOpener("config.txt");
-			tmpCanvas = new BoardCanvas(readCfg.getLevelsList().get(0));
+			tmpCanvas = new BoardCanvas(readCfg.getLevelsList().get(0), this);
 			add(tmpCanvas, BorderLayout.CENTER);
 		} catch (FileNotFoundException e) {
 			readCfg = null;
@@ -35,17 +34,19 @@ public class GamePanel extends JumperPanel {
 			config = readCfg;
 			canvas = tmpCanvas;
 		}
-		// TODO guzik - do schowania (pokazywany na koniec planszy)
-		JButton gameOverButton = new JButton("Zgin");
-		gameOverButton.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				canvas.endGame();
-				getFrameComponents().showGameOver();
-			}
-		});
-		add(gameOverButton, BorderLayout.NORTH); 
+		timerLabel = new JLabel();
+		add(timerLabel, BorderLayout.NORTH);
+//		// TODO guzik - do schowania (pokazywany na koniec planszy)
+//		JButton gameOverButton = new JButton("Zgin");
+//		gameOverButton.addActionListener(new ActionListener() {
+//			
+//			@Override
+//			public void actionPerformed(ActionEvent arg0) {
+//				canvas.endGame();
+//				getFrameComponents().showGameOver();
+//			}
+//		});
+//		add(gameOverButton, BorderLayout.NORTH); 
 	}
 
 	@Override
@@ -57,5 +58,16 @@ public class GamePanel extends JumperPanel {
 		}
 		canvas.requestFocusInWindow();
 		canvas.startGame();
+	}
+
+	public void gameOver() {
+		getFrameComponents().showGameOver();
+	}
+	
+	public void setTimer(long milisecsLeft) {
+		if (milisecsLeft < 0) {
+			canvas.endGame();
+		}
+		timerLabel.setText("pozosta³o: " + milisecsLeft/1000 + "s");
 	}
 }

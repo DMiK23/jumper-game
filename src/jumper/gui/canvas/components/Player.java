@@ -34,24 +34,16 @@ public class Player extends BoardObject implements KeyListener {
 	public void keyPressed(KeyEvent e) {
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_RIGHT :
-			setX(getX() + 1); 
-			if (detector.collision(this))
-				setX(getX() - 1);
+			trySetX(getX() + 1);
 			break;
 		case KeyEvent.VK_LEFT  :
-			setX(getX() - 1); 
-			if (detector.collision(this))
-				setX(getX() + 1);
+			trySetX(getX() - 1);
 			break;
 		case KeyEvent.VK_UP    :
-			setY(getY() - 1); 
-			if (detector.collision(this))
-				setY(getY() + 1);
+			trySetY(getY() - 1);
 			break;
 		case KeyEvent.VK_DOWN  :
-			setY(getY() + 1); 
-			if (detector.collision(this))
-				setY(getY() - 1);
+			trySetY(getY() + 1);
 			break;
 		}
 		System.out.println("player got KeyEvent Pressed");
@@ -77,5 +69,19 @@ public class Player extends BoardObject implements KeyListener {
 	@Override
 	protected void setY(int newY) {
 		super.setY(newY < 0 ? 0 : (newY > 127 ? 127 : newY));
+	}
+	
+	private void trySetX(int newX) {
+		int old = getX();
+		setX(newX); 
+		if (detector.collision(this))
+			setX(old);
+	}
+	
+	private void trySetY(int newY) {
+		int old = getY();
+		setY(newY); 
+		if (detector.collision(this))
+			setY(old);
 	}
 }

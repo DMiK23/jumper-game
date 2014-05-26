@@ -18,8 +18,13 @@ import javax.swing.SwingUtilities;
 import jumper.gui.canvas.components.Bonus;
 import jumper.gui.canvas.components.Platform;
 import jumper.gui.canvas.components.Player;
-import jumper.gui.panels.GamePanel;
 import jumper.model.Board;
+
+// TODO trzeba wszystkie funkcje i atrybuty zwiazane z obsulga zdarzen gry
+// TODO przeniesc do osobnej klasy, np. GameController,
+// TODO zajmujace sie zliczaniem punktow, obsluga bonusow, znikaniem platform
+// TODO a byc moze rowniez obsluga kolizji (skads trzeba wiedziec,
+// TODO kiedy zniknac platforme).
 
 /**
  * Plansza z gra. Rysuje elementy planszy przy pomocy podwojnego bufora.
@@ -40,7 +45,7 @@ public class BoardCanvas extends Canvas implements Runnable {
 	private Image offScreen = null;
 	private Thread thread;
 	private boolean gameOver;
-	private final GamePanel gameOverListener;
+	private final GameOverListener gameOverListener;
 	private final Timer countDown;
 	private final Board board;
 	private final CollisionDetector detector;
@@ -48,8 +53,9 @@ public class BoardCanvas extends Canvas implements Runnable {
 	/**
 	 * Tworzy elementy graficzne
 	 * @param board - obiekt przechowujacy parametry poziomu.
+	 * @param gameOverListener - obiekt nasluchujacy zdarzen w grze
 	 */
-	public BoardCanvas (final Board board, final GamePanel gameOverListener) {
+	public BoardCanvas (final Board board, final GameOverListener gameOverListener) {
 		this.board = board;
 		this.gameOver = false;
 		this.gameOverListener = gameOverListener;

@@ -8,10 +8,11 @@ import javax.swing.JOptionPane;
 
 import jumper.gui.FrameComponents;
 import jumper.gui.canvas.BoardCanvas;
+import jumper.gui.canvas.GameOverListener;
 import jumper.model.ConfigFileOpener;
 
 @SuppressWarnings("serial")
-public class GamePanel extends JumperPanel {
+public class GamePanel extends JumperPanel implements GameOverListener {
 	
 	private final ConfigFileOpener config;
 	private final BoardCanvas canvas;
@@ -35,18 +36,7 @@ public class GamePanel extends JumperPanel {
 			canvas = tmpCanvas;
 		}
 		timerLabel = new JLabel();
-		add(timerLabel, BorderLayout.NORTH);
-//		// TODO guzik - do schowania (pokazywany na koniec planszy)
-//		JButton gameOverButton = new JButton("Zgin");
-//		gameOverButton.addActionListener(new ActionListener() {
-//			
-//			@Override
-//			public void actionPerformed(ActionEvent arg0) {
-//				canvas.endGame();
-//				getFrameComponents().showGameOver();
-//			}
-//		});
-//		add(gameOverButton, BorderLayout.NORTH); 
+		add(timerLabel, BorderLayout.NORTH); 
 	}
 
 	@Override

@@ -1,6 +1,5 @@
 package jumper.gui.canvas;
 
-import java.awt.Rectangle;
 import java.util.List;
 
 import jumper.gui.canvas.components.Bonus;

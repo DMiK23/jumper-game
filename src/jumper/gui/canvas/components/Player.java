@@ -16,7 +16,6 @@ import jumper.gui.canvas.CollisionDetector;
  */
 public class Player extends BoardObject implements KeyListener {
 	
-	private int lastScale;
 	private final CollisionDetector detector;
 	
 	public Player (Point p, Dimension dim, CollisionDetector det) {
@@ -69,26 +68,14 @@ public class Player extends BoardObject implements KeyListener {
 		// TODO Auto-generated method stub
 		System.out.println("player got KeyEvent Typed");
 	}
-	
-	@Override
-	public void updateScaling(Dimension newOnScreenDimension, int newScale) {
-		super.updateScaling(newOnScreenDimension, newScale);
-		lastScale = newScale;
-	}
-	
-	@Override
-	public void updateScaling(int newScale) {
-		super.updateScaling(newScale);
-		lastScale = newScale;
-	}
 
-	private void setX(int newX) {
-		p.x = newX < 0 ? 0 : (newX > 127 ? 127 : newX);
-		onScreenPoint.x = p.x * lastScale;
+	@Override
+	protected void setX(int newX) {
+		super.setX(newX < 0 ? 0 : (newX > 127 ? 127 : newX));
 	}
 	
-	private void setY(int newY) {
-		p.y = newY < 0 ? 0 : (newY > 127 ? 127 : newY);
-		onScreenPoint.y = p.y * lastScale;
+	@Override
+	protected void setY(int newY) {
+		super.setY(newY < 0 ? 0 : (newY > 127 ? 127 : newY));
 	}
 }

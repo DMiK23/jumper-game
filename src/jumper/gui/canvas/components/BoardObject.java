@@ -16,7 +16,8 @@ public abstract class BoardObject {
 	protected final Dimension dim;
 	protected Point onScreenPoint;
 	protected Dimension onScreenDim;
-	private Rectangle bounds;
+	protected int lastScale;
+	protected Rectangle bounds;
 	
 	public BoardObject(int x, int y, int width, int height) {
 		p = new Point(x, y);
@@ -28,8 +29,18 @@ public abstract class BoardObject {
 		this.dim = dim;
 	}
 	
+	protected void setX(int x) {
+		p.x = x;
+		updateProperties();
+	}
+	
 	public int getX() {
 		return p.x;
+	}
+	
+	protected void setY(int y) {
+		p.y = y;
+		updateProperties();
 	}
 	
 	public int getY() {
@@ -37,18 +48,26 @@ public abstract class BoardObject {
 	}
 	
 	public void updateScaling(int newScale) {
-		onScreenDim = new Dimension(dim.width * newScale, dim.height * newScale);
-		onScreenPoint = new Point(p.x * newScale, p.y * newScale);
-		bounds = new Rectangle(onScreenPoint, onScreenDim);
+		lastScale = newScale;
+		updateProperties();
 	}
 	
 	public void updateScaling(Dimension newOnScreenDimension, int newScale) {
-		onScreenDim = newOnScreenDimension;
-		onScreenPoint = new Point(p.x * newScale, p.y * newScale);
-		bounds = new Rectangle(onScreenPoint, newOnScreenDimension);
+		lastScale = newScale;
+		updateProperties(newOnScreenDimension);
 	}
 	
 	public Rectangle getBounds() {
 		return bounds;
+	}
+	
+	protected void updateProperties() {
+		updateProperties(new Dimension(dim.width * lastScale, dim.height * lastScale));
+	}
+	
+	protected void updateProperties(Dimension newDim) {
+		onScreenDim = newDim;
+		onScreenPoint = new Point(p.x * lastScale, p.y * lastScale);
+		bounds = new Rectangle(onScreenPoint, onScreenDim);
 	}
 }

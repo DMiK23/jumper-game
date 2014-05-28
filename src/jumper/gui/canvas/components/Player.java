@@ -20,6 +20,9 @@ public class Player extends BoardObject implements KeyListener {
 	private final CollisionDetector detector;
 	private Boolean ruchWLewo = false;
 	private Boolean ruchWPrawo = false;
+	private Boolean ruchWGore = false;
+	private int wysSkoku;
+	private int maxWysSkoku = 200;
 	
 	public Player (Point p, Dimension dim, CollisionDetector det) {
 		super(p, dim);
@@ -46,7 +49,9 @@ public class Player extends BoardObject implements KeyListener {
 			break;
 		case KeyEvent.VK_UP    :
 			if(isOnPlatform()) {
-				trySetY(getY() - 130);
+				ruchWGore = true;
+				wysSkoku = 0;
+				System.out.println("wykryto skok");
 			}			
 			break;
 		}
@@ -108,11 +113,22 @@ public class Player extends BoardObject implements KeyListener {
 	
 	public void applyMovement () {
 		trySetY(getY() + 2);	//grawitacja
+		System.out.print(wysSkoku);
+		System.out.println("/n");
 		if (ruchWPrawo == true) {
 			trySetX(getX() + 2);
 		}
 		if (ruchWLewo == true) {
 			trySetX(getX() - 2);
+		}
+		if (ruchWGore == true) {
+			if (wysSkoku < maxWysSkoku) {
+				trySetY(getY() - 3);
+				wysSkoku = wysSkoku +3;
+			}else {
+				ruchWGore = false;
+			}
+			
 		}
 	}
 }

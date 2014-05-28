@@ -93,12 +93,12 @@ public class Board {
 		public Board getNextBoard () {
 			int np = skaner.nextInt();
 			long cnp = skaner.nextLong() * 1000;
-			Point pg = new Point(skaner.nextInt() << 3, skaner.nextInt() << 3);
+			Point pg = new Point(skaner.nextInt() << 6, skaner.nextInt() << 6);
 			BonusTypeEnumerator tb = BonusTypeEnumerator.create(skaner.nextInt());
-			Point pb = new Point(skaner.nextInt() << 3, skaner.nextInt() << 3);
+			Point pb = new Point(skaner.nextInt() << 6, skaner.nextInt() << 6);
 			List<Point> pp = new Vector<Point>();
 			do {
-				pp.add(new Point(skaner.nextInt() << 3, skaner.nextInt() << 3));
+				pp.add(new Point(skaner.nextInt() << 6, skaner.nextInt() << 6));
 			} while (!skaner.hasNext(boardLimiter));
 			skaner.next(boardLimiter);
 			return new Board (np, pp, pg, tb, pb, cnp );

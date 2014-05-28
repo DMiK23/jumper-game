@@ -78,4 +78,10 @@ public class Player extends BoardObject implements KeyListener {
 	protected void setY(int newY) {
 		super.setY(newY < 0 ? 0 : (newY > 127 ? 127 : newY));
 	}
+	
+	public void applyGravity () {
+		setY(getY() + 1);
+		if (detector.collision(this))
+			setY(getY() - 1);
+	}
 }

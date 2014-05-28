@@ -34,9 +34,9 @@ import jumper.model.Board;
 @SuppressWarnings("serial")
 public class BoardCanvas extends Canvas implements Runnable {
 	
-	private static final Dimension platformDim = new Dimension(8, 2);
-	private static final Dimension playerDim = new Dimension(2, 2);
-	private static final Dimension bonusDim = new Dimension(1, 1);
+	private static final Dimension platformDim = new Dimension(64, 16);
+	private static final Dimension playerDim = new Dimension(16, 16);
+	private static final Dimension bonusDim = new Dimension(8, 8);
 	private Graphics offScreenGraphics = null;	
 	private final Player player;
 	private final Bonus bonus;
@@ -102,7 +102,7 @@ public class BoardCanvas extends Canvas implements Runnable {
     }
 
 	public void modifyLocation () {
-
+		player.applyGravity();
 	}
 
 	void sleep() {
@@ -145,10 +145,10 @@ public class BoardCanvas extends Canvas implements Runnable {
 	 * oraz tworzy obraz uzywany jako bufor (o dobrych wymiarach).
 	 */
 	public void updateSize() {
-        int w = getWidth() >> 7;
+        double w = (double)getWidth() / 1024.0;
         bonus.updateScaling(w);
         player.updateScaling(w);
-        Dimension platformOnScreenDim = new Dimension(platformDim.width * w, platformDim.height * w);
+        Dimension platformOnScreenDim = new Dimension((int)(platformDim.width * w),(int)(platformDim.height * w));
         for (Platform p : platforms) {
         	p.updateScaling(platformOnScreenDim, w);
         }

@@ -12,11 +12,11 @@ import java.awt.Rectangle;
  */
 public abstract class BoardObject {
 
-	protected final Point p;
-	protected final Dimension dim;
+	private final Point p;
+	private final Dimension dim;
 	protected Point onScreenPoint;
 	protected Dimension onScreenDim;
-	protected int lastScale;
+	protected double lastScale;
 	protected Rectangle bounds;
 	
 	public BoardObject(int x, int y, int width, int height) {
@@ -27,11 +27,13 @@ public abstract class BoardObject {
 	public BoardObject(Point p, Dimension dim) {
 		this.p = p;
 		this.dim = dim;
+		bounds = new Rectangle(p, dim);
 	}
 	
 	protected void setX(int x) {
 		p.x = x;
 		updateProperties();
+		bounds = new Rectangle(p, dim);
 	}
 	
 	public int getX() {
@@ -41,18 +43,19 @@ public abstract class BoardObject {
 	protected void setY(int y) {
 		p.y = y;
 		updateProperties();
+		bounds = new Rectangle(p, dim);
 	}
 	
 	public int getY() {
 		return p.y;
 	}
 	
-	public void updateScaling(int newScale) {
+	public void updateScaling(double newScale) {
 		lastScale = newScale;
 		updateProperties();
 	}
 	
-	public void updateScaling(Dimension newOnScreenDimension, int newScale) {
+	public void updateScaling(Dimension newOnScreenDimension, double newScale) {
 		lastScale = newScale;
 		updateProperties(newOnScreenDimension);
 	}
@@ -62,12 +65,11 @@ public abstract class BoardObject {
 	}
 	
 	protected void updateProperties() {
-		updateProperties(new Dimension(dim.width * lastScale, dim.height * lastScale));
+		updateProperties(new Dimension((int)(dim.width * lastScale), (int)(dim.height * lastScale)));
 	}
 	
 	protected void updateProperties(Dimension newDim) {
 		onScreenDim = newDim;
-		onScreenPoint = new Point(p.x * lastScale, p.y * lastScale);
-		bounds = new Rectangle(onScreenPoint, onScreenDim);
+		onScreenPoint = new Point((int)(p.x * lastScale),(int)( p.y * lastScale));
 	}
 }

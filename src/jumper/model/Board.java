@@ -76,6 +76,7 @@ public class Board {
 		
 		private Scanner skaner;
 		public final static String boardLimiter = "=====";
+		public static final int scale = 1024; 
 		
 		/**
 		 * Zapamietuje skaner z ktorego bedzie wczytywac level.
@@ -87,18 +88,18 @@ public class Board {
 		
 		/**
 		 * Wczytuje 1plansze o okreslonym formacie ze skanera.
-		 * Zajmuje sie przeskalowaniem z 16x16 do 128x128 pol.
+		 * Zajmuje sie przeskalowaniem z 16x16 do 1024x1024 pol.
 		 * @return plansza stworzona na podstawie odczytanych danych.
 		 */
 		public Board getNextBoard () {
 			int np = skaner.nextInt();
 			long cnp = skaner.nextLong() * 1000;
-			Point pg = new Point(skaner.nextInt() << 6, skaner.nextInt() << 6);
+			Point pg = new Point(skaner.nextInt() * (scale/16), skaner.nextInt() * (scale/16));
 			BonusTypeEnumerator tb = BonusTypeEnumerator.create(skaner.nextInt());
-			Point pb = new Point(skaner.nextInt() << 6, skaner.nextInt() << 6);
+			Point pb = new Point(skaner.nextInt() * (scale/16), skaner.nextInt() * (scale/16));
 			List<Point> pp = new Vector<Point>();
 			do {
-				pp.add(new Point(skaner.nextInt() << 6, skaner.nextInt() << 6));
+				pp.add(new Point(skaner.nextInt() * (scale/16), skaner.nextInt() * (scale/16)));
 			} while (!skaner.hasNext(boardLimiter));
 			skaner.next(boardLimiter);
 			return new Board (np, pp, pg, tb, pb, cnp );

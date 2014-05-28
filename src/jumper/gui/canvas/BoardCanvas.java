@@ -19,6 +19,7 @@ import jumper.gui.canvas.components.Bonus;
 import jumper.gui.canvas.components.Platform;
 import jumper.gui.canvas.components.Player;
 import jumper.model.Board;
+import jumper.model.Board.BoardFactory;
 
 // TODO trzeba wszystkie funkcje i atrybuty zwiazane z obsulga zdarzen gry
 // TODO przeniesc do osobnej klasy, np. GameController,
@@ -34,9 +35,10 @@ import jumper.model.Board;
 @SuppressWarnings("serial")
 public class BoardCanvas extends Canvas implements Runnable {
 	
-	private static final Dimension platformDim = new Dimension(64, 16);
-	private static final Dimension playerDim = new Dimension(16, 16);
-	private static final Dimension bonusDim = new Dimension(8, 8);
+	public static final int scale = BoardFactory.scale; 
+	private static final Dimension platformDim = new Dimension(scale/16, scale/64);
+	private static final Dimension playerDim = new Dimension(scale/64, scale/64);
+	private static final Dimension bonusDim = new Dimension(scale/128, scale/128);
 	private Graphics offScreenGraphics = null;	
 	private final Player player;
 	private final Bonus bonus;
@@ -102,7 +104,7 @@ public class BoardCanvas extends Canvas implements Runnable {
     }
 
 	public void modifyLocation () {
-		player.applyGravity();
+		player.applyMovement();
 	}
 
 	void sleep() {
@@ -145,7 +147,10 @@ public class BoardCanvas extends Canvas implements Runnable {
 	 * oraz tworzy obraz uzywany jako bufor (o dobrych wymiarach).
 	 */
 	public void updateSize() {
-        double w = (double)getWidth() / 1024.0;
+		int width = getWidth();
+		int height = getHeight();
+		int smallerDim = height < width ? height : width;
+        double w = (double)smallerDim / (double)scale;
         bonus.updateScaling(w);
         player.updateScaling(w);
         Dimension platformOnScreenDim = new Dimension((int)(platformDim.width * w),(int)(platformDim.height * w));

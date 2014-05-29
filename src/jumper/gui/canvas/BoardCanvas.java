@@ -35,10 +35,12 @@ import jumper.model.Board.BoardFactory;
 @SuppressWarnings("serial")
 public class BoardCanvas extends Canvas implements Runnable {
 	
-	public static final int scale = BoardFactory.scale; 
-	private static final Dimension platformDim = new Dimension(scale/16, scale/64);
-	private static final Dimension playerDim = new Dimension(scale/64, scale/64);
-	private static final Dimension bonusDim = new Dimension(scale/128, scale/128);
+	public static final int scaleX = BoardFactory.scaleX; 
+	public static final int scaleY = BoardFactory.scaleY; 
+	public static final double ratio = BoardFactory.ratio;
+	private static final Dimension platformDim = new Dimension(scaleX/16, scaleY/((int)(64*ratio)));
+	private static final Dimension playerDim = new Dimension(scaleX/64, scaleY/((int)(64*ratio)));
+	private static final Dimension bonusDim = new Dimension(scaleX/128, scaleY/((int)(128*ratio)));
 	private Graphics offScreenGraphics = null;	
 	private final Player player;
 	private final Bonus bonus;
@@ -150,7 +152,8 @@ public class BoardCanvas extends Canvas implements Runnable {
 		int width = getWidth();
 		int height = getHeight();
 		int smallerDim = height < width ? height : width;
-        double w = (double)smallerDim / (double)scale;
+//        double w = (double)smallerDim / (double)scaleX;
+        double w = (double)smallerDim / (height < width ? (double)scaleY : (double)scaleX);
         bonus.updateScaling(w);
         player.updateScaling(w);
         Dimension platformOnScreenDim = new Dimension((int)(platformDim.width * w),(int)(platformDim.height * w));

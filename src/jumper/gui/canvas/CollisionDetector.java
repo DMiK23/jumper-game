@@ -1,5 +1,6 @@
 package jumper.gui.canvas;
 
+import java.awt.Rectangle;
 import java.util.List;
 
 import jumper.gui.canvas.components.Bonus;
@@ -17,10 +18,13 @@ public class CollisionDetector {
 	}
 	
 	public boolean collision(Player player) {
+		return collision(player.getBounds());
+	}
+	
+	public boolean collision(Rectangle rect) {
 		for (Platform platform : platforms) {
-			if (player.getBounds().intersects(platform.getBounds())) {
+			if (platform.getBounds().intersects(rect))
 				return true;
-			}			
 		}
 		return false;
 	}

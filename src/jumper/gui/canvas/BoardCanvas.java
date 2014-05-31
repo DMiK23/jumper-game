@@ -11,10 +11,6 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import javax.swing.SwingUtilities;
 
 import jumper.gui.canvas.components.Bonus;
 import jumper.gui.canvas.components.Platform;
@@ -30,49 +26,42 @@ import jumper.model.Board.BoardFactory;
 
 /**
  * Plansza z gra. Rysuje elementy planszy przy pomocy podwojnego bufora.
+ * Zajmuje sie rowniez przeskalowywaniem przy zmianie obszaru rysowanego.
  * @author Maurycy
  *
  */
 @SuppressWarnings("serial")
-public class BoardCanvas extends Canvas implements Runnable {
+public class BoardCanvas extends Canvas {
 	
 	public static final int scaleX = BoardFactory.scaleX; 
 	public static final int scaleY = BoardFactory.scaleY; 
 	public static final double ratio = BoardFactory.ratio;
+	
 	private static final Dimension platformDim = new Dimension(scaleX/16, scaleY/((int)(64*ratio)));
 	private static final Dimension playerDim = new Dimension(scaleX/64, scaleY/((int)(64*ratio)));
 	private static final Dimension bonusDim = new Dimension(scaleX/128, scaleY/((int)(128*ratio)));
+	
+	private Image offScreen = null;
 	private Graphics offScreenGraphics = null;	
+	private final Dimension defaultSize = new Dimension(600, 200);
+	private final Image img = Toolkit.getDefaultToolkit().createImage("background.jpg");
+	
 	private final Player player;
 	private final Bonus bonus;
 	private final List<Platform> platforms;
-	private final Dimension defaultSize = new Dimension(600, 200);
-	private Image offScreen = null;
-	private Thread thread;
-	private boolean gameOver;
-	private final GameOverListener gameOverListener;
-	private final Timer countDown;
-	private final Board board;
-	private final CollisionDetector detector;
-	private final Image img = Toolkit.getDefaultToolkit().createImage("background.jpg");
 	
 	/**
-	 * Tworzy elementy graficzne
+	 * Tworzy elementy graficzne.
 	 * @param board - obiekt przechowujacy parametry poziomu.
-	 * @param gameOverListener - obiekt nasluchujacy zdarzen w grze
+	 * @param playerCollDetector - obiekt kontrolujacy kolizje gracza
 	 */
-	public BoardCanvas (final Board board, final GameOverListener gameOverListener) {
-		this.board = board;
-		this.gameOver = false;
-		this.gameOverListener = gameOverListener;
-		countDown = new Timer();
+	public BoardCanvas (final Board board, final CollisionDetector playerCollDetector) {
 		this.bonus = new Bonus(board.getPolozenieBonusu(), bonusDim, board.getTypBonusu());
 		this.platforms = new ArrayList<Platform>(board.getPolozeniePlatform().size());
 		for (Point p : board.getPolozeniePlatform()) {
 			platforms.add(new Platform(p, platformDim));
 		}
-		this.detector = new CollisionDetector(platforms, bonus);
-		this.player = new Player(board.getPolozeniePoczatkoweGracza(), playerDim, detector);
+		this.player = new Player(board.getPolozeniePoczatkoweGracza(), playerDim, playerCollDetector);
 		addComponentListener(new ComponentAdapter() {
 			public void componentResized(ComponentEvent ce) {
                 BoardCanvas.this.updateSize();
@@ -97,7 +86,7 @@ public class BoardCanvas extends Canvas implements Runnable {
 		g.drawImage(offScreen, 0, 0, this);
 	}
 	
-	void updateOffscreen() {
+	public void updateOffscreen() {
 		offScreenGraphics.clearRect(0, 0, offScreen.getWidth(this), offScreen.getHeight(this));
 		offScreenGraphics.drawImage (img, 0, 0, offScreen.getWidth(this), offScreen.getHeight(this), null);
 		offScreenGraphics.setColor(Color.yellow);
@@ -111,41 +100,6 @@ public class BoardCanvas extends Canvas implements Runnable {
 	public void modifyLocation () {
 		player.applyMovement();
 	}
-
-	void sleep() {
-        try {
-            Thread.sleep(30);
-        } catch (InterruptedException ie) {
-        }
-    }
-
-	public void run() {
-		updateSize();
-		countDown.scheduleAtFixedRate(new TimerTask() {
-			private long counterMs = board.getCzasNaPrzejscie();
-			@Override
-			public void run() {
-				BoardCanvas.this.gameOverListener.setTimer(counterMs-=100);
-			}
-		}, 100, 100);
-        while (true) {
-            modifyLocation();
-        	updateOffscreen();
-            repaint();
-            sleep();
-            if (gameOver)
-            	break;
-        }
-        countDown.cancel();
-        SwingUtilities.invokeLater(new Runnable() {
-			
-			@Override
-			public void run() {
-				// TODO przekazanie wynikow etc
-				gameOverListener.gameOver();
-			}
-		});
-    }
 	
 	/**
 	 * Przelicza wielkosci zalezne od rozmiarow okna
@@ -167,14 +121,12 @@ public class BoardCanvas extends Canvas implements Runnable {
         offScreen = createImage(getWidth(), getHeight());
         offScreenGraphics = offScreen.getGraphics();
     }
-
-	public void endGame() {
-		gameOver = true;
+	
+	public Bonus getBonus() {
+		return bonus;
 	}
-
-	public void startGame() {
-		thread = new Thread(this);
-		gameOver = false;
-		thread.start();
+	
+	public List<Platform> getPlatforms() {
+		return platforms;
 	}
 }

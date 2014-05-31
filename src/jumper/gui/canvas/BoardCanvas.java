@@ -129,4 +129,8 @@ public class BoardCanvas extends Canvas {
 	public List<Platform> getPlatforms() {
 		return platforms;
 	}
+
+	public Player getPlayer() {
+		return player;
+	}
 }

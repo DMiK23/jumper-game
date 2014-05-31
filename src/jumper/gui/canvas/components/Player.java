@@ -10,6 +10,7 @@ import java.awt.event.KeyListener;
 
 import jumper.gui.canvas.CollisionDetector;
 import jumper.model.Board.BoardFactory;
+import jumper.model.controllers.PlayerListener;
 
 /**
  * Gracz.
@@ -28,11 +29,16 @@ public class Player extends BoardObject implements KeyListener {
 	private int wysSkoku = 0;
 	private final Rectangle mock;
 	private final CollisionDetector detector;
+	private PlayerListener listener;
 	
 	public Player (Point p, Dimension dim, CollisionDetector det) {
 		super(p, dim);
 		detector = det;
 		mock = new Rectangle(p, dim);
+	}
+	
+	public void setListener(PlayerListener listener) {
+		this.listener = listener;
 	}
 	
 	public void paintPlayer(Graphics g)
@@ -144,6 +150,9 @@ public class Player extends BoardObject implements KeyListener {
 			} else { // koniec zasiegu skoku
 				ruchWGore = false;
 			}
+		}
+		if (getY() + dy >= BoardFactory.scaleY && listener != null) {
+			listener.onPlayerOutOfBoard();
 		}
 		tryAddToX(dx);
 		tryAddToY(dy);

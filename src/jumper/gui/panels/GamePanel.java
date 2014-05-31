@@ -45,6 +45,7 @@ public class GamePanel extends JumperPanel implements GameListener {
 	@Override
 	public void endBoard(int boardScore) {
 		remove(canvas);
+		validate();
 	}
 
 	@Override

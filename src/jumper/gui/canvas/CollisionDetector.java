@@ -13,6 +13,7 @@ public class CollisionDetector {
 	private final List<Platform> platforms;
 	private Bonus bonus;
 	private final CollisionListener listener;
+	private Player player;
 
 	public CollisionDetector(CollisionListener listener) {
 		this.platforms = new ArrayList<>();
@@ -25,6 +26,10 @@ public class CollisionDetector {
 	
 	public void setBonus(Bonus b) {
 		this.bonus = b;
+	}
+	
+	public void setPlayer(Player p) {
+		player = p;
 	}
 	
 	public boolean collision(Player player) {
@@ -51,6 +56,6 @@ public class CollisionDetector {
 	
 	private void fireBonusTouched(Bonus b) {
 		if (listener != null)
-			listener.onBonusTouched(b);
+			listener.onBonusTouched(b, player);
 	}
 }

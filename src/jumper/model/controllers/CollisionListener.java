@@ -2,6 +2,7 @@ package jumper.model.controllers;
 
 import jumper.gui.canvas.components.Bonus;
 import jumper.gui.canvas.components.Platform;
+import jumper.gui.canvas.components.Player;
 
 /**
  * Nasluchuje zdarzen detektora kolizji, takich jak:
@@ -14,5 +15,5 @@ public interface CollisionListener {
 
 	public void onPlatformTouched(Platform p);
 	
-	public void onBonusTouched(Bonus b);
+	public void onBonusTouched(Bonus b, Player p);
 }

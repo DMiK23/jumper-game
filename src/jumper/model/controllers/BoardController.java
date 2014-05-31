@@ -7,6 +7,7 @@ import jumper.gui.canvas.BoardCanvas;
 import jumper.gui.canvas.CollisionDetector;
 import jumper.gui.canvas.components.Bonus;
 import jumper.gui.canvas.components.Platform;
+import jumper.gui.canvas.components.Player;
 import jumper.model.Board;
 
 /**
@@ -16,7 +17,7 @@ import jumper.model.Board;
  * @author Maurycy
  *
  */
-public class BoardController implements CollisionListener {
+public class BoardController implements CollisionListener, PlayerListener {
 	
 	private final GameListener listener;
 	private final Board board;
@@ -28,12 +29,7 @@ public class BoardController implements CollisionListener {
 	}
 	
 	public void startBoard() {
-		CollisionDetector detector = new CollisionDetector(this);
-		BoardCanvas canvas = new BoardCanvas(board, detector);
-		detector.addPlatforms(canvas.getPlatforms());
-		detector.setBonus(canvas.getBonus());
-		thread = new BoardThread(canvas);
-		listener.startNewBoard(canvas);
+		boardSetup();
 		thread.start();
 	}
 
@@ -44,9 +40,25 @@ public class BoardController implements CollisionListener {
 	}
 
 	@Override
-	public void onBonusTouched(Bonus b) {
+	public void onBonusTouched(Bonus b, Player p) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void onPlayerOutOfBoard() {
+		thread.gameOver = true;
+	}
+	
+	private void boardSetup() {
+		CollisionDetector detector = new CollisionDetector(this);
+		BoardCanvas canvas = new BoardCanvas(board, detector);
+		detector.addPlatforms(canvas.getPlatforms());
+		detector.setBonus(canvas.getBonus());
+		detector.setPlayer(canvas.getPlayer());
+		canvas.getPlayer().setListener(this);
+		thread = new BoardThread(canvas);
+		listener.startNewBoard(canvas);
 	}
 	
 	private void fireEndBoard() {
@@ -83,7 +95,7 @@ public class BoardController implements CollisionListener {
 						onTimeout();
 					}
 				}
-			}, 100, 100);
+			}, 0, 100);
 		}
 		
 		private void sleep() {

@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
@@ -53,6 +54,7 @@ public class BoardCanvas extends Canvas implements Runnable {
 	private final Timer countDown;
 	private final Board board;
 	private final CollisionDetector detector;
+	private final Image img = Toolkit.getDefaultToolkit().createImage("background.jpg");
 	
 	/**
 	 * Tworzy elementy graficzne
@@ -97,6 +99,7 @@ public class BoardCanvas extends Canvas implements Runnable {
 	
 	void updateOffscreen() {
 		offScreenGraphics.clearRect(0, 0, offScreen.getWidth(this), offScreen.getHeight(this));
+		offScreenGraphics.drawImage (img, 0, 0, offScreen.getWidth(this), offScreen.getHeight(this), null);
 		offScreenGraphics.setColor(Color.yellow);
         for (Platform p : platforms) {
         	p.paintPlatform(offScreenGraphics);

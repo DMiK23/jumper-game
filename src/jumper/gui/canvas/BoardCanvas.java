@@ -154,14 +154,15 @@ public class BoardCanvas extends Canvas implements Runnable {
 	public void updateSize() {
 		int width = getWidth();
 		int height = getHeight();
-		int smallerDim = height < width ? height : width;
-//        double w = (double)smallerDim / (double)scaleX;
-        double w = (double)smallerDim / (height < width ? (double)scaleY : (double)scaleX);
-        bonus.updateScaling(w);
-        player.updateScaling(w);
-        Dimension platformOnScreenDim = new Dimension((int)(platformDim.width * w),(int)(platformDim.height * w));
+		double pxWidth = (double)width/scaleX;
+		double pxHeight = (double)height/scaleY;
+		double pxMaxSize = pxWidth < pxHeight ? pxWidth : pxHeight; 
+        bonus.updateScaling(pxMaxSize);
+        player.updateScaling(pxMaxSize);
+        Dimension platformOnScreenDim = new Dimension((int)(platformDim.width * pxMaxSize),
+        		(int)(platformDim.height * pxMaxSize));
         for (Platform p : platforms) {
-        	p.updateScaling(platformOnScreenDim, w);
+        	p.updateScaling(platformOnScreenDim, pxMaxSize);
         }
         offScreen = createImage(getWidth(), getHeight());
         offScreenGraphics = offScreen.getGraphics();

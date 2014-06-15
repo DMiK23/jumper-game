@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JTextField;
+import javax.swing.JLabel;
 
 import jumper.gui.FrameComponents;
 
@@ -16,11 +16,12 @@ import jumper.gui.FrameComponents;
  */
 @SuppressWarnings("serial")
 public class GameOver extends JumperPanel {
+	
+	private JLabel wyniki = new JLabel("Punkty: ----");
 
 	public GameOver (FrameComponents fc) {
 		super (fc);
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-		JTextField wyniki = new JTextField("Punkty: 1234");
 		wyniki.setAlignmentX(CENTER_ALIGNMENT);
 		this.add(wyniki);
 		JButton powrot = new JButton("Powrot do menu");
@@ -33,6 +34,10 @@ public class GameOver extends JumperPanel {
 			}
 		});
 		add(powrot);
+	}
+	
+	public void setScore (int gameScore) {
+		wyniki.setText("Punkty: " + gameScore);
 	}
 	
 }

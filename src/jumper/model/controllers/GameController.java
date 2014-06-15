@@ -33,7 +33,7 @@ public class GameController implements GameListener {
 
 	public void startGame() {
 		loadNewBoard();
-		setLives(lives);
+		setLivesAndTotal(lives, score);
 	}
 
 	@Override
@@ -45,8 +45,7 @@ public class GameController implements GameListener {
 	public void endBoard(int boardScore, boolean passed) {
 		listener.endBoard(boardScore, passed);
 		if (!passed) {
-			lives--;
-			setLives(lives);
+			listener.setLivesAndTotal(--lives, score);
 			if (lives > 0) {
 				loadBoardAgain();
 			} else {
@@ -57,6 +56,7 @@ public class GameController implements GameListener {
 			score += boardScore;
 			if (currentBoardIndex + 1 < config.getLevelsList().size()) {
 				loadNewBoard();
+				listener.setLivesAndTotal(lives, score);
 			} else {
 				fireEndGame();
 			}
@@ -78,13 +78,13 @@ public class GameController implements GameListener {
 		listener.setScore(score);
 	}
 	@Override
-	public void setLives(int lives) {
-		listener.setLives(lives);		
+	public void setLivesAndTotal(int lives, int score) {
+		listener.setLivesAndTotal(lives, score);		
 	}
 	@Override
 	public void oneUp () {
 		this.lives++;
-		listener.setLives(this.lives);
+		listener.setLivesAndTotal(this.lives, score);
 	}
 	
 	private void loadBoardAgain () {

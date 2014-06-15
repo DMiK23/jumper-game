@@ -12,9 +12,12 @@ import java.awt.Point;
 public class Platform extends BoardObject {
 	
 	private boolean active = true;
+	private final boolean last;
+	private boolean disappeared = false;
 	
-	public Platform (Point p, Dimension dim) {
+	public Platform (Point p, Dimension dim, boolean last) {
 		super(p, dim);
+		this.last = last;
 	}
 
 	public void paintPlatform(Graphics g) {
@@ -29,4 +32,17 @@ public class Platform extends BoardObject {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
+	public boolean isLast() {
+		return last;
+	}
+
+	public boolean isDisappeared() {
+		return disappeared;
+	}
+
+	public void setDisappeared(boolean disappeared) {
+		this.disappeared = disappeared;
+	}
+	
+	
 }

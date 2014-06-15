@@ -81,7 +81,8 @@ public class FrameComponents extends JPanel{
 	/**
 	 * Ustawia w widoku panel informujacy o zakonczeniu gry z wynikiem.
 	 */
-	public void showGameOver () {
+	public void showGameOver (int gameScore) {
+		gameOverPanel.setScore(gameScore);
 		cardLayout.show(cardPanel, gameOverPanelName);
 		gameOverPanel.putOnTop();
 	}

@@ -16,4 +16,6 @@ public interface CollisionListener {
 	public void onPlatformTouched(Platform p);
 	
 	public void onBonusTouched(Bonus b, Player p);
+	
+	public void onPlayerLeavingPlatform (Platform p);
 }

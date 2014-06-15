@@ -41,7 +41,7 @@ public interface GameListener {
 	 */
 	public void setScore (int score);
 	
-	public void setLives (int lives);
+	public void setLivesAndTotal (int lives, int score);
 	
 	public void oneUp ();
 }

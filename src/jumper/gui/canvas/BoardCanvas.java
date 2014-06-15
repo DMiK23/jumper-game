@@ -49,6 +49,7 @@ public class BoardCanvas extends Canvas {
 	private final Player player;
 	private final Bonus bonus;
 	private final List<Platform> platforms;
+	private Platform ostatnia;
 	
 	/**
 	 * Tworzy elementy graficzne.
@@ -58,8 +59,9 @@ public class BoardCanvas extends Canvas {
 	public BoardCanvas (final Board board, final CollisionDetector playerCollDetector) {
 		this.bonus = new Bonus(board.getPolozenieBonusu(), bonusDim, board.getTypBonusu());
 		this.platforms = new ArrayList<Platform>(board.getPolozeniePlatform().size());
-		for (Point p : board.getPolozeniePlatform()) {
-			platforms.add(new Platform(p, platformDim));
+		List<Point> polozeniePlatform = board.getPolozeniePlatform();
+		for (int i = 0; i < polozeniePlatform.size(); ++i) {
+			platforms.add(new Platform(polozeniePlatform.get(i), platformDim, i == polozeniePlatform.size() - 1));
 		}
 		this.player = new Player(board.getPolozeniePoczatkoweGracza(), playerDim, playerCollDetector);
 		addComponentListener(new ComponentAdapter() {
@@ -91,7 +93,8 @@ public class BoardCanvas extends Canvas {
 		offScreenGraphics.drawImage (img, 0, 0, offScreen.getWidth(this), offScreen.getHeight(this), null);
 		offScreenGraphics.setColor(Color.yellow);
         for (Platform p : platforms) {
-        	p.paintPlatform(offScreenGraphics);
+        	if (p.isLast()) {offScreenGraphics.setColor(Color.red);}
+        	if (!p.isDisappeared()) {p.paintPlatform(offScreenGraphics);}
         }
         if (bonus.isActive()) {
             bonus.paintBonus(offScreenGraphics);

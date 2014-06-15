@@ -37,9 +37,14 @@ public class BoardController implements CollisionListener, PlayerListener {
 
 	@Override
 	public void onPlatformTouched(Platform p) {
-		//p.setActive(false);
-		//TODO
-		
+		if (p.isActive()) {
+			addBoardScore(board.getPunktyPlatforma());
+			if (p.isLast()) {
+				thread.passed = true;
+				thread.gameOver = true;
+			}
+		}
+		p.setActive(false);
 	}
 
 	@Override
@@ -62,11 +67,16 @@ public class BoardController implements CollisionListener, PlayerListener {
 		}
 		b.setActive(false);
 	}
+	
+	@Override
+	public void onPlayerLeavingPlatform(Platform p) {
+		p.setDisappeared(true);
+	}
 
 	@Override
 	public void onPlayerOutOfBoard() {
-		thread.gameOver = true;
 		thread.passed = false;
+		thread.gameOver = true;
 	}
 	
 	private void addBoardScore (int i) {
@@ -132,8 +142,8 @@ public class BoardController implements CollisionListener, PlayerListener {
 	    }
 		
 		private void onTimeout() {
-			gameOver = true;
 			passed = false;
+			gameOver = true;
 		}
 
 		@Override

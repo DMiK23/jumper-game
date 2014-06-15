@@ -1,6 +1,7 @@
 package jumper.gui.panels;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.io.FileNotFoundException;
 
@@ -26,10 +27,10 @@ public class GamePanel extends JumperPanel implements GameListener {
 	public GamePanel (FrameComponents fc) {
 		super (fc);
 		this.setLayout(new BorderLayout());
-		gameInfoPanel.setLayout(new GridLayout(2, 3, 2 ,0));
-		//gameInfoPanel.add(timerLabel);
-		gameInfoPanel.add(scoreLabel);
+		gameInfoPanel.setLayout(new GridLayout(1, 3, 2 ,0));
+		gameInfoPanel.setBackground(new Color(50));
 		gameInfoPanel.add(timerLabel);
+		gameInfoPanel.add(scoreLabel);
 		gameInfoPanel.add(livesLabel);
 		add(gameInfoPanel, BorderLayout.NORTH);
 		
@@ -49,8 +50,7 @@ public class GamePanel extends JumperPanel implements GameListener {
 
 	@Override
 	public void endGame(int gameScore) {
-		// TODO przekazanie wynikow
-		getFrameComponents().showGameOver();
+		getFrameComponents().showGameOver(gameScore);
 	}
 
 	@Override
@@ -69,22 +69,25 @@ public class GamePanel extends JumperPanel implements GameListener {
 
 	@Override
 	public void setPozostalyCzas(long czas) {
-		timerLabel.setText("pozosta³o: " + czas/1000 + "s");
+		timerLabel.setText("Pozosta³o: " + czas/1000 + "s");
+		timerLabel.setForeground(Color.orange);
 	}
 
 	@Override
 	public void setScore(int score) {
-		scoreLabel.setText("Punkty: " + score);		
+		scoreLabel.setText("Punkty w tym poziomie: " + score);
+		scoreLabel.setForeground(Color.orange);
 	}
 
 	@Override
-	public void setLives(int lives) {
-		livesLabel.setText("¯ycia: " + lives);
-		
+	public void setLivesAndTotal(int lives, int totalScore) {
+		livesLabel.setText("Punkty w sumie: " + totalScore + " ¯ycia: " + lives);
+		livesLabel.setForeground(Color.orange);
 	}
 
 	@Override
 	public void oneUp() {
+		// ignorujemy, nie spodziewamy sie takiego zdarzenia - my to zdarzenie wysylamy
 	} 
 	
 }

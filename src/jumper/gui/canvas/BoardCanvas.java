@@ -93,7 +93,9 @@ public class BoardCanvas extends Canvas {
         for (Platform p : platforms) {
         	p.paintPlatform(offScreenGraphics);
         }
-        bonus.paintBonus(offScreenGraphics);
+        if (bonus.isActive()) {
+            bonus.paintBonus(offScreenGraphics);
+        }
         player.paintPlayer(offScreenGraphics);
     }
 

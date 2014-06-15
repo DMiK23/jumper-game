@@ -22,6 +22,8 @@ public class BoardController implements CollisionListener, PlayerListener {
 	private final GameListener listener;
 	private final Board board;
 	private BoardThread thread;
+	private int boardScore = 0;
+	private static final long premiaCzasowa = 7000;
 	
 	public BoardController(Board board, GameListener listener) {
 		this.board = board;
@@ -35,19 +37,41 @@ public class BoardController implements CollisionListener, PlayerListener {
 
 	@Override
 	public void onPlatformTouched(Platform p) {
-		// TODO Auto-generated method stub
+		//p.setActive(false);
+		//TODO
 		
 	}
 
 	@Override
 	public void onBonusTouched(Bonus b, Player p) {
-		// TODO Auto-generated method stub
-		
+		if (b.isActive()) {
+			switch (b.getType()) {
+			case ADD_POINTS: 
+				addBoardScore(board.getPunktyPremia());
+				break;
+			case ADD_TIME: 
+				thread.counterMs += premiaCzasowa;
+				break;
+			case BETTER_JUMP: 
+				p.betterJump();
+				break;
+			case ONE_UP: 
+				listener.oneUp();
+				break;
+			}		
+		}
+		b.setActive(false);
 	}
 
 	@Override
 	public void onPlayerOutOfBoard() {
 		thread.gameOver = true;
+		thread.passed = false;
+	}
+	
+	private void addBoardScore (int i) {
+		boardScore += i;
+		listener.setScore(boardScore);		
 	}
 	
 	private void boardSetup() {
@@ -61,9 +85,9 @@ public class BoardController implements CollisionListener, PlayerListener {
 		listener.startNewBoard(canvas);
 	}
 	
-	private void fireEndBoard() {
+	private void fireEndBoard(boolean passed) {
 		// obliczenie wynikow etc.
-		listener.endBoard(0);
+		listener.endBoard(boardScore, passed); //TODO  
 	}
 	
 	/**
@@ -76,6 +100,7 @@ public class BoardController implements CollisionListener, PlayerListener {
 		private final BoardCanvas canvas;
 		private Timer countDown;
 		private boolean gameOver = false;
+		private boolean passed = true;
 		private long counterMs = 0;
 		
 		private BoardThread(BoardCanvas canvas) {
@@ -85,6 +110,7 @@ public class BoardController implements CollisionListener, PlayerListener {
 		
 		private void setup() {
 			canvas.updateSize();
+			listener.setScore(boardScore);
 			counterMs = board.getCzasNaPrzejscie();
 			countDown.scheduleAtFixedRate(new TimerTask() {
 				@Override
@@ -107,15 +133,14 @@ public class BoardController implements CollisionListener, PlayerListener {
 		
 		private void onTimeout() {
 			gameOver = true;
+			passed = false;
 		}
 
 		@Override
 		public void run() {
 			setup();
 			// petla animacyjna
-	        while (true) {
-	            if (gameOver)
-	            	break;
+	        while (!gameOver) {
 	            canvas.modifyLocation();
 	        	canvas.updateOffscreen();
 	            canvas.repaint();
@@ -123,7 +148,7 @@ public class BoardController implements CollisionListener, PlayerListener {
 	        }
 	        // zakonczenie gry
 	        countDown.cancel();
-	        fireEndBoard();
+	        fireEndBoard(passed);
 		}
 	}
 }

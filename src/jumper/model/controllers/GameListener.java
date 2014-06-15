@@ -21,7 +21,7 @@ public interface GameListener {
 	 * Sygnal zakonczenia planszy.
 	 * @param boardScore Wynik gracza na planszy.
 	 */
-	public void endBoard(int boardScore);
+	public void endBoard(int boardScore, boolean passed);
 	
 	/**
 	 * Synal o rozpoczeciu nowego poziomu.
@@ -34,4 +34,14 @@ public interface GameListener {
 	 * @param czas Pozostaly czas w milisekundach.
 	 */
 	public void setPozostalyCzas(long czas);
+	
+	/**
+	 * Sygnal o aktualych pubktoach gracza.
+	 * @param score
+	 */
+	public void setScore (int score);
+	
+	public void setLives (int lives);
+	
+	public void oneUp ();
 }

@@ -19,17 +19,21 @@ public class GameController implements GameListener {
 	
 	private final ConfigFileOpener config;
 	private final GameListener listener;
-	private final List<Integer> scores;
+	private int score;
+	private int lives;
 	private int currentBoardIndex = -1;
+	
 
 	public GameController(String configFileName, GameListener listener) throws FileNotFoundException {
 		this.config = new ConfigFileOpener(configFileName);
 		this.listener = listener;
-		this.scores = new ArrayList<Integer>(config.getLevelsList().size());
+		this.score = 0;
+		this.lives = config.getLiczbaZyc();
 	}
 
 	public void startGame() {
 		loadNewBoard();
+		setLives(lives);
 	}
 
 	@Override
@@ -38,13 +42,24 @@ public class GameController implements GameListener {
 	}
 
 	@Override
-	public void endBoard(int boardScore) {
-		scores.add(boardScore);
-		listener.endBoard(boardScore);
-		if (currentBoardIndex + 1 < config.getLevelsList().size()) {
-			loadNewBoard();
+	public void endBoard(int boardScore, boolean passed) {
+		listener.endBoard(boardScore, passed);
+		if (!passed) {
+			lives--;
+			setLives(lives);
+			if (lives > 0) {
+				loadBoardAgain();
+			} else {
+				fireEndGame();
+			}
+			
 		} else {
-			fireEndGame();
+			score += boardScore;
+			if (currentBoardIndex + 1 < config.getLevelsList().size()) {
+				loadNewBoard();
+			} else {
+				fireEndGame();
+			}
 		}
 	}
 
@@ -56,6 +71,26 @@ public class GameController implements GameListener {
 	@Override
 	public void setPozostalyCzas(long czas) {
 		listener.setPozostalyCzas(czas);
+	}
+	
+	@Override
+	public void setScore (int score) {
+		listener.setScore(score);
+	}
+	@Override
+	public void setLives(int lives) {
+		listener.setLives(lives);		
+	}
+	@Override
+	public void oneUp () {
+		this.lives++;
+		listener.setLives(this.lives);
+	}
+	
+	private void loadBoardAgain () {
+		Board board = config.getLevelsList().get(currentBoardIndex);
+		BoardController controller = new BoardController(board, this);
+		controller.startBoard();
 	}
 	
 	/**
@@ -73,10 +108,6 @@ public class GameController implements GameListener {
 	 * Wylicza calkowity wynik i odpala koniec gry.
 	 */
 	private void fireEndGame() {
-		int totalScore = 0;
-		for (Integer score : scores) {
-			totalScore += score;
-		}
-		listener.endGame(totalScore);
+		listener.endGame(score);
 	}
 }

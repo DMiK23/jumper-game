@@ -19,7 +19,8 @@ import jumper.model.controllers.PlayerListener;
  */
 public class Player extends BoardObject implements KeyListener {
 
-	private static final int maxWysSkoku = (int)(0.75*(BoardFactory.scaleY >> 1));
+	private static int maxWysSkoku = (int)(0.75*(BoardFactory.scaleY >> 1));
+	private boolean betterJump = false;
 	private static final int dGrawitacji = maxWysSkoku >> 5;
 	private static final int dSkoku = dGrawitacji << 1;
 	private static final int dRuchuPoziomego = BoardFactory.scaleX >> 8;
@@ -99,6 +100,10 @@ public class Player extends BoardObject implements KeyListener {
 		mock.y = yInBounds;
 	}
 	
+	public void betterJump () {
+		betterJump = true;
+	}
+	
 	private void tryAddToX(int dx) {
 		int i = 0;
 		int dxSign = dx < 0 ? -1 : (dx > 0 ? 1 : 0);
@@ -144,7 +149,7 @@ public class Player extends BoardObject implements KeyListener {
 		dx += ruchWPrawo ? dRuchuPoziomego : 0;
 		dx -= ruchWLewo ? dRuchuPoziomego : 0;
 		if (ruchWGore) {
-			if (wysSkoku < maxWysSkoku) {
+			if (wysSkoku < maxWysSkoku + (betterJump ? maxWysSkoku >> 1 : 0)) {
 				dy -= dSkoku;
 				wysSkoku += dSkoku;
 			} else { // koniec zasiegu skoku

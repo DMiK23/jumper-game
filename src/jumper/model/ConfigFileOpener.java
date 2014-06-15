@@ -32,7 +32,7 @@ public class ConfigFileOpener {
 		punktyPremia = skaner.nextInt();
 		listaPoziomow = new Vector<>();
 		skaner.next(BoardFactory.boardLimiter);
-		BoardFactory factory = new BoardFactory(skaner);		
+		BoardFactory factory = new BoardFactory(skaner, punktyPlatforma, punktyPremia);		
 		while (skaner.hasNext()) {
 			listaPoziomow.add(factory.getNextBoard());
 		}
@@ -43,13 +43,6 @@ public class ConfigFileOpener {
 		return liczbaZyc;
 	}
 
-	public int getPunktyPlatforma() {
-		return punktyPlatforma;
-	}
-
-	public int getPunktyPremia() {
-		return punktyPremia;
-	}
 	
 	public List<Board> getLevelsList () {
 		return listaPoziomow;

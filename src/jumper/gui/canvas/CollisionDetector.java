@@ -9,6 +9,12 @@ import jumper.gui.canvas.components.Platform;
 import jumper.gui.canvas.components.Player;
 import jumper.model.controllers.CollisionListener;
 
+/**
+ * Wykrywa kolizje gracza.
+ * @author Maurycy
+ *
+ */
+
 public class CollisionDetector {
 	private final List<Platform> platforms;
 	private Bonus bonus;
@@ -31,11 +37,7 @@ public class CollisionDetector {
 	public void setPlayer(Player p) {
 		player = p;
 	}
-	
-	public boolean collision(Player player) {
-		return collision(player.getBounds());
-	}
-	
+		
 	public boolean collision(Rectangle rect) {
 		if (bonus != null && bonus.getBounds().intersects(rect)) {
 			fireBonusTouched(bonus);

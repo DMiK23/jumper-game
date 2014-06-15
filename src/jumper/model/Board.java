@@ -24,23 +24,30 @@ public class Board {
 	private final BonusTypeEnumerator typBonusu;
 	private final Point polozenieBonusu;
 	private final long czasNaPrzejscie;
+	private final int punktyPlatforma;
+	private final int punktyPremia;
 	
 	/**
 	 * 
-	 * @param np - numer poziomu
-	 * @param pp - lista wspolzednych platform
-	 * @param pg - plozenie poczatkowe gracza
-	 * @param tb - typ bonusa
-	 * @param pb - polozenie bonusu
+	 * @param numpoz - numer poziomu
+	 * @param polplat - lista wspolzednych platform
+	 * @param polgrac - plozenie poczatkowe gracza
+	 * @param typbon - typ bonusa
+	 * @param polbon - polozenie bonusu
 	 * @param cnp - czas na przejscie planszy
+	 * @param punplat - punkty za znikniecie platformy
+	 * @param punprem - premia punktowa
 	 */
-	public Board (int np, List<Point> pp, Point pg, BonusTypeEnumerator tb, Point pb, long cnp) {
-		numerPoziomu = np;
-		polozeniePlatform = pp;
-		polozeniePoczatkoweGracza = pg;
-		typBonusu = tb;
-		polozenieBonusu = pb;
+	public Board (int numpoz, List<Point> polplat, Point polgrac, BonusTypeEnumerator typbon,
+			Point polbon, long cnp, int punplat, int punprem) {
+		numerPoziomu = numpoz;
+		polozeniePlatform = polplat;
+		polozeniePoczatkoweGracza = polgrac;
+		typBonusu = typbon;
+		polozenieBonusu = polbon;
 		czasNaPrzejscie = cnp;
+		punktyPlatforma = punplat;
+		punktyPremia = punprem;
 	}
 	
 	public int getNumerPoziomu() {
@@ -52,11 +59,11 @@ public class Board {
 	}
 	
 	public Point getPolozeniePoczatkoweGracza() {
-		return polozeniePoczatkoweGracza;
+		return (Point) polozeniePoczatkoweGracza.clone();
 	}
 	
 	public Point getPolozenieBonusu() {
-		return polozenieBonusu;
+		return (Point) polozenieBonusu.clone();
 	}
 	
 	public long getCzasNaPrzejscie() {
@@ -65,6 +72,14 @@ public class Board {
 	
 	public BonusTypeEnumerator getTypBonusu() {
 		return typBonusu;
+	}
+	
+	public int getPunktyPlatforma() {
+		return punktyPlatforma;
+	}
+	
+	public int getPunktyPremia() {
+		return punktyPremia;
 	}
 	
 	/**
@@ -76,6 +91,8 @@ public class Board {
 	public static class BoardFactory {
 		
 		private Scanner skaner;
+		private final int punktyPlatforma;
+		private final int punktyPremia;
 		public final static String boardLimiter = "=====";
 		public static final int scaleX = 1024;	//musi byæ potêg¹ 2
 		public static final double ratio = 0.5;
@@ -85,8 +102,10 @@ public class Board {
 		 * Zapamietuje skaner z ktorego bedzie wczytywac level.
 		 * @param scanner przechowuje wczytane z pliku konfiguracujnego dane
 		 */
-		public BoardFactory (Scanner scanner) {
+		public BoardFactory (Scanner scanner, int punktyPlatforma, int punktyPremia) {
 			skaner = scanner;
+			this.punktyPlatforma = punktyPlatforma;
+			this.punktyPremia = punktyPremia;
 		}
 		
 		/**
@@ -105,7 +124,7 @@ public class Board {
 				pp.add(new Point(skaner.nextInt() * (scaleX/16), skaner.nextInt() * (scaleY/((int)(16*ratio)))));
 			} while (!skaner.hasNext(boardLimiter));
 			skaner.next(boardLimiter);
-			return new Board (np, pp, pg, tb, pb, cnp );
+			return new Board (np, pp, pg, tb, pb, cnp, this.punktyPlatforma, this.punktyPremia);
 		}
 		
 	}

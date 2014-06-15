@@ -17,6 +17,7 @@ import jumper.gui.canvas.components.Platform;
 import jumper.gui.canvas.components.Player;
 import jumper.model.Board;
 import jumper.model.Board.BoardFactory;
+import jumper.model.controllers.CollisionDetector;
 
 // TODO trzeba wszystkie funkcje i atrybuty zwiazane z obsulga zdarzen gry
 // TODO przeniesc do osobnej klasy, np. GameController,

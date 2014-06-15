@@ -1,4 +1,4 @@
-package jumper.gui.canvas;
+package jumper.model.controllers;
 
 import java.awt.Rectangle;
 import java.util.ArrayList;
@@ -7,7 +7,6 @@ import java.util.List;
 import jumper.gui.canvas.components.Bonus;
 import jumper.gui.canvas.components.Platform;
 import jumper.gui.canvas.components.Player;
-import jumper.model.controllers.CollisionListener;
 
 /**
  * Wykrywa kolizje gracza.
@@ -20,6 +19,7 @@ public class CollisionDetector {
 	private Bonus bonus;
 	private final CollisionListener listener;
 	private Player player;
+	private Platform podNogami = null;
 
 	public CollisionDetector(CollisionListener listener) {
 		this.platforms = new ArrayList<>();
@@ -38,15 +38,24 @@ public class CollisionDetector {
 		player = p;
 	}
 		
-	public boolean collision(Rectangle rect) {
+	public boolean collision(Rectangle rect, boolean kierunek) {
 		if (bonus != null && bonus.getBounds().intersects(rect)) {
 			fireBonusTouched(bonus);
 		}
 		for (Platform platform : platforms) {
-			if (platform.getBounds().intersects(rect)) {
+			if (platform.getBounds().intersects(rect) && !platform.isDisappeared()) {
 				firePlatformTouched(platform);
+				if ((podNogami != null)&&(podNogami != platform)) {
+					listener.onPlayerLeavingPlatform(podNogami);
+					podNogami = null;
+				}
+				podNogami = platform;
 				return true;
 			}
+		}
+		if ((podNogami != null)&&(kierunek)) {
+			listener.onPlayerLeavingPlatform(podNogami);
+			podNogami = null;
 		}
 		return false;
 	}

@@ -8,8 +8,8 @@ import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import jumper.gui.canvas.CollisionDetector;
 import jumper.model.Board.BoardFactory;
+import jumper.model.controllers.CollisionDetector;
 import jumper.model.controllers.PlayerListener;
 
 /**
@@ -110,7 +110,7 @@ public class Player extends BoardObject implements KeyListener {
 		dx = dx < 0 ? -dx : dx; // abs
 		for (; i < dx; ++i) {
 			mock.x += dxSign;
-			if (detector.collision(mock)) {
+			if (detector.collision(mock, false)) { //false -> ruch w osi x -> nie patrzymy czy zeszlismy z platformy
 				mock.x -= dxSign;
 				break;
 			}
@@ -124,7 +124,7 @@ public class Player extends BoardObject implements KeyListener {
 		dy = dy < 0 ? -dy : dy; // abs
 		for (; i < dy; ++i) {
 			mock.y += dySign;
-			if (detector.collision(mock)) {
+			if (detector.collision(mock, true)) { //true -> ruch w osi y -> patrzymy czy zeszlismy z platformy
 				mock.y -= dySign;
 				break;
 			}
@@ -134,7 +134,7 @@ public class Player extends BoardObject implements KeyListener {
 	
 	private boolean isOnPlatform () {
 		mock.y += 1;
-		if (detector.collision(mock)) {
+		if (detector.collision(mock, false)) { //false -> spr. war. skoku -> nie patrzymy czy zeszlismy z platformy
 			mock.y -= 1;
 			return true;
 		}

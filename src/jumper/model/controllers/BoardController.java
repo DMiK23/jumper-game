@@ -1,10 +1,11 @@
 package jumper.model.controllers;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import jumper.gui.canvas.BoardCanvas;
-import jumper.gui.canvas.CollisionDetector;
 import jumper.gui.canvas.components.Bonus;
 import jumper.gui.canvas.components.Platform;
 import jumper.gui.canvas.components.Player;
@@ -112,10 +113,15 @@ public class BoardController implements CollisionListener, PlayerListener {
 		private boolean gameOver = false;
 		private boolean passed = true;
 		private long counterMs = 0;
+		private boolean isPaused = false;
 		
 		private BoardThread(BoardCanvas canvas) {
 			this.canvas = canvas;
 			this.countDown = new Timer();
+		}
+		
+		public void threadPause (boolean b) {
+			isPaused = b;
 		}
 		
 		private void setup() {
@@ -126,7 +132,7 @@ public class BoardController implements CollisionListener, PlayerListener {
 				@Override
 				public void run() {
 					listener.setPozostalyCzas(counterMs);
-					counterMs -= 100;
+					counterMs -= isPaused ? 0 : 100;
 					if (counterMs < 0) {
 						onTimeout();
 					}
@@ -151,14 +157,17 @@ public class BoardController implements CollisionListener, PlayerListener {
 			setup();
 			// petla animacyjna
 	        while (!gameOver) {
-	            canvas.modifyLocation();
-	        	canvas.updateOffscreen();
-	            canvas.repaint();
-	            sleep();
+	        	if (!isPaused) {
+	        		canvas.modifyLocation();
+	        		canvas.updateOffscreen();
+	            	canvas.repaint();
+	        	}
+	            sleep();	            
 	        }
 	        // zakonczenie gry
 	        countDown.cancel();
 	        fireEndBoard(passed);
 		}
 	}
+
 }

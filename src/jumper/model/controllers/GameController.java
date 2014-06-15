@@ -1,8 +1,6 @@
 package jumper.model.controllers;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
 
 import jumper.gui.canvas.BoardCanvas;
 import jumper.model.Board;

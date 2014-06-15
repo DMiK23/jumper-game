@@ -19,12 +19,6 @@ import jumper.model.Board;
 import jumper.model.Board.BoardFactory;
 import jumper.model.controllers.CollisionDetector;
 
-// TODO trzeba wszystkie funkcje i atrybuty zwiazane z obsulga zdarzen gry
-// TODO przeniesc do osobnej klasy, np. GameController,
-// TODO zajmujace sie zliczaniem punktow, obsluga bonusow, znikaniem platform
-// TODO a byc moze rowniez obsluga kolizji (skads trzeba wiedziec,
-// TODO kiedy zniknac platforme).
-
 /**
  * Plansza z gra. Rysuje elementy planszy przy pomocy podwojnego bufora.
  * Zajmuje sie rowniez przeskalowywaniem przy zmianie obszaru rysowanego.
@@ -50,7 +44,6 @@ public class BoardCanvas extends Canvas {
 	private final Player player;
 	private final Bonus bonus;
 	private final List<Platform> platforms;
-	private Platform ostatnia;
 	
 	/**
 	 * Tworzy elementy graficzne.

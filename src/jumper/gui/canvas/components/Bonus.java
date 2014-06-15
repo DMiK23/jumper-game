@@ -16,7 +16,6 @@ public class Bonus extends BoardObject {
 	
 	private final BonusTypeEnumerator type;
 	private boolean active = true;
-	private int bonusPoints = 0;
 	
 	public Bonus(Point p, Dimension dim, BonusTypeEnumerator type) {
 		super(p, dim);

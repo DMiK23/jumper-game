@@ -78,12 +78,17 @@ public class Player extends BoardObject implements KeyListener {
 		case KeyEvent.VK_LEFT  :
 			ruchWLewo = false;
 			break;
+		case KeyEvent.VK_UP  :
+			ruchWGore = false;
+			break;
 		}
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
+		if (e.getKeyChar() == 'p') {
+			listener.playerWantsToPause();
+		}
 	}
 
 	@Override

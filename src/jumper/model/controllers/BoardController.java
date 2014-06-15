@@ -1,7 +1,5 @@
 package jumper.model.controllers;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -97,8 +95,7 @@ public class BoardController implements CollisionListener, PlayerListener {
 	}
 	
 	private void fireEndBoard(boolean passed) {
-		// obliczenie wynikow etc.
-		listener.endBoard(boardScore, passed); //TODO  
+		listener.endBoard(boardScore, passed); 
 	}
 	
 	/**
@@ -120,8 +117,8 @@ public class BoardController implements CollisionListener, PlayerListener {
 			this.countDown = new Timer();
 		}
 		
-		public void threadPause (boolean b) {
-			isPaused = b;
+		public void threadPause () {
+			isPaused = !isPaused;
 		}
 		
 		private void setup() {
@@ -169,5 +166,12 @@ public class BoardController implements CollisionListener, PlayerListener {
 	        fireEndBoard(passed);
 		}
 	}
+
+	@Override
+	public void playerWantsToPause() {
+		thread.threadPause();
+		
+	}
+	
 
 }

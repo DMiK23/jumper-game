@@ -9,4 +9,6 @@ package jumper.model.controllers;
 public interface PlayerListener {
 
 	public void onPlayerOutOfBoard();
+	
+	public void playerWantsToPause();
 }

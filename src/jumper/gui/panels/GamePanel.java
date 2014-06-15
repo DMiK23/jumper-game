@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.io.FileNotFoundException;
 
-import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;

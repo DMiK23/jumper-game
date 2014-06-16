@@ -101,22 +101,28 @@ public class FrameComponents extends JPanel {
 	 */
 	public void showMenu() {
 		cardLayout.show(cardPanel, menuPanelName);
+		String errorMessage = null;
 		try {
 			highScoreManager = HighScoreManager.readFromFile();
 		} catch (FileNotFoundException e) {
-			JOptionPane.showConfirmDialog(menuPanel,
-					"Plik najlepszych wynikow nie zosta³ odnaleziony!",
-					"B³¹d!", JOptionPane.ERROR_MESSAGE);
+			errorMessage = "Plik najlepszych wynikow nie zosta³ odnaleziony!";
 		} catch (InvalidPropertiesFormatException e) {
-			JOptionPane.showConfirmDialog(menuPanel,
-					"Plik najlepszych wynikow jest ¿le sformatowany!", "B³¹d!",
-					JOptionPane.ERROR_MESSAGE);
+			errorMessage = "Plik najlepszych wynikow jest ¿le sformatowany!";
 		} catch (Exception e) {
-			JOptionPane
-					.showConfirmDialog(
-							menuPanel,
-							"Podczas odczytywania pliku najlepszych wyników wyst¹pi³ nieznany b³¹d!",
-							"B³¹d!", JOptionPane.ERROR_MESSAGE);
+			errorMessage = "Podczas odczytywania pliku najlepszych wyników wyst¹pi³ nieznany b³¹d!";
+		}
+		if (errorMessage != null)
+		{
+			JOptionPane.showMessageDialog(menuPanel,
+					errorMessage,
+					"B³¹d!", JOptionPane.ERROR_MESSAGE);
+			try {
+				highScoreManager.saveScores();
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(menuPanel,
+						"Zapis czystego pliku wyników nie powiód³ siê!",
+						"B³¹d!", JOptionPane.ERROR_MESSAGE);
+			}
 		}
 		menuPanel.putOnTop();
 	}

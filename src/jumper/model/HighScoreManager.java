@@ -140,16 +140,22 @@ public class HighScoreManager {
 	 * @return true jesli wynik gracza zmiescil sie w najlepszych, false w p.p.
 	 */
 	public boolean addNewScore(Score newScore) {
+		// jesli ostatni wynik jest lepszy, na pewno nie dodajemy
 		if (newScore.getScorePoints() <= listaWynikow.get(LICZBA_WYNIKOW - 1)
 				.getScorePoints()) {
 			return false;
 		}
 		int i = 0;
-		while (i < LICZBA_WYNIKOW && newScore.getScorePoints() <= listaWynikow.get(i).getScorePoints()) {
-			++i;
+		// znajdywanie ostatniego wiekszego/rownego wyniku
+		while (newScore.getScorePoints() < listaWynikow.get(i).getScorePoints()) {
+			++i; // indeksu nie pilnujemy bo na pewno miescimy sie w tabeli
+		}
+		// dodawanie tylko jesli nie jest rowny
+		if (newScore.getScorePoints() == listaWynikow.get(i).getScorePoints()) {
+			return false;
 		}
 		listaWynikow.add(i, newScore);
-		return true;
+		return i < LICZBA_WYNIKOW;
 	}
 
 	/**

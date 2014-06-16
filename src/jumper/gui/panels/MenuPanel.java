@@ -2,14 +2,10 @@ package jumper.gui.panels;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JPanel;
 
 import jumper.gui.FrameComponents;
 
@@ -21,7 +17,7 @@ import jumper.gui.FrameComponents;
 public class MenuPanel extends JumperPanel {
 	
 	
-	private JPanel menuBackground;
+//	private JPanel menuBackground;
 	//private final Image img = Toolkit.getDefaultToolkit().createImage("menu_background.jpg");
 
 	/**

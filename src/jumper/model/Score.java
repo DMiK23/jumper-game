@@ -2,20 +2,20 @@ package jumper.model;
 
 public class Score {
 	
-	private final int scorePoints;
-	private final String name;
+	private final int points;
+	private final String playerNick;
 	
-	public Score (int scorePoints, String name) {
-		this.scorePoints = scorePoints;
-		this.name = name;		
+	public Score (int points, String playerNick) {
+		this.points = points;
+		this.playerNick = playerNick;		
 	}
 
-	public int getScorePoints() {
-		return scorePoints;
+	public int getPoints() {
+		return points;
 	}
 
-	public String getName() {
-		return name;
+	public String getNick() {
+		return playerNick;
 	}
 
 }

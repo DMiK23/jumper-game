@@ -15,7 +15,7 @@ import jumper.gui.FrameComponents;
 import jumper.gui.canvas.BoardCanvas;
 
 @SuppressWarnings("serial")
-public class GamePanel extends JumperPanel implements GameListener {
+public class GamePanel extends AbstractJumperPanel implements GameListener {
 	
 	private BoardCanvas canvas;
 	private JLabel timerLabel = new JLabel();
@@ -42,7 +42,7 @@ public class GamePanel extends JumperPanel implements GameListener {
 			controller.startGame();
 		} catch (FileNotFoundException e) {
 			JOptionPane.showMessageDialog(getFrameComponents().getCardPanel(),
-					"Nie uda³o siê wczytaæ pliku konfiguracyjnego!", "B³¹d", ERROR, null);
+					"Nie uda³o siê wczytaæ pliku konfiguracyjnego!", "B³¹d", JOptionPane.ERROR_MESSAGE);
 			getFrameComponents().showMenu();
 		}
 	}

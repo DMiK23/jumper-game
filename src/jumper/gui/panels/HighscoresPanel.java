@@ -24,12 +24,13 @@ import java.awt.FlowLayout;
  * @author Maurycy
  * 
  */
-public class HighscoresPanel extends JumperPanel {
+public class HighscoresPanel extends AbstractJumperPanel {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private final JTextPane wynikiTextPane;
+	private final JButton powrotButton;
 	private HighScoreManager hsManager = new HighScoreManager();
 
 	public HighscoresPanel(FrameComponents fc) {
@@ -58,7 +59,7 @@ public class HighscoresPanel extends JumperPanel {
 				wynikiTextPane.setFont(new Font("Tahoma", Font.BOLD, 15));
 				wynikiTextPane.setEnabled(false);
 				wynikiTextPane.setEditable(false);
-		JButton powrotButton = new JButton("Powrot");
+		powrotButton = new JButton("Powrot");
 		powrotButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -83,9 +84,10 @@ public class HighscoresPanel extends JumperPanel {
 		for (int i = 0; i < lista.size();) {
 			Score score = lista.get(i);
 			scoreTextBuilder.append(String.format("%d. %d\t- %s\n", ++i,
-					score.getScorePoints(), score.getName()));
+					score.getPoints(), score.getNick()));
 		}
 		wynikiTextPane.setText(scoreTextBuilder.toString());
+		powrotButton.requestFocusInWindow();
 	}
 
 	public void setHSManager(HighScoreManager hsManager) {

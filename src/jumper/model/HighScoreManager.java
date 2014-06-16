@@ -124,9 +124,9 @@ public class HighScoreManager {
 		for (int i = 0; i < LICZBA_WYNIKOW; i++) {
 			Score wynik = listaWynikow.get(i);
 			properties.put(String.format("%d%s", i, "username"),
-					wynik.getName());
+					wynik.getNick());
 			properties.put(String.format("%d%s", i, "score"),
-					Integer.toString(wynik.getScorePoints()));
+					Integer.toString(wynik.getPoints()));
 		}
 		properties.storeToXML(new FileOutputStream(highScoresFileName), null);
 	}
@@ -137,25 +137,33 @@ public class HighScoreManager {
 	 * 
 	 * @param newScore
 	 *            - wynik do dodania do listy.
-	 * @return true jesli wynik gracza zmiescil sie w najlepszych, false w p.p.
 	 */
-	public boolean addNewScore(Score newScore) {
+	public void addNewScore(Score newScore) {
+		int newScorePoints = newScore.getPoints(); 
 		// jesli ostatni wynik jest lepszy, na pewno nie dodajemy
-		if (newScore.getScorePoints() <= listaWynikow.get(LICZBA_WYNIKOW - 1)
-				.getScorePoints()) {
-			return false;
+		if (!isHighScore(newScorePoints)) {
+			return;
 		}
+		// wynik na pewno wyzszy niz ostatni
 		int i = 0;
-		// znajdywanie ostatniego wiekszego/rownego wyniku
-		while (newScore.getScorePoints() < listaWynikow.get(i).getScorePoints()) {
+		// znajdywanie pierwszego mniejszego wyniku
+		while (newScorePoints <= listaWynikow.get(i).getPoints()) {
 			++i; // indeksu nie pilnujemy bo na pewno miescimy sie w tabeli
 		}
-		// dodawanie tylko jesli nie jest rowny
-		if (newScore.getScorePoints() == listaWynikow.get(i).getScorePoints()) {
-			return false;
-		}
 		listaWynikow.add(i, newScore);
-		return i < LICZBA_WYNIKOW;
+	}
+
+	/**
+	 * Sprawdza czy podany wynik zostanie dolaczony do najlepszych wynikow.
+	 * 
+	 * @param newScorePoints
+	 *            - wynik do sprawdzenia.
+	 * @return true jesli wynik miesci sie wsrod najlpszych, false w p.p.
+	 */
+	public boolean isHighScore(int newScorePoints) {
+		// jesli ostatni wynik jest lepszy lub rowny, na pewno nie dodajemy
+		return newScorePoints > listaWynikow.get(LICZBA_WYNIKOW - 1)
+				.getPoints();
 	}
 
 	/**

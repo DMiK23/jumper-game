@@ -22,7 +22,7 @@ public class HighScoreManager {
 
 	private final List<Score> listaWynikow;
 	public static final int LICZBA_WYNIKOW = 10;
-	private static final String highScoresFileName = "highscores.xml";
+	public static final String highScoresFileName = "highscores.xml";
 
 	/**
 	 * Tworzy pusta liste 10 najlepszych wynikow.
@@ -50,11 +50,11 @@ public class HighScoreManager {
 	 * 
 	 * @return Manager z wynikami odczytanymi z pliku.
 	 * @throws InvalidPropertiesFormatException
-	 *             - jesli plik jest zle sformatowany.
+	 *             jesli plik jest zle sformatowany.
 	 * @throws IOException
-	 *             - jesli nastapil blad odczytu pliku.
+	 *             jesli nastapil blad odczytu pliku.
 	 * @throws FileNotFoundException
-	 *             - jesli plik nie zostal odnaleziony.
+	 *             jesli plik nie zostal odnaleziony.
 	 */
 	public static HighScoreManager readFromFile()
 			throws InvalidPropertiesFormatException, IOException,
@@ -126,7 +126,7 @@ public class HighScoreManager {
 			properties.put(String.format("%d%s", i, "username"),
 					wynik.getName());
 			properties.put(String.format("%d%s", i, "score"),
-					wynik.getScorePoints());
+					Integer.toString(wynik.getScorePoints()));
 		}
 		properties.storeToXML(new FileOutputStream(highScoresFileName), null);
 	}

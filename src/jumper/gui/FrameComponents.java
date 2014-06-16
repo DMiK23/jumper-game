@@ -1,7 +1,10 @@
 package jumper.gui;
 
 import java.awt.CardLayout;
+import java.io.FileNotFoundException;
+import java.util.InvalidPropertiesFormatException;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import jumper.gui.panels.GameOver;
@@ -12,12 +15,13 @@ import jumper.model.HighScoreManager;
 
 /**
  * Tworzenie i zarzadzanie kartami w podanym panelu.
+ * 
  * @author Maurycy
- *
+ * 
  */
 @SuppressWarnings("serial")
-public class FrameComponents extends JPanel{
-	
+public class FrameComponents extends JPanel {
+
 	private final JPanel cardPanel;
 	private final CardLayout cardLayout;
 	/* Panele (i ich nazwy) dodane do layoutu */
@@ -29,16 +33,17 @@ public class FrameComponents extends JPanel{
 	private final static String gameOverPanelName = "koniec";
 	private final MenuPanel menuPanel;
 	private final static String menuPanelName = "menu";
-	private final HighScoreManager highScoreManager;
-	
+	private HighScoreManager highScoreManager;
+
 	/**
-	 * Konfiguruje panel gry i zarzadza nim.
-	 * Ustawia CardLayout i dodaje potrzebne panele,
-	 * w tym menu i sama gre.
-	 * @param mainPanel panel zawierajacy CardLayout i pozostale panele gry
+	 * Konfiguruje panel gry i zarzadza nim. Ustawia CardLayout i dodaje
+	 * potrzebne panele, w tym menu i sama gre.
+	 * 
+	 * @param mainPanel
+	 *            panel zawierajacy CardLayout i pozostale panele gry
 	 */
 	public FrameComponents(JPanel mainPanel) {
-		
+
 		cardPanel = mainPanel;
 		menuPanel = new MenuPanel(this);
 		scoresPanel = new Highscores(this);
@@ -52,7 +57,7 @@ public class FrameComponents extends JPanel{
 		cardPanel.add(gameOverPanel, gameOverPanelName);
 		highScoreManager = new HighScoreManager();
 	}
-	
+
 	/**
 	 * 
 	 * @return Panel-rodzic CardLayout-u.
@@ -60,20 +65,20 @@ public class FrameComponents extends JPanel{
 	public JPanel getCardPanel() {
 		return cardPanel;
 	}
-	
+
 	/**
 	 * Ustawia w widoku panel z najlepszymi wynikami.
 	 */
-	public void showHighscores () {
+	public void showHighscores() {
 		scoresPanel.setHSManager(highScoreManager);
 		cardLayout.show(cardPanel, scoresPanelName);
 		scoresPanel.putOnTop();
 	}
-	
+
 	/**
 	 * Ustawia w widoku panel z gra.
 	 */
-	public void showGamePanel () {
+	public void showGamePanel() {
 		cardPanel.remove(gamePanel);
 		gamePanel = new GamePanel(this);
 		cardPanel.add(gamePanel, gamePanelName);
@@ -81,21 +86,38 @@ public class FrameComponents extends JPanel{
 		cardLayout.show(cardPanel, gamePanelName);
 		gamePanel.putOnTop();
 	}
-	
+
 	/**
 	 * Ustawia w widoku panel informujacy o zakonczeniu gry z wynikiem.
 	 */
-	public void showGameOver (int gameScore) {
+	public void showGameOver(int gameScore) {
 		gameOverPanel.setContext(gameScore, highScoreManager);
 		cardLayout.show(cardPanel, gameOverPanelName);
 		gameOverPanel.putOnTop();
 	}
-	
+
 	/**
 	 * Ustawia w widoku panel menu.
 	 */
-	public void showMenu () {
+	public void showMenu() {
 		cardLayout.show(cardPanel, menuPanelName);
+		try {
+			highScoreManager = HighScoreManager.readFromFile();
+		} catch (FileNotFoundException e) {
+			JOptionPane.showConfirmDialog(menuPanel,
+					"Plik najlepszych wynikow nie zosta³ odnaleziony!",
+					"B³¹d!", JOptionPane.ERROR_MESSAGE);
+		} catch (InvalidPropertiesFormatException e) {
+			JOptionPane.showConfirmDialog(menuPanel,
+					"Plik najlepszych wynikow jest ¿le sformatowany!", "B³¹d!",
+					JOptionPane.ERROR_MESSAGE);
+		} catch (Exception e) {
+			JOptionPane
+					.showConfirmDialog(
+							menuPanel,
+							"Podczas odczytywania pliku najlepszych wyników wyst¹pi³ nieznany b³¹d!",
+							"B³¹d!", JOptionPane.ERROR_MESSAGE);
+		}
 		menuPanel.putOnTop();
 	}
 }

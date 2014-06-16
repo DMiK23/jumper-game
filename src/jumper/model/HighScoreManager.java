@@ -151,4 +151,14 @@ public class HighScoreManager {
 
 	}
 
+	/**
+	 * Tworzy i zwraca liste {@link #liczbaWynikow} najlepszych wynikow.
+	 * 
+	 * @return Utworzona liste najlepszych wynikow.
+	 */
+	public List<Score> getHighScores() {
+		List<Score> resultList = new ArrayList<>(liczbaWynikow);
+		resultList.addAll(listaWynikow.subList(0, liczbaWynikow));
+		return resultList;
+	}
 }

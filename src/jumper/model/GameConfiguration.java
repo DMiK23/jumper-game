@@ -9,7 +9,7 @@ import java.util.Vector;
 import jumper.model.BoardModel.BoardFactory;
 
 /**
- * Konfiguracja gry. Konstruktor wczytuje z pliku. Metoda read.
+ * Konfiguracja gry. Konstruktor wczytuje z pliku.
  * 
  * @author Maurycy
  * 
@@ -21,6 +21,11 @@ public class GameConfiguration {
 	private final int punktyPremia;
 	private final List<BoardModel> listaPoziomow;
 
+	/**
+	 * Wczytuje dane z pliku konfiguracyjnego i zleca ztworzenie modeli wszytkich plansz.
+	 * @param configFileName - pliku konfiguracyjny.
+	 * @throws FileNotFoundException  - jeœli nie ma pliku.
+	 */
 	public GameConfiguration(String configFileName)
 			throws FileNotFoundException {
 		Scanner skaner = new Scanner(new File(configFileName));
@@ -41,10 +46,18 @@ public class GameConfiguration {
 		skaner.close();
 	}
 
+	/**
+	 * Zwraca liczbê ¿yæ.
+	 * @return - liczba ¿yæ.
+	 */
 	public int getLiczbaZyc() {
 		return liczbaZyc;
 	}
 
+	/**
+	 *  Zwraca listê modeli plansz.
+	 * @return - lista modeli plansz.
+	 */
 	public List<BoardModel> getLevelsList() {
 		return listaPoziomow;
 	}

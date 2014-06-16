@@ -11,6 +11,10 @@ public enum BonusTypeEnumerator {
 	ADD_TIME,
 	ADD_POINTS;	
 	
+	/**
+	 * Tworzy Bonus o zadanym typie.
+	 * @param i - typ bnusu.
+	 */
 	public static BonusTypeEnumerator create(int i) {
 		switch (i) {
 		case 1: return BETTER_JUMP;

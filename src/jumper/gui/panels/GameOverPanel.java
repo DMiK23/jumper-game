@@ -18,7 +18,7 @@ import jumper.model.Score;
 
 /**
  * Panel konca gry. Pokazuje wynik gracza.
- * 
+ * Pozwala na zapisanie wyniku wraz z nickiem gracza.
  * @author Maurycy
  * 
  */
@@ -33,6 +33,11 @@ public class GameOverPanel extends AbstractJumperPanel {
 	private int wynikGracza = 0;
 	private HighScoreManager hsManager = new HighScoreManager();
 
+	/**
+	 * Ustawia grafikê panelu.
+	 * Zapamiêtuje panel zarz¹dzaj¹cy kartami.
+	 * @param fc - panel zarz¹dzaj¹cy kartami.
+	 */
 	public GameOverPanel(FrameComponents fc) {
 		super(fc);
 		setLayout(new BorderLayout());
@@ -53,6 +58,10 @@ public class GameOverPanel extends AbstractJumperPanel {
 		add(powrotButton, BorderLayout.SOUTH);
 	}
 
+	/**
+	 * W przypadku gdy wynik zalicza siê do najlepszych, prosi gracza o nick.
+	 * Wyœwitla równie¿ wtedy inormacjê o zakwalifikowaniu sie do najlepszych wyników.
+	 */
 	@Override
 	public void putOnTop() {
 		wyniki.setText(String.format("Punkty: %d", wynikGracza));
@@ -78,6 +87,11 @@ public class GameOverPanel extends AbstractJumperPanel {
 		powrotButton.requestFocusInWindow();
 	}
 
+	/**
+	 * Przekazuje panelowi wynik i menad¿era wyników.
+	 * @param wynikGracza - punktu zdobyte w trakcie gry.
+	 * @param hsManager - menad¿er wyników.
+	 */
 	public void setContext(int wynikGracza, HighScoreManager hsManager) {
 		this.wynikGracza = wynikGracza;
 		this.hsManager = hsManager;

@@ -19,20 +19,22 @@ import javax.swing.JPanel;
 import java.awt.FlowLayout;
 
 /**
- * Pokazywanie najlepszych wynikow.
- * 
+ * Pokazywanie najlepszych wynikow. 
  * @author Maurycy
  * 
  */
 public class HighscoresPanel extends AbstractJumperPanel {
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	private final JTextPane wynikiTextPane;
 	private final JButton powrotButton;
 	private HighScoreManager hsManager = new HighScoreManager();
 
+	/**
+	 * Ustawia grafikê panelu.
+	 * Zapamiêtuje panel zarz¹dzaj¹cy kartami.
+	 * @param fc - panel zarz¹dzaj¹cy kartami.
+	 */
 	public HighscoresPanel(FrameComponents fc) {
 		super(fc);
 		setBackground(Color.BLACK);
@@ -76,6 +78,9 @@ public class HighscoresPanel extends AbstractJumperPanel {
 		add(powrotButton, gbc_powrotButton);
 	}
 
+	/**
+	 * Tworzy tekst z wynikami do wyœwietlenia.
+	 */
 	@Override
 	public void putOnTop() {
 		StringBuilder scoreTextBuilder = new StringBuilder(String.format(
@@ -90,6 +95,10 @@ public class HighscoresPanel extends AbstractJumperPanel {
 		powrotButton.requestFocusInWindow();
 	}
 
+	/**
+	 * Zapamiêtuje menad¿era wyników.
+	 * @param hsManager - menad¿er wyników.
+	 */
 	public void setHSManager(HighScoreManager hsManager) {
 		this.hsManager = hsManager;
 	}

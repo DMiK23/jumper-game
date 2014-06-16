@@ -14,4 +14,11 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>src/menu_background.jpg</name>
+			<type>1</type>
+			<locationURI>PROJECT_LOC/menu_background.jpg</locationURI>
+		</link>
+	</linkedResources>
 </projectDescription>

@@ -14,6 +14,14 @@ import jumper.controller.GameListener;
 import jumper.gui.FrameComponents;
 import jumper.gui.canvas.BoardCanvas;
 
+/**
+ * Panel zawieraj¹cy grê.
+ * Tworzy kontrolera gry. {@link #GameController(String, GameListener)}
+ * Pokazuje aktualne informacje o grze.
+ * Po skoñczeniu gry pokazuje panel koñca gry. {@link #endGame(int)}
+ * @author Maurycy
+ *
+ */
 @SuppressWarnings("serial")
 public class GamePanel extends AbstractJumperPanel implements GameListener {
 	
@@ -23,6 +31,11 @@ public class GamePanel extends AbstractJumperPanel implements GameListener {
 	private JLabel livesLabel = new JLabel();
 	private JPanel gameInfoPanel = new JPanel();
 	
+	/**
+	 * Ustawia grafikê panelu.
+	 * Zapamiêtuje panel zarz¹dzaj¹cy kartami.
+	 * @param fc - panel zarz¹dzaj¹cy kartami.
+	 */
 	public GamePanel (FrameComponents fc) {
 		super (fc);
 		this.setLayout(new BorderLayout());
@@ -35,6 +48,9 @@ public class GamePanel extends AbstractJumperPanel implements GameListener {
 		
 	}
 
+	/**
+	 * Przy pokazaniu siê panel tworzy kontrolera gry.
+	 */
 	@Override
 	public void putOnTop() {
 		try {
@@ -47,17 +63,26 @@ public class GamePanel extends AbstractJumperPanel implements GameListener {
 		}
 	}
 
+	/**
+	 * Po skoñczeniu gry pokazuje panel koñca gry.
+	 */
 	@Override
 	public void endGame(int gameScore) {
 		getFrameComponents().showGameOver(gameScore);
 	}
 
+	/**
+	 * Po planszy usuwa j¹.
+	 */
 	@Override
 	public void endBoard(int boardScore, boolean passed) {
 		remove(canvas);
 		validate();
 	}
 
+	/**
+	 * Tworzy now¹ planszê.
+	 */
 	@Override
 	public void startNewBoard(BoardCanvas canvas) {
 		this.canvas = canvas;
@@ -66,18 +91,27 @@ public class GamePanel extends AbstractJumperPanel implements GameListener {
 		canvas.requestFocusInWindow();
 	}
 
+	/**
+	 * Przekazuje ile czasu zosta³o graczowi.
+	 */
 	@Override
 	public void setPozostalyCzas(long czas) {
 		timerLabel.setText("Pozosta³o: " + czas/1000 + "s");
 		timerLabel.setForeground(Color.orange);
 	}
 
+	/**
+	 * Przekazuje ile punktów ma gracz na poziomie.
+	 */
 	@Override
 	public void setScore(int score) {
 		scoreLabel.setText("Punkty w tym poziomie: " + score);
 		scoreLabel.setForeground(Color.orange);
 	}
 
+	/**
+	 * Przekazuje ile ¿yæ zosta³o graczowi oraz ile ma punktów w sumie.
+	 */
 	@Override
 	public void setLivesAndTotal(int lives, int totalScore) {
 		livesLabel.setText("Punkty w sumie: " + totalScore + "   ¯ycia: " + lives);

@@ -45,16 +45,16 @@ public class BoardCanvas extends Canvas {
 	/**
 	 * Tworzy elementy graficzne.
 	 * @param board - obiekt przechowujacy parametry poziomu.
-	 * @param playerCollDetector - obiekt kontrolujacy kolizje gracza
+	 * @param playerCallDetector - obiekt kontrolujacy kolizje gracza
 	 */
-	public BoardCanvas (final BoardModel board, final CollisionDetector playerCollDetector) {
+	public BoardCanvas (final BoardModel board, final CollisionDetector playerCallDetector) {
 		this.bonus = new Bonus(board.getPolozenieBonusu(), bonusDim, board.getTypBonusu());
 		this.platforms = new ArrayList<Platform>(board.getPolozeniePlatform().size());
 		List<Point> polozeniePlatform = board.getPolozeniePlatform();
 		for (int i = 0; i < polozeniePlatform.size(); ++i) {
 			platforms.add(new Platform(polozeniePlatform.get(i), platformDim, i == polozeniePlatform.size() - 1));
 		}
-		this.player = new Player(board.getPolozeniePoczatkoweGracza(), playerDim, playerCollDetector);
+		this.player = new Player(board.getPolozeniePoczatkoweGracza(), playerDim, playerCallDetector);
 		addComponentListener(new ComponentAdapter() {
 			public void componentResized(ComponentEvent ce) {
                 BoardCanvas.this.updateSize();
@@ -69,16 +69,25 @@ public class BoardCanvas extends Canvas {
         offScreenGraphics = offScreen.getGraphics();
     }
 	
+	/**
+	 * Wrzuca obraz zbuforowany na grafikê.
+	 */
 	@Override
 	public void update(Graphics g) {
 		g.drawImage(offScreen, 0, 0, this);
 	}
 	
+	/**
+	 * Wrzuca obraz zbuforowany na grafikê.
+	 */
 	@Override
 	public void paint (Graphics g) {
 		g.drawImage(offScreen, 0, 0, this);
 	}
 	
+	/**
+	 * Rysuje planszê na obrazie buforowanym.
+	 */
 	public void updateOffscreen() {
 		offScreenGraphics.clearRect(0, 0, offScreen.getWidth(this), offScreen.getHeight(this));
 		offScreenGraphics.drawImage (img, 0, 0, offScreen.getWidth(this), offScreen.getHeight(this), null);
@@ -93,6 +102,9 @@ public class BoardCanvas extends Canvas {
         player.paintPlayer(offScreenGraphics);
     }
 
+	/**
+	 * Ka¿e graczowi zaktualizowaæ swoje po³o¿enie.
+	 */
 	public void modifyLocation () {
 		player.applyMovement();
 	}
@@ -118,14 +130,26 @@ public class BoardCanvas extends Canvas {
         offScreenGraphics = offScreen.getGraphics();
     }
 	
+	/**
+	 * Zwraca Bonus.
+	 * @return Bonus.
+	 */
 	public Bonus getBonus() {
 		return bonus;
 	}
 	
+	/**
+	 * Zwraca liste platform.
+	 * @return lista platform.
+	 */
 	public List<Platform> getPlatforms() {
 		return platforms;
 	}
 
+	/**
+	 * Zwraca Playera.
+	 * @return Player.
+	 */
 	public Player getPlayer() {
 		return player;
 	}

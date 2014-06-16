@@ -24,16 +24,29 @@ public class BoardController implements CollisionListener, PlayerListener {
 	private int boardScore = 0;
 	private static final long premiaCzasowa = 7000;
 	
+	/**
+	 * Tworzy kontrolera planczy z paramtrami.
+	 * @param board - plansza.
+	 * @param listener - listenr gry.
+	 */
 	public BoardController(BoardModel board, GameListener listener) {
 		this.board = board;
 		this.listener = listener;
 	}
 	
+	/**
+	 *  Zaczyna planszê.
+	 */
 	public void startBoard() {
 		boardSetup();
 		thread.start();
 	}
 
+	/**
+	 * Reaguje na dotkniêcie platformy przez gracza.
+	 * Przekazuje platformie, ze jest dotkniêta przez gracza.
+	 * Jeœli jest to meta, ustawia flagi koñca poziomu.
+	 */
 	@Override
 	public void onPlatformTouched(Platform p) {
 		if (p.isActive()) {
@@ -47,6 +60,10 @@ public class BoardController implements CollisionListener, PlayerListener {
 		p.setActive(false);
 	}
 
+	/**
+	 * Reaguje na dotkniêcie bonusu przez gracza.
+	 * Reaguje odpowiednio na dane bonusy.
+	 */
 	@Override
 	public void onBonusTouched(Bonus b, Player p) {
 		if (b.isActive()) {
@@ -68,22 +85,35 @@ public class BoardController implements CollisionListener, PlayerListener {
 		b.setActive(false);
 	}
 	
+	/**
+	 * Gdy player opuœci platforme ustawi siê jej flaga znikniêcia.
+	 */
 	@Override
 	public void onPlayerLeavingPlatform(Platform p) {
 		p.setDisappeared(true);
 	}
 
+	/**
+	 * Ustawia flagi koñca koñca poziomu, gdzy gracz spadnie.
+	 */
 	@Override
 	public void onPlayerOutOfBoard() {
 		thread.passed = false;
 		thread.gameOver = true;
 	}
 	
+	/**
+	 * Zwieksza wynik za dan¹ planszê.
+	 * @param i -  dodane do wyniku planszy.
+	 */
 	private void addBoardScore (int i) {
 		boardScore += i;
 		listener.setScore(boardScore);		
 	}
 	
+	/**
+	 * Ustawia wszytkie potrzebne listenery i detectory.
+	 */
 	private void boardSetup() {
 		CollisionDetector detector = new CollisionDetector(this);
 		BoardCanvas canvas = new BoardCanvas(board, detector);
@@ -95,6 +125,10 @@ public class BoardController implements CollisionListener, PlayerListener {
 		listener.startNewBoard(canvas);
 	}
 	
+	/**
+	 * Koñczy planszê.
+	 * @param passed wynik planszy (zaliczona lub nie).
+	 */
 	private void fireEndBoard(boolean passed) {
 		listener.endBoard(boardScore, passed); 
 	}

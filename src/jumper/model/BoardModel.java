@@ -9,8 +9,8 @@ import java.util.Vector;
  * Przechowuje rozklad elementow planszy i gracza dla danego poziomu.
  * Dany poziom ma swoj indywidualny numer.
  * 
- * Polozenia objektow sa wyrazone wielkosciami (0-16;0-16),
- * gdzie puntk (0,0) to lewy gorny rog, a (16,16) to prawy dolny.
+ * Polozenia objektow sa wyrazone wielkosciami (0-16;0-8),
+ * gdzie puntk (0,0) to lewy gorny rog, a (16,8) to prawy dolny.
  * 
  * @author Maurycy
  *
@@ -28,7 +28,7 @@ public class BoardModel {
 	private final int punktyPremia;
 	
 	/**
-	 * 
+	 * Tworzy model planszy z paramtrami.
 	 * @param numpoz - numer poziomu
 	 * @param polplat - lista wspolzednych platform
 	 * @param polgrac - plozenie poczatkowe gracza
@@ -50,34 +50,66 @@ public class BoardModel {
 		punktyPremia = punprem;
 	}
 	
+	/**
+	 * Zwraca numer poziomu.
+	 * @return numer poziomu.
+	 */
 	public int getNumerPoziomu() {
 		return numerPoziomu;
 	}
 	
+	/**
+	 * Zwraca po³o¿enie platform.
+	 * @return po³o¿enie platform.
+	 */
 	public List<Point> getPolozeniePlatform() {
 		return polozeniePlatform;
 	}
 	
+	/**
+	 * Zwraca po³o¿enie poczatkowe gracza.
+	 * @return po³o¿enie poczatkowe gracza.
+	 */
 	public Point getPolozeniePoczatkoweGracza() {
 		return (Point) polozeniePoczatkoweGracza.clone();
 	}
 	
+	/**
+	 * Zwraca po³o¿enie bonusu.
+	 * @return po³o¿enie bonusu.
+	 */
 	public Point getPolozenieBonusu() {
 		return (Point) polozenieBonusu.clone();
 	}
 	
+	/**
+	 * Zwraca czas na przejœcie.
+	 * @return czas na przejœcie.
+	 */
 	public long getCzasNaPrzejscie() {
 		return czasNaPrzejscie;
 	}
 	
+	/**
+	 * Zwraca typ bonusu.
+	 * @return typ bonusu.
+	 */
 	public BonusTypeEnumerator getTypBonusu() {
 		return typBonusu;
 	}
 	
+	/**
+	 * Zwraca punkty za platformê.
+	 * @return punkty za platformê.
+	 */
 	public int getPunktyPlatforma() {
 		return punktyPlatforma;
 	}
 	
+	/**
+	 * Zwraca punkty za bonus punktowy.
+	 * @return punkty za bonus punktowy.
+	 */
 	public int getPunktyPremia() {
 		return punktyPremia;
 	}

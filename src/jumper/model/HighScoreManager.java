@@ -25,7 +25,7 @@ public class HighScoreManager {
 	public static final String highScoresFileName = "highscores.xml";
 
 	/**
-	 * Tworzy pusta liste 10 najlepszych wynikow.
+	 * Tworzy pusta liste {@link #LICZBA_WYNIKOW} najlepszych wynikow.
 	 */
 	public HighScoreManager() {
 		listaWynikow = new ArrayList<>(LICZBA_WYNIKOW);

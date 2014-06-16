@@ -13,7 +13,9 @@ import jumper.controller.PlayerListener;
 import jumper.model.BoardModel.BoardFactory;
 
 /**
- * Gracz.
+ * Gracz. 
+ * Nas³uchuje wciœniêtych klawiszy.
+ * Porusza siê po planszy.
  * @author Maurycy
  *
  */
@@ -32,16 +34,30 @@ public class Player extends AbstractBoardObject implements KeyListener {
 	private final CollisionDetector detector;
 	private PlayerListener listener;
 	
+	/**
+	 * Tworzy gracza z paramtrami.
+	 * @param p - po³o¿enie.
+	 * @param dim - wymiary.
+	 * @param det - zapamiêtuje detektor kolizji
+	 */
 	public Player (Point p, Dimension dim, CollisionDetector det) {
 		super(p, dim);
 		detector = det;
 		mock = new Rectangle(p, dim);
 	}
 	
+	/**
+	 * Ustawia listenera gracza.
+	 * @param listener gracza.
+	 */
 	public void setListener(PlayerListener listener) {
 		this.listener = listener;
 	}
 	
+	/**
+	 * Rysuje gracza za pomoc¹ grafiki.
+	 * @param g - grafika.
+	 */
 	public void paintPlayer(Graphics g)
 	{
 		g.drawImage(Toolkit.getDefaultToolkit().getImage("0.gif"),
@@ -49,6 +65,10 @@ public class Player extends AbstractBoardObject implements KeyListener {
 				onScreenDim.width, onScreenDim.height, null);
 	}
 
+	/**
+	 * Reaguje na klawisze.
+	 * W zale¿noœci od wciœniêtych klawiszy ustawia flagi ruchu.
+	 */
 	@Override
 	public void keyPressed(KeyEvent e) {
 		switch (e.getKeyCode()) {
@@ -69,6 +89,10 @@ public class Player extends AbstractBoardObject implements KeyListener {
 		}
 	}
 
+	/**
+	 * Reaguje na klawisze.
+	 * W zale¿noœci od puszczonych klawiszy ustawia flagi ruchu.
+	 */
 	@Override
 	public void keyReleased(KeyEvent e) {
 		switch (e.getKeyCode()) {
@@ -84,6 +108,9 @@ public class Player extends AbstractBoardObject implements KeyListener {
 		}
 	}
 
+	/**
+	 * Reguje na przycisk pauzy.
+	 */
 	@Override
 	public void keyTyped(KeyEvent e) {
 		if (e.getKeyChar() == 'p') {
@@ -91,6 +118,9 @@ public class Player extends AbstractBoardObject implements KeyListener {
 		}
 	}
 
+	/**
+	 * Ustawia po³o¿enie x gracza.
+	 */
 	@Override
 	protected void setX(int newX) {
 		int xInBounds = newX < 0 ? 0 : (newX > (BoardFactory.scaleX -1) ? (BoardFactory.scaleX -1) : newX); 
@@ -98,6 +128,9 @@ public class Player extends AbstractBoardObject implements KeyListener {
 		mock.x = xInBounds;
 	}
 	
+	/**
+	 * Ustawia po³o¿enie y gracza.
+	 */
 	@Override
 	protected void setY(int newY) {
 		int yInBounds = newY < 0 ? 0 : (newY > (BoardFactory.scaleY -1) ? (BoardFactory.scaleY -1) : newY);
@@ -105,10 +138,17 @@ public class Player extends AbstractBoardObject implements KeyListener {
 		mock.y = yInBounds;
 	}
 	
+	/**
+	 * Ustawia flagê osnaczaj¹c¹ wy¿szy skok.
+	 */
 	public void betterJump () {
 		betterJump = true;
 	}
 	
+	/**
+	 * Jeœli nie ma kolizji przesówa gracza.
+	 * @param dx - przesuniêcie gracza.
+	 */
 	private void tryAddToX(int dx) {
 		int i = 0;
 		int dxSign = dx < 0 ? -1 : (dx > 0 ? 1 : 0);
@@ -123,6 +163,10 @@ public class Player extends AbstractBoardObject implements KeyListener {
 		setX(mock.x);
 	}
 	
+	/**
+	 * Jeœli nie ma kolizji przesówa gracza.
+	 * @param dy - przesuniêcie gracza.
+	 */
 	private void tryAddToY(int dy) {
 		int i = 0;
 		int dySign = dy < 0 ? -1 : (dy > 0 ? 1 : 0);
@@ -137,6 +181,10 @@ public class Player extends AbstractBoardObject implements KeyListener {
 		setY(mock.y);
 	}
 	
+	/**
+	 * Sprawdza czy gracz stoi na platformie.
+	 * @return informacja czy gracz stoi na platformie.
+	 */
 	private boolean isOnPlatform () {
 		mock.y += 1;
 		if (detector.collision(mock, false)) { //false -> spr. war. skoku -> nie patrzymy czy zeszlismy z platformy
@@ -147,6 +195,9 @@ public class Player extends AbstractBoardObject implements KeyListener {
 		return false;
 	}
 	
+	/**
+	 * Zgodnie z flagami ruchu i grawitacj¹ próbuje zmodyfikowaæ o³o¿enie gracza.
+	 */
 	public void applyMovement () {
 		int dx = 0;
 		int dy = 0;

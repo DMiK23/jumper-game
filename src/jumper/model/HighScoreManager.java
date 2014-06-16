@@ -13,7 +13,7 @@ import java.util.Properties;
  * Zarzadza lista wynikow. Zajmuje sie zapisem ({@link #readFromFile(String)}) i
  * odczytem ({@link #saveScores(String)}) do pliku. Dodawanie nowych wynikow
  * nastepuje tylko jesli miesci sie w TOP X, gdzie X jest ustalone jako
- * {@link #liczbaWynikow}.
+ * {@link #LICZBA_WYNIKOW}.
  * 
  * @author Maurycy
  * 
@@ -21,15 +21,15 @@ import java.util.Properties;
 public class HighScoreManager {
 
 	private final List<Score> listaWynikow;
-	private static final int liczbaWynikow = 10;
+	public static final int LICZBA_WYNIKOW = 10;
 	private static final String highScoresFileName = "highscores.xml";
 
 	/**
 	 * Tworzy pusta liste 10 najlepszych wynikow.
 	 */
 	public HighScoreManager() {
-		listaWynikow = new ArrayList<>(liczbaWynikow);
-		for (int i = 0; i < liczbaWynikow; i++) {
+		listaWynikow = new ArrayList<>(LICZBA_WYNIKOW);
+		for (int i = 0; i < LICZBA_WYNIKOW; i++) {
 			listaWynikow.add(new Score(0, "---"));
 		}
 	}
@@ -81,8 +81,8 @@ public class HighScoreManager {
 			FileNotFoundException {
 		Properties properties = new Properties();
 		properties.loadFromXML(new FileInputStream(highScoresFileName));
-		List<Score> listaWynikow = new ArrayList<>(liczbaWynikow);
-		for (int i = 0; i < liczbaWynikow; i++) {
+		List<Score> listaWynikow = new ArrayList<>(LICZBA_WYNIKOW);
+		for (int i = 0; i < LICZBA_WYNIKOW; i++) {
 			String name = properties.getProperty(String.format("%d%s", i,
 					"username"));
 			int score = Integer.parseInt(properties.getProperty(String.format(
@@ -121,7 +121,7 @@ public class HighScoreManager {
 	public void saveScores(String highScoresFileName)
 			throws FileNotFoundException, IOException {
 		Properties properties = new Properties();
-		for (int i = 0; i < liczbaWynikow; i++) {
+		for (int i = 0; i < LICZBA_WYNIKOW; i++) {
 			Score wynik = listaWynikow.get(i);
 			properties.put(String.format("%d%s", i, "username"),
 					wynik.getName());
@@ -133,32 +133,33 @@ public class HighScoreManager {
 
 	/**
 	 * Dodaje wynik do listy, jesli miesci sie w pierwszych
-	 * {@link HighScoreManager#liczbaWynikow}.
+	 * {@link HighScoreManager#LICZBA_WYNIKOW}.
 	 * 
 	 * @param newScore
 	 *            - wynik do dodania do listy.
+	 * @return true jesli wynik gracza zmiescil sie w najlepszych, false w p.p.
 	 */
-	public void addNewScore(Score newScore) {
-		if (newScore.getScorePoints() <= listaWynikow.get(liczbaWynikow)
+	public boolean addNewScore(Score newScore) {
+		if (newScore.getScorePoints() <= listaWynikow.get(LICZBA_WYNIKOW - 1)
 				.getScorePoints()) {
-			return;
+			return false;
 		}
-		int i = liczbaWynikow - 1;
+		int i = LICZBA_WYNIKOW - 1;
 		while (newScore.getScorePoints() > listaWynikow.get(i).getScorePoints()) {
 			i++;
 		}
 		listaWynikow.add(i, newScore);
-
+		return true;
 	}
 
 	/**
-	 * Tworzy i zwraca liste {@link #liczbaWynikow} najlepszych wynikow.
+	 * Tworzy i zwraca liste {@link #LICZBA_WYNIKOW} najlepszych wynikow.
 	 * 
 	 * @return Utworzona liste najlepszych wynikow.
 	 */
 	public List<Score> getHighScores() {
-		List<Score> resultList = new ArrayList<>(liczbaWynikow);
-		resultList.addAll(listaWynikow.subList(0, liczbaWynikow));
+		List<Score> resultList = new ArrayList<>(LICZBA_WYNIKOW);
+		resultList.addAll(listaWynikow.subList(0, LICZBA_WYNIKOW));
 		return resultList;
 	}
 }

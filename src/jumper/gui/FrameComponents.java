@@ -1,9 +1,6 @@
 package jumper.gui;
 
 import java.awt.CardLayout;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.InvalidPropertiesFormatException;
 
 import javax.swing.JPanel;
 
@@ -32,7 +29,7 @@ public class FrameComponents extends JPanel{
 	private final static String gameOverPanelName = "koniec";
 	private final MenuPanel menuPanel;
 	private final static String menuPanelName = "menu";
-	private HighScoreManager highScoreManager;
+	private final HighScoreManager highScoreManager;
 	
 	/**
 	 * Konfiguruje panel gry i zarzadza nim.
@@ -53,7 +50,7 @@ public class FrameComponents extends JPanel{
 		cardPanel.add(scoresPanel, scoresPanelName);
 		cardPanel.add(gamePanel, gamePanelName);
 		cardPanel.add(gameOverPanel, gameOverPanelName);
-		//highScoreManager = new HighScoreManager();
+		highScoreManager = new HighScoreManager();
 	
 	}
 	
@@ -89,7 +86,7 @@ public class FrameComponents extends JPanel{
 	 * Ustawia w widoku panel informujacy o zakonczeniu gry z wynikiem.
 	 */
 	public void showGameOver (int gameScore) {
-		gameOverPanel.setScore(gameScore);
+		gameOverPanel.setContext(gameScore, highScoreManager);
 		cardLayout.show(cardPanel, gameOverPanelName);
 		gameOverPanel.putOnTop();
 	}

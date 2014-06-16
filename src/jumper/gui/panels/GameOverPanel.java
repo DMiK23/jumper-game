@@ -23,11 +23,12 @@ import jumper.model.Score;
  * 
  */
 @SuppressWarnings("serial")
-public class GameOverPanel extends JumperPanel {
+public class GameOverPanel extends AbstractJumperPanel {
 
 	private JLabel wyniki = new JLabel("Punkty: ----");
 	private JLabel sukcesLabel = new JLabel();
 	private JPanel scoreInfoPanel = new JPanel();
+	private final JButton powrotButton;
 	// kontekst
 	private int wynikGracza = 0;
 	private HighScoreManager hsManager = new HighScoreManager();
@@ -39,8 +40,8 @@ public class GameOverPanel extends JumperPanel {
 		scoreInfoPanel.setBackground(new Color(50));
 		add(scoreInfoPanel, BorderLayout.CENTER);
 		add(sukcesLabel, BorderLayout.NORTH);
-		JButton powrot = new JButton("Powrot do menu");
-		powrot.addActionListener(new ActionListener() {
+		powrotButton = new JButton("Powrot do menu");
+		powrotButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -49,7 +50,7 @@ public class GameOverPanel extends JumperPanel {
 			}
 		});
 
-		add(powrot, BorderLayout.SOUTH);
+		add(powrotButton, BorderLayout.SOUTH);
 	}
 
 	@Override
@@ -57,9 +58,11 @@ public class GameOverPanel extends JumperPanel {
 		wyniki.setText(String.format("Punkty: %d", wynikGracza));
 		wyniki.setForeground(Color.orange);
 		wyniki.setFont(new Font("Tahoma", Font.BOLD, 35));
-		String nazwa = JOptionPane.showInputDialog(this, "Wpisz swój nick");
-		Score score = new Score(wynikGracza, nazwa == null || nazwa.isEmpty() ? "anonim" : nazwa);
-		if (hsManager.addNewScore(score)) {
+		if (hsManager.isHighScore(wynikGracza)) {
+			String nazwa = JOptionPane.showInputDialog(this, "Wpisz swój nick");
+			Score score = new Score(wynikGracza, nazwa == null
+					|| nazwa.isEmpty() ? "anonim" : nazwa);
+			hsManager.addNewScore(score);
 			sukcesLabel.setText(String.format("Jestes w TOP %d !!!",
 					HighScoreManager.LICZBA_WYNIKOW));
 			try {
@@ -72,6 +75,7 @@ public class GameOverPanel extends JumperPanel {
 		} else {
 			sukcesLabel.setText("");
 		}
+		powrotButton.requestFocusInWindow();
 	}
 
 	public void setContext(int wynikGracza, HighScoreManager hsManager) {

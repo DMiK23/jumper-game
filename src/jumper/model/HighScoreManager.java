@@ -144,9 +144,9 @@ public class HighScoreManager {
 				.getScorePoints()) {
 			return false;
 		}
-		int i = LICZBA_WYNIKOW - 1;
-		while (newScore.getScorePoints() > listaWynikow.get(i).getScorePoints()) {
-			i++;
+		int i = 0;
+		while (i < LICZBA_WYNIKOW && newScore.getScorePoints() <= listaWynikow.get(i).getScorePoints()) {
+			++i;
 		}
 		listaWynikow.add(i, newScore);
 		return true;

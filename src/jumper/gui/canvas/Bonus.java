@@ -1,4 +1,4 @@
-package jumper.gui.canvas.components;
+package jumper.gui.canvas;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -12,7 +12,7 @@ import jumper.model.BonusTypeEnumerator;
  * @author Maurycy
  *
  */
-public class Bonus extends BoardObject {
+public class Bonus extends AbstractBoardObject {
 	
 	private final BonusTypeEnumerator type;
 	private boolean active = true;

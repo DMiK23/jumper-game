@@ -9,7 +9,7 @@ import jumper.gui.MainFrame;
  * @author Maurycy
  *
  */
-public class Bootstrapper {
+public class JumperGameApp {
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {

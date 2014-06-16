@@ -9,10 +9,10 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import jumper.controller.GameController;
+import jumper.controller.GameListener;
 import jumper.gui.FrameComponents;
 import jumper.gui.canvas.BoardCanvas;
-import jumper.model.controllers.GameController;
-import jumper.model.controllers.GameListener;
 
 @SuppressWarnings("serial")
 public class GamePanel extends JumperPanel implements GameListener {

@@ -1,4 +1,4 @@
-package jumper.gui.canvas.components;
+package jumper.gui.canvas;
 
 import java.awt.Dimension;
 import java.awt.Point;
@@ -10,7 +10,7 @@ import java.awt.Rectangle;
  * @author Maurycy
  *
  */
-public abstract class BoardObject {
+public abstract class AbstractBoardObject {
 
 	private final Point p;
 	private final Dimension dim;
@@ -19,12 +19,12 @@ public abstract class BoardObject {
 	protected double lastScale;
 	protected Rectangle bounds;
 	
-	public BoardObject(int x, int y, int width, int height) {
+	public AbstractBoardObject(int x, int y, int width, int height) {
 		p = new Point(x, y);
 		dim = new Dimension(width, height);
 	}
 	
-	public BoardObject(Point p, Dimension dim) {
+	public AbstractBoardObject(Point p, Dimension dim) {
 		this.p = p;
 		this.dim = dim;
 		bounds = new Rectangle(p, dim);

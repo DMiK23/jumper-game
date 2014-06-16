@@ -1,10 +1,10 @@
-package jumper.model.controllers;
+package jumper.controller;
 
 import java.io.FileNotFoundException;
 
 import jumper.gui.canvas.BoardCanvas;
-import jumper.model.Board;
-import jumper.model.ConfigFileOpener;
+import jumper.model.BoardModel;
+import jumper.model.GameConfiguration;
 
 /**
  * Kontroluje plansze gry i przechowuje informacje
@@ -15,7 +15,7 @@ import jumper.model.ConfigFileOpener;
  */
 public class GameController implements GameListener {
 	
-	private final ConfigFileOpener config;
+	private final GameConfiguration config;
 	private final GameListener listener;
 	private int score;
 	private int lives;
@@ -23,7 +23,7 @@ public class GameController implements GameListener {
 	
 
 	public GameController(String configFileName, GameListener listener) throws FileNotFoundException {
-		this.config = new ConfigFileOpener(configFileName);
+		this.config = new GameConfiguration(configFileName);
 		this.listener = listener;
 		this.score = 0;
 		this.lives = config.getLiczbaZyc();
@@ -86,7 +86,7 @@ public class GameController implements GameListener {
 	}
 	
 	private void loadBoardAgain () {
-		Board board = config.getLevelsList().get(currentBoardIndex);
+		BoardModel board = config.getLevelsList().get(currentBoardIndex);
 		BoardController controller = new BoardController(board, this);
 		controller.startBoard();
 	}
@@ -97,7 +97,7 @@ public class GameController implements GameListener {
 	 */
 	private void loadNewBoard() {
 		++currentBoardIndex;
-		Board board = config.getLevelsList().get(currentBoardIndex);
+		BoardModel board = config.getLevelsList().get(currentBoardIndex);
 		BoardController controller = new BoardController(board, this);
 		controller.startBoard();
 	}

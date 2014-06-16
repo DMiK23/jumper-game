@@ -6,22 +6,23 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Vector;
 
-import jumper.model.Board.BoardFactory;
+import jumper.model.BoardModel.BoardFactory;
 
 /**
- * Klasa wczytuje plik konfiguracyjny.
- * Metoda read.
+ * Konfiguracja gry. Konstruktor wczytuje z pliku. Metoda read.
+ * 
  * @author Maurycy
- *
+ * 
  */
-public class ConfigFileOpener {
-	
+public class GameConfiguration {
+
 	private final int liczbaZyc;
 	private final int punktyPlatforma;
 	private final int punktyPremia;
-	private final List<Board> listaPoziomow;
-	
-	public ConfigFileOpener (String configFileName) throws FileNotFoundException {
+	private final List<BoardModel> listaPoziomow;
+
+	public GameConfiguration(String configFileName)
+			throws FileNotFoundException {
 		Scanner skaner = new Scanner(new File(configFileName));
 		if (!skaner.hasNext()) {
 			skaner.close();
@@ -32,7 +33,8 @@ public class ConfigFileOpener {
 		punktyPremia = skaner.nextInt();
 		listaPoziomow = new Vector<>();
 		skaner.next(BoardFactory.boardLimiter);
-		BoardFactory factory = new BoardFactory(skaner, punktyPlatforma, punktyPremia);		
+		BoardFactory factory = new BoardFactory(skaner, punktyPlatforma,
+				punktyPremia);
 		while (skaner.hasNext()) {
 			listaPoziomow.add(factory.getNextBoard());
 		}
@@ -43,8 +45,7 @@ public class ConfigFileOpener {
 		return liczbaZyc;
 	}
 
-	
-	public List<Board> getLevelsList () {
+	public List<BoardModel> getLevelsList() {
 		return listaPoziomow;
 	}
 }

@@ -1,4 +1,4 @@
-package jumper.gui.canvas.components;
+package jumper.gui.canvas;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -8,16 +8,16 @@ import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import jumper.model.Board.BoardFactory;
-import jumper.model.controllers.CollisionDetector;
-import jumper.model.controllers.PlayerListener;
+import jumper.controller.CollisionDetector;
+import jumper.controller.PlayerListener;
+import jumper.model.BoardModel.BoardFactory;
 
 /**
  * Gracz.
  * @author Maurycy
  *
  */
-public class Player extends BoardObject implements KeyListener {
+public class Player extends AbstractBoardObject implements KeyListener {
 
 	private static int maxWysSkoku = (int)(0.75*(BoardFactory.scaleY >> 1));
 	private boolean betterJump = false;

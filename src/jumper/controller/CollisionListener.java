@@ -1,8 +1,8 @@
-package jumper.model.controllers;
+package jumper.controller;
 
-import jumper.gui.canvas.components.Bonus;
-import jumper.gui.canvas.components.Platform;
-import jumper.gui.canvas.components.Player;
+import jumper.gui.canvas.Bonus;
+import jumper.gui.canvas.Platform;
+import jumper.gui.canvas.Player;
 
 /**
  * Nasluchuje zdarzen detektora kolizji, takich jak:

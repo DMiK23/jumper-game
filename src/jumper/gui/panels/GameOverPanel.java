@@ -22,7 +22,7 @@ import jumper.model.Score;
  * 
  */
 @SuppressWarnings("serial")
-public class GameOver extends JumperPanel {
+public class GameOverPanel extends JumperPanel {
 
 	private JLabel wyniki = new JLabel("Punkty: ----");
 	private JLabel sukcesLabel = new JLabel();
@@ -31,7 +31,7 @@ public class GameOver extends JumperPanel {
 	private int wynikGracza = 0;
 	private HighScoreManager hsManager = new HighScoreManager();
 
-	public GameOver(FrameComponents fc) {
+	public GameOverPanel(FrameComponents fc) {
 		super(fc);
 		setLayout(new BorderLayout());
 		scoreInfoPanel.add(wyniki);

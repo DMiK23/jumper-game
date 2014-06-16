@@ -12,12 +12,9 @@ import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-import jumper.gui.canvas.components.Bonus;
-import jumper.gui.canvas.components.Platform;
-import jumper.gui.canvas.components.Player;
-import jumper.model.Board;
-import jumper.model.Board.BoardFactory;
-import jumper.model.controllers.CollisionDetector;
+import jumper.controller.CollisionDetector;
+import jumper.model.BoardModel;
+import jumper.model.BoardModel.BoardFactory;
 
 /**
  * Plansza z gra. Rysuje elementy planszy przy pomocy podwojnego bufora.
@@ -50,7 +47,7 @@ public class BoardCanvas extends Canvas {
 	 * @param board - obiekt przechowujacy parametry poziomu.
 	 * @param playerCollDetector - obiekt kontrolujacy kolizje gracza
 	 */
-	public BoardCanvas (final Board board, final CollisionDetector playerCollDetector) {
+	public BoardCanvas (final BoardModel board, final CollisionDetector playerCollDetector) {
 		this.bonus = new Bonus(board.getPolozenieBonusu(), bonusDim, board.getTypBonusu());
 		this.platforms = new ArrayList<Platform>(board.getPolozeniePlatform().size());
 		List<Point> polozeniePlatform = board.getPolozeniePlatform();

@@ -1,4 +1,4 @@
-package jumper.gui.canvas.components;
+package jumper.gui.canvas;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -9,7 +9,7 @@ import java.awt.Point;
  * @author Maurycy
  *
  */
-public class Platform extends BoardObject {
+public class Platform extends AbstractBoardObject {
 	
 	private boolean active = true;
 	private final boolean last;

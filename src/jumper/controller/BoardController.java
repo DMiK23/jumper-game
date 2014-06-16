@@ -1,13 +1,13 @@
-package jumper.model.controllers;
+package jumper.controller;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 import jumper.gui.canvas.BoardCanvas;
-import jumper.gui.canvas.components.Bonus;
-import jumper.gui.canvas.components.Platform;
-import jumper.gui.canvas.components.Player;
-import jumper.model.Board;
+import jumper.gui.canvas.Bonus;
+import jumper.gui.canvas.Platform;
+import jumper.gui.canvas.Player;
+import jumper.model.BoardModel;
 
 /**
  * Kontroluje postep gracza na planszy oraz zdarzenia
@@ -19,12 +19,12 @@ import jumper.model.Board;
 public class BoardController implements CollisionListener, PlayerListener {
 	
 	private final GameListener listener;
-	private final Board board;
+	private final BoardModel board;
 	private BoardThread thread;
 	private int boardScore = 0;
 	private static final long premiaCzasowa = 7000;
 	
-	public BoardController(Board board, GameListener listener) {
+	public BoardController(BoardModel board, GameListener listener) {
 		this.board = board;
 		this.listener = listener;
 	}

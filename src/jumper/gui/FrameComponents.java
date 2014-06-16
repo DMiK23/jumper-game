@@ -7,9 +7,9 @@ import java.util.InvalidPropertiesFormatException;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import jumper.gui.panels.GameOver;
+import jumper.gui.panels.GameOverPanel;
 import jumper.gui.panels.GamePanel;
-import jumper.gui.panels.Highscores;
+import jumper.gui.panels.HighscoresPanel;
 import jumper.gui.panels.MenuPanel;
 import jumper.model.HighScoreManager;
 
@@ -25,11 +25,11 @@ public class FrameComponents extends JPanel {
 	private final JPanel cardPanel;
 	private final CardLayout cardLayout;
 	/* Panele (i ich nazwy) dodane do layoutu */
-	private final Highscores scoresPanel;
+	private final HighscoresPanel scoresPanel;
 	private final static String scoresPanelName = "wyniki";
 	private GamePanel gamePanel;
 	private final static String gamePanelName = "gra";
-	private final GameOver gameOverPanel;
+	private final GameOverPanel gameOverPanel;
 	private final static String gameOverPanelName = "koniec";
 	private final MenuPanel menuPanel;
 	private final static String menuPanelName = "menu";
@@ -46,9 +46,9 @@ public class FrameComponents extends JPanel {
 
 		cardPanel = mainPanel;
 		menuPanel = new MenuPanel(this);
-		scoresPanel = new Highscores(this);
+		scoresPanel = new HighscoresPanel(this);
 		gamePanel = new GamePanel(this);
-		gameOverPanel = new GameOver(this);
+		gameOverPanel = new GameOverPanel(this);
 		cardLayout = new CardLayout();
 		cardPanel.setLayout(cardLayout);
 		cardPanel.add(menuPanel, menuPanelName);

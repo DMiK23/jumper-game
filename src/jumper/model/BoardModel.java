@@ -16,7 +16,7 @@ import java.util.Vector;
  *
  */
 
-public class Board {
+public class BoardModel {
 
 	private final int numerPoziomu;
 	private final List<Point> polozeniePlatform;
@@ -38,7 +38,7 @@ public class Board {
 	 * @param punplat - punkty za znikniecie platformy
 	 * @param punprem - premia punktowa
 	 */
-	public Board (int numpoz, List<Point> polplat, Point polgrac, BonusTypeEnumerator typbon,
+	public BoardModel (int numpoz, List<Point> polplat, Point polgrac, BonusTypeEnumerator typbon,
 			Point polbon, long cnp, int punplat, int punprem) {
 		numerPoziomu = numpoz;
 		polozeniePlatform = polplat;
@@ -113,7 +113,7 @@ public class Board {
 		 * Zajmuje sie przeskalowaniem z 16x8 do 1024x512 pol.
 		 * @return plansza stworzona na podstawie odczytanych danych.
 		 */
-		public Board getNextBoard () {
+		public BoardModel getNextBoard () {
 			int np = skaner.nextInt();
 			long cnp = skaner.nextLong() * 1000;
 			Point pg = new Point(skaner.nextInt() * (scaleX/16), skaner.nextInt() * (scaleY/((int)(16*ratio))));
@@ -124,7 +124,7 @@ public class Board {
 				pp.add(new Point(skaner.nextInt() * (scaleX/16), skaner.nextInt() * (scaleY/((int)(16*ratio)))));
 			} while (!skaner.hasNext(boardLimiter));
 			skaner.next(boardLimiter);
-			return new Board (np, pp, pg, tb, pb, cnp, this.punktyPlatforma, this.punktyPremia);
+			return new BoardModel (np, pp, pg, tb, pb, cnp, this.punktyPlatforma, this.punktyPremia);
 		}
 		
 	}

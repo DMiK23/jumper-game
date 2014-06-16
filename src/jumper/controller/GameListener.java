@@ -1,4 +1,4 @@
-package jumper.model.controllers;
+package jumper.controller;
 
 import jumper.gui.canvas.BoardCanvas;
 

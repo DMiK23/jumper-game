@@ -24,7 +24,7 @@ import java.awt.FlowLayout;
  * @author Maurycy
  * 
  */
-public class Highscores extends JumperPanel {
+public class HighscoresPanel extends JumperPanel {
 	/**
 	 * 
 	 */
@@ -32,7 +32,7 @@ public class Highscores extends JumperPanel {
 	private final JTextPane wynikiTextPane;
 	private HighScoreManager hsManager = new HighScoreManager();
 
-	public Highscores(FrameComponents fc) {
+	public HighscoresPanel(FrameComponents fc) {
 		super(fc);
 		setBackground(Color.BLACK);
 		GridBagLayout gridBagLayout = new GridBagLayout();

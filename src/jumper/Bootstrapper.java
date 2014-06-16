@@ -1,6 +1,6 @@
 package jumper;
 
-import javax.swing.SwingUtilities;
+import java.awt.EventQueue;
 
 import jumper.gui.MainFrame;
 
@@ -12,12 +12,12 @@ import jumper.gui.MainFrame;
 public class Bootstrapper {
 
 	public static void main(String[] args) {
-		final MainFrame frame = new MainFrame();
-        
-		SwingUtilities.invokeLater(new Runnable() {
+		EventQueue.invokeLater(new Runnable() {
 			@Override
 			public void run() {
+				MainFrame frame = new MainFrame();
 				frame.setVisible(true);
+				frame.showMenu();
 			}
 		});
 	}

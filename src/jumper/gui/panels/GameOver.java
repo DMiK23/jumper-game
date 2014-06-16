@@ -1,12 +1,14 @@
 package jumper.gui.panels;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 import jumper.gui.FrameComponents;
 import jumper.model.Score;
@@ -21,12 +23,14 @@ public class GameOver extends JumperPanel {
 	
 	private JLabel wyniki = new JLabel("Punkty: ----");
 	private int wynikGracza;
+	private JPanel scoreInfoPanel = new JPanel();
 
 	public GameOver (FrameComponents fc) {
 		super (fc);
-		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-		wyniki.setAlignmentX(CENTER_ALIGNMENT);
-		this.add(wyniki);
+		setLayout(new BorderLayout());
+		scoreInfoPanel.add(wyniki);
+		scoreInfoPanel.setBackground(new Color(50));
+		add(scoreInfoPanel, BorderLayout.CENTER);
 		JButton powrot = new JButton("Powrot do menu");
 		powrot.addActionListener(new ActionListener() {
 			
@@ -36,7 +40,8 @@ public class GameOver extends JumperPanel {
 				
 			}
 		});
-		add(powrot);
+		
+		add(powrot, BorderLayout.SOUTH);
 	}
 	
 	@Override
@@ -48,6 +53,7 @@ public class GameOver extends JumperPanel {
 	
 	public void setScore (int gameScore) {
 		wyniki.setText("Punkty: " + gameScore);
+		wyniki.setForeground(Color.orange);
 		this.wynikGracza = gameScore;
 	}
 	

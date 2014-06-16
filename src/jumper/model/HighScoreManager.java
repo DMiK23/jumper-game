@@ -36,6 +36,8 @@ public class HighScoreManager {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (Exception e) {
+			System.out.println("blad");
 		}
 		
 	}

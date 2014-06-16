@@ -1,15 +1,17 @@
 package jumper.gui.panels;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.InvalidPropertiesFormatException;
 
 import javax.swing.JButton;
+import javax.swing.JPanel;
 
 import jumper.gui.FrameComponents;
-import jumper.model.HighScoreManager;
 
 /**
  * Panel zawierajacy menu glowne.
@@ -17,6 +19,10 @@ import jumper.model.HighScoreManager;
  *
  */
 public class MenuPanel extends JumperPanel {
+	
+	
+	private JPanel menuBackground;
+	//private final Image img = Toolkit.getDefaultToolkit().createImage("menu_background.jpg");
 
 	/**
 	 * 
@@ -25,17 +31,9 @@ public class MenuPanel extends JumperPanel {
 
 	public MenuPanel (FrameComponents fc) {
 		super (fc);
-		JButton highscoreButton = new JButton("Wyniki");
-		highscoreButton.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				getFrameComponents().showHighscores();
-				
-			}
-		});
-		add(highscoreButton);
-		
+		setBackground(new Color(102, 102, 255));
+		setLayout(new BorderLayout());
+
 		JButton newGameButton = new JButton("Nowa Gra");
 		newGameButton.addActionListener(new ActionListener() {
 			
@@ -45,7 +43,24 @@ public class MenuPanel extends JumperPanel {
 				
 			}
 		});
-		add(newGameButton);
+		newGameButton.setSize(40, 30);
+		newGameButton.setBackground(Color.BLACK);
+		newGameButton.setForeground(Color.white);
+		add(newGameButton, BorderLayout.WEST);
+		
+		JButton highscoreButton = new JButton("Wyniki");
+		highscoreButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				getFrameComponents().showHighscores();
 				
+			}
+		});
+		highscoreButton.setSize(40, 30);
+		highscoreButton.setBackground(Color.yellow);
+		highscoreButton.setForeground(Color.black);
+		add(highscoreButton, BorderLayout.EAST);
+					
 	}
 }

@@ -53,7 +53,7 @@ public class FrameComponents extends JPanel{
 		cardPanel.add(scoresPanel, scoresPanelName);
 		cardPanel.add(gamePanel, gamePanelName);
 		cardPanel.add(gameOverPanel, gameOverPanelName);
-		highScoreManager = new HighScoreManager();
+		//highScoreManager = new HighScoreManager();
 	
 	}
 	

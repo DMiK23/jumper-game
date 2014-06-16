@@ -26,7 +26,8 @@ public abstract class JumperPanel extends JPanel {
 	}
 	
 	/**
-	 * Method called after object is displayed in parent layout.
+	 * Metoda jest wo³ana przy prze³¹czaniu sie na dany panel,
+	 * powiadamia panel, ¿e jest widoczny.
 	 */
 	public void putOnTop() {
 		// do nothing by default

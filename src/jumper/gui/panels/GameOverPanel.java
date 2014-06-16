@@ -2,6 +2,7 @@ package jumper.gui.panels;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -55,6 +56,7 @@ public class GameOverPanel extends JumperPanel {
 	public void putOnTop() {
 		wyniki.setText(String.format("Punkty: %d", wynikGracza));
 		wyniki.setForeground(Color.orange);
+		wyniki.setFont(new Font("Tahoma", Font.BOLD, 35));
 		String nazwa = JOptionPane.showInputDialog(this, "Wpisz swój nick");
 		Score score = new Score(wynikGracza, nazwa == null || nazwa.isEmpty() ? "anonim" : nazwa);
 		if (hsManager.addNewScore(score)) {

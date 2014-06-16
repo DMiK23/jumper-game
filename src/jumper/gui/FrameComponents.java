@@ -14,7 +14,7 @@ import jumper.gui.panels.MenuPanel;
 import jumper.model.HighScoreManager;
 
 /**
- * Tworzenie i zarzadzanie kartami w podanym panelu.
+ * Tworzy i zarzêdza wszytkiemi kartami w podanym panelu.
  * 
  * @author Maurycy
  * 
@@ -40,7 +40,7 @@ public class FrameComponents extends JPanel {
 	 * potrzebne panele, w tym menu i sama gre.
 	 * 
 	 * @param mainPanel
-	 *            panel zawierajacy CardLayout i pozostale panele gry
+	 *            panel zawierajacy CardLayout i pozostale panele gry.
 	 */
 	public FrameComponents(JPanel mainPanel) {
 
@@ -59,7 +59,7 @@ public class FrameComponents extends JPanel {
 	}
 
 	/**
-	 * 
+	 * Zwraca panel zawieraj¹cy CardLayout i pozostale panele gry.
 	 * @return Panel-rodzic CardLayout-u.
 	 */
 	public JPanel getCardPanel() {
@@ -68,6 +68,7 @@ public class FrameComponents extends JPanel {
 
 	/**
 	 * Ustawia w widoku panel z najlepszymi wynikami.
+	 * Przekazuje mu te¿ menad¿era wyników.
 	 */
 	public void showHighscores() {
 		scoresPanel.setHSManager(highScoreManager);

@@ -5,7 +5,7 @@ import java.awt.EventQueue;
 import jumper.gui.MainFrame;
 
 /**
- * Uruchamia program
+ * Uruchamia program. Tworzy okno g³ówne programu i  wyœwietla menu.
  * @author Maurycy
  *
  */

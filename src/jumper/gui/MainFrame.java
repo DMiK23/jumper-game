@@ -8,8 +8,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 /**
- * Okno glowne.
- * 
+ * Tworzy okno glowne. Ustawia pocz¹tkowy rozmiar okna.
+ * Dodaje do okna panel z wszystkimi pozycjami menu.
  * @author Maurycy
  * 
  */

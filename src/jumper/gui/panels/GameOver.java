@@ -6,8 +6,10 @@ import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import jumper.gui.FrameComponents;
+import jumper.model.Score;
 
 /**
  * Panel konca gry. Pokazuje wynik gracza.
@@ -18,6 +20,7 @@ import jumper.gui.FrameComponents;
 public class GameOver extends JumperPanel {
 	
 	private JLabel wyniki = new JLabel("Punkty: ----");
+	private int wynikGracza;
 
 	public GameOver (FrameComponents fc) {
 		super (fc);
@@ -36,8 +39,16 @@ public class GameOver extends JumperPanel {
 		add(powrot);
 	}
 	
+	@Override
+	public void putOnTop() {
+		String nazwa =  JOptionPane.showInputDialog("Wpisz swój nick");
+		Score score = new Score(wynikGracza, nazwa == null ? "anonim" : nazwa);
+		// TODO addNewSco
+	}
+	
 	public void setScore (int gameScore) {
 		wyniki.setText("Punkty: " + gameScore);
+		this.wynikGracza = gameScore;
 	}
 	
 }

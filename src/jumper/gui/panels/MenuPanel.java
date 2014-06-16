@@ -2,10 +2,14 @@ package jumper.gui.panels;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.InvalidPropertiesFormatException;
 
 import javax.swing.JButton;
 
 import jumper.gui.FrameComponents;
+import jumper.model.HighScoreManager;
 
 /**
  * Panel zawierajacy menu glowne.
@@ -42,6 +46,6 @@ public class MenuPanel extends JumperPanel {
 			}
 		});
 		add(newGameButton);
-		
+				
 	}
 }

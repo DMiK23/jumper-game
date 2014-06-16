@@ -39,6 +39,7 @@ public class BoardController implements CollisionListener, PlayerListener {
 		if (p.isActive()) {
 			addBoardScore(board.getPunktyPlatforma());
 			if (p.isLast()) {
+				addBoardScore((int)(thread.counterMs/1000));
 				thread.passed = true;
 				thread.gameOver = true;
 			}

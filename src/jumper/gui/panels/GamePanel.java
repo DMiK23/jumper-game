@@ -80,7 +80,7 @@ public class GamePanel extends JumperPanel implements GameListener {
 
 	@Override
 	public void setLivesAndTotal(int lives, int totalScore) {
-		livesLabel.setText("Punkty w sumie: " + totalScore + " ¯ycia: " + lives);
+		livesLabel.setText("Punkty w sumie: " + totalScore + "   ¯ycia: " + lives);
 		livesLabel.setForeground(Color.orange);
 	}
 

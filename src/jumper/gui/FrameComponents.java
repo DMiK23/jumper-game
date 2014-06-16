@@ -1,6 +1,9 @@
 package jumper.gui;
 
 import java.awt.CardLayout;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.InvalidPropertiesFormatException;
 
 import javax.swing.JPanel;
 
@@ -8,6 +11,7 @@ import jumper.gui.panels.GameOver;
 import jumper.gui.panels.GamePanel;
 import jumper.gui.panels.Highscores;
 import jumper.gui.panels.MenuPanel;
+import jumper.model.HighScoreManager;
 
 /**
  * Tworzenie i zarzadzanie kartami w podanym panelu.
@@ -48,6 +52,7 @@ public class FrameComponents extends JPanel{
 		cardPanel.add(scoresPanel, scoresPanelName);
 		cardPanel.add(gamePanel, gamePanelName);
 		cardPanel.add(gameOverPanel, gameOverPanelName);
+		
 	}
 	
 	/**

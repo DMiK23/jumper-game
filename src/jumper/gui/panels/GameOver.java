@@ -56,7 +56,7 @@ public class GameOver extends JumperPanel {
 		wyniki.setText(String.format("Punkty: %d", wynikGracza));
 		wyniki.setForeground(Color.orange);
 		String nazwa = JOptionPane.showInputDialog("Wpisz swój nick");
-		Score score = new Score(wynikGracza, nazwa == null ? "anonim" : nazwa);
+		Score score = new Score(wynikGracza, nazwa == null || nazwa.isEmpty() ? "anonim" : nazwa);
 		if (hsManager.addNewScore(score)) {
 			sukcesLabel.setText(String.format("Jestes w TOP %d !!!",
 					HighScoreManager.LICZBA_WYNIKOW));

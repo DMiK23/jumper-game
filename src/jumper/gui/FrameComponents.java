@@ -51,7 +51,6 @@ public class FrameComponents extends JPanel{
 		cardPanel.add(gamePanel, gamePanelName);
 		cardPanel.add(gameOverPanel, gameOverPanelName);
 		highScoreManager = new HighScoreManager();
-	
 	}
 	
 	/**
@@ -66,6 +65,7 @@ public class FrameComponents extends JPanel{
 	 * Ustawia w widoku panel z najlepszymi wynikami.
 	 */
 	public void showHighscores () {
+		scoresPanel.setHSManager(highScoreManager);
 		cardLayout.show(cardPanel, scoresPanelName);
 		scoresPanel.putOnTop();
 	}

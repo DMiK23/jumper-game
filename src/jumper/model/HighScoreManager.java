@@ -23,9 +23,33 @@ public class HighScoreManager {
 	
 	public HighScoreManager () {
 		listaWynikow = new ArrayList<>(liczbaWynikow);
-		for (int i = 0; i < liczbaWynikow; i++) {
-			listaWynikow.add(new Score(0, "---"));
+		try {
+			readFromFile();
+		} catch (InvalidPropertiesFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			for (int i = 0; i < liczbaWynikow; i++) {
+				listaWynikow.add(new Score(0, "---"));
+			}
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		
+	}
+	
+	public static /*HighScoreManager*/ void readFromFile() throws InvalidPropertiesFormatException, IOException, FileNotFoundException {		
+		Properties properties = new Properties();
+		properties.loadFromXML(new FileInputStream(highScoresFileName));
+		List<Score> listaWynikow = new ArrayList<>(liczbaWynikow);
+		for (int i = 0; i < liczbaWynikow; i++) {
+			String name = properties.getProperty(String.format("%d%s", i, "username"));
+			int score = Integer.parseInt(properties.getProperty(String.format("%d%s", i, "score")));
+			listaWynikow.add(new Score(score, name));
+		}
+		//return new HighScoreManager(listaWynikow);
 	}
 	
 	public HighScoreManager(List<Score> listaWynikow) {
@@ -41,19 +65,7 @@ public class HighScoreManager {
 		}
 		properties.storeToXML(new FileOutputStream(highScoresFileName), null);
 	}
-	
-	public static HighScoreManager readFromFile() throws InvalidPropertiesFormatException, IOException, FileNotFoundException {		
-		Properties properties = new Properties();
-		properties.loadFromXML(new FileInputStream(highScoresFileName));
-		List<Score> listaWynikow = new ArrayList<>(liczbaWynikow);
-		for (int i = 0; i < liczbaWynikow; i++) {
-			String name = properties.getProperty(String.format("%d%s", i, "username"));
-			int score = Integer.parseInt(properties.getProperty(String.format("%d%s", i, "score")));
-			listaWynikow.add(new Score(score, name));
-		}
-		return new HighScoreManager(listaWynikow);
-	}
-	
+		
 	public void addNewScore (Score newScore) {
 		if (newScore.getScorePoints() > listaWynikow.get(liczbaWynikow).getScorePoints()) {
 			int i = liczbaWynikow - 1;

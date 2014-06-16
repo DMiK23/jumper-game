@@ -32,6 +32,7 @@ public class FrameComponents extends JPanel{
 	private final static String gameOverPanelName = "koniec";
 	private final MenuPanel menuPanel;
 	private final static String menuPanelName = "menu";
+	private HighScoreManager highScoreManager;
 	
 	/**
 	 * Konfiguruje panel gry i zarzadza nim.
@@ -52,7 +53,8 @@ public class FrameComponents extends JPanel{
 		cardPanel.add(scoresPanel, scoresPanelName);
 		cardPanel.add(gamePanel, gamePanelName);
 		cardPanel.add(gameOverPanel, gameOverPanelName);
-		
+		highScoreManager = new HighScoreManager();
+	
 	}
 	
 	/**

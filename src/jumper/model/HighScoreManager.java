@@ -97,8 +97,7 @@ public class HighScoreManager {
 	 * wywolaniu {@link #saveScores(String)} z argumentem
 	 * {@link #highScoresFileName}.
 	 * 
-	 * @param highScoresFileName
-	 *            nazwa pliku do ktorego wyniki zostana zapisane.
+	 * highScoresFileName - nazwa pliku do ktorego wyniki zostana zapisane.
 	 * @throws FileNotFoundException
 	 *             jesli plik o podanej nazwie nie mogl zostac utworzony.
 	 * @throws IOException

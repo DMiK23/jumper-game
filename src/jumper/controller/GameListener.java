@@ -20,6 +20,7 @@ public interface GameListener {
 	/**
 	 * Sygnal zakonczenia planszy.
 	 * @param boardScore Wynik gracza na planszy.
+	 * @param passed - czy plansza zosta³a zaliczona.
 	 */
 	public void endBoard(int boardScore, boolean passed);
 	
@@ -36,12 +37,18 @@ public interface GameListener {
 	public void setPozostalyCzas(long czas);
 	
 	/**
-	 * Sygnal o aktualych pubktoach gracza.
-	 * @param score
+	 * Sygnal o aktualych punktach gracza.
+	 * @param score punkty gracza.
 	 */
 	public void setScore (int score);
 	
+	/**
+	 * Sygnal o aktualych ¿yciach i sumarycznych punktach gracza.
+	 * @param lives - liczba ¿yæ.
+	 * @param score - wynik.
+	 */
 	public void setLivesAndTotal (int lives, int score);
 	
 	public void oneUp ();
+	// ignorujemy, nie spodziewamy sie takiego zdarzenia - my to zdarzenie wysylamy
 }

@@ -69,7 +69,7 @@ public class FrameComponents extends JPanel {
 
 	/**
 	 * Ustawia w widoku panel z najlepszymi wynikami.
-	 * Przekazuje mu te¿ menad¿era wyników {@link #setHSManager(HighScoreManager)}.
+	 * Przekazuje mu te¿ menad¿era wyników.
 	 */
 	public void showHighscores() {
 		scoresPanel.setHSManager(highScoreManager);
@@ -91,7 +91,8 @@ public class FrameComponents extends JPanel {
 
 	/**
 	 * Ustawia w widoku panel informujacy o zakonczeniu gry z wynikiem.
-	 * Przekazuje temu panelowi liczbê uzyskanych pubktów i menad¿era wyników {@link #setContext(int, HighScoreManager)}.
+	 * Przekazuje temu panelowi liczbê uzyskanych pubktów i menad¿era wyników.
+	 * @param gameScore - wynik gry.
 	 */
 	public void showGameOver(int gameScore) {
 		gameOverPanel.setContext(gameScore, highScoreManager);
@@ -101,7 +102,7 @@ public class FrameComponents extends JPanel {
 
 	/**
 	 * Ustawia w widoku panel menu.
-	 * Jako, ¿e to pierwszy pokazywany panel, ka¿e on te¿ menad¿erowi wyników wczytaæ je z pliku {@link #readFromFile(String)}.
+	 * Jako, ¿e to pierwszy pokazywany panel, ka¿e on te¿ menad¿erowi wyników wczytaæ je z pliku .
 	 * Obs³uguje wyj¹tki zwi¹zane z wczytywaniem plików.
 	 */
 	public void showMenu() {

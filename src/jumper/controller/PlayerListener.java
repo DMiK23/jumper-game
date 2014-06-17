@@ -8,7 +8,13 @@ package jumper.controller;
  */
 public interface PlayerListener {
 
+	/**
+	 * Sygnal o wypadniêciu gracza z planszy.
+	 */
 	public void onPlayerOutOfBoard();
 	
+	/**
+	 * Sygnal o ¿¹daniu pauzy.
+	 */
 	public void playerWantsToPause();
 }

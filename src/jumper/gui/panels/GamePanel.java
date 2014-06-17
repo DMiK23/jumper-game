@@ -16,7 +16,7 @@ import jumper.gui.canvas.BoardCanvas;
 
 /**
  * Panel zawieraj¹cy grê.
- * Tworzy kontrolera gry. {@link #GameController(String, GameListener)}
+ * Tworzy kontrolera gry.
  * Pokazuje aktualne informacje o grze.
  * Po skoñczeniu gry pokazuje panel koñca gry. {@link #endGame(int)}
  * @author Maurycy

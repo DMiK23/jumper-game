@@ -133,6 +133,8 @@ public class BoardModel {
 		/**
 		 * Zapamietuje skaner z ktorego bedzie wczytywac level.
 		 * @param scanner przechowuje wczytane z pliku konfiguracujnego dane
+		 * @param punktyPlatforma - punkty za str¹cenie platformy.
+		 * @param punktyPremia - premia za bonuz punktowy.
 		 */
 		public BoardFactory (Scanner scanner, int punktyPlatforma, int punktyPremia) {
 			skaner = scanner;

@@ -147,15 +147,26 @@ public class BoardController implements CollisionListener, PlayerListener {
 		private long counterMs = 0;
 		private boolean isPaused = false;
 		
+		/**
+		 * Tworzy w¹tek, timer i zapamiêtuje obraz planszy któr¹ bêdzie rysowa³.
+		 * @param canvas
+		 */
 		private BoardThread(BoardCanvas canvas) {
 			this.canvas = canvas;
 			this.countDown = new Timer();
 		}
 		
+		/**
+		 * Ustawia flagê pauzy.
+		 */
 		public void threadPause () {
 			isPaused = !isPaused;
 		}
 		
+		/**
+		 * Ustwia wszytko potrzebne do uruchomienia poziomu.
+		 * Ustawia wielkoœæ, punkty pocz¹tkowe i timer.
+		 */
 		private void setup() {
 			canvas.updateSize();
 			listener.setScore(boardScore);
@@ -172,6 +183,9 @@ public class BoardController implements CollisionListener, PlayerListener {
 			}, 0, 100);
 		}
 		
+		/**
+		 * Usypia w¹tek.
+		 */
 		private void sleep() {
 	        try {
 	            Thread.sleep(30);
@@ -179,11 +193,17 @@ public class BoardController implements CollisionListener, PlayerListener {
 	        }
 	    }
 		
+		/**
+		 * Gdy skoæzy siê czas ustawia flagi koñca poziomu.
+		 */
 		private void onTimeout() {
 			passed = false;
 			gameOver = true;
 		}
 
+		/**
+		 * Petla animacji.
+		 */
 		@Override
 		public void run() {
 			setup();
@@ -202,10 +222,12 @@ public class BoardController implements CollisionListener, PlayerListener {
 		}
 	}
 
+	/**
+	 * Wywo³uje funkje pauzuj¹c¹.
+	 */
 	@Override
 	public void playerWantsToPause() {
-		thread.threadPause();
-		
+		thread.threadPause();		
 	}
 	
 

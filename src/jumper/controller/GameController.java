@@ -22,6 +22,12 @@ public class GameController implements GameListener {
 	private int currentBoardIndex = -1;
 	
 
+	/**
+	 * Tworzy kontroler.
+	 * @param configFileName - nazwa pliku konfiguracyjnego.
+	 * @param listener - listener zdarzeñ kotrolera gry.
+	 * @throws FileNotFoundException - nie znaleziono pliku konfiguracyjnego.
+	 */
 	public GameController(String configFileName, GameListener listener) throws FileNotFoundException {
 		this.config = new GameConfiguration(configFileName);
 		this.listener = listener;
@@ -29,6 +35,9 @@ public class GameController implements GameListener {
 		this.lives = config.getLiczbaZyc();
 	}
 
+	/**
+	 * £aduje pierwsz¹ planszê.
+	 */
 	public void startGame() {
 		loadNewBoard();
 		setLivesAndTotal(lives, score);
@@ -39,6 +48,10 @@ public class GameController implements GameListener {
 		// ignorujemy, nie spodziewamy sie takiego zdarzenia - my to zdarzenie wysylamy
 	}
 
+	/**
+	 * Gdy plansza siê skoczy decyduje czy za³adowaæ ja od nowa,
+	 * czy za³adowaæ nastêpn¹, czy skoñczyæ grê.
+	 */
 	@Override
 	public void endBoard(int boardScore, boolean passed) {
 		listener.endBoard(boardScore, passed);
@@ -61,30 +74,53 @@ public class GameController implements GameListener {
 		}
 	}
 
+	/**
+	 * ¯¹da rozpoczêcia nowej planszy.
+	 */
 	@Override
 	public void startNewBoard(BoardCanvas canvas) {
 		listener.startNewBoard(canvas);
 	}
 
+	/**
+	 * Przekazuje ile czasu zosta³o graczowi.
+	 */
 	@Override
 	public void setPozostalyCzas(long czas) {
 		listener.setPozostalyCzas(czas);
 	}
 	
+	/**
+	 * Przekazuje ile punktów ma gracz na poziomie.
+	 */
 	@Override
 	public void setScore (int score) {
 		listener.setScore(score);
 	}
+	
+	/**
+	 * Sygnal o aktualych ¿yciach i sumarycznych punktach gracza.
+	 * @param lives - liczba ¿yæ.
+	 * @param score - wynik.
+	 */
 	@Override
 	public void setLivesAndTotal(int lives, int score) {
 		listener.setLivesAndTotal(lives, score);		
 	}
+	
+	/**
+	 * Dodaje dodatkowe ¿ycie.
+	 */
 	@Override
 	public void oneUp () {
 		this.lives++;
 		listener.setLivesAndTotal(this.lives, score);
 	}
 	
+	/**
+	 * ¯¹da rozpoczêcia planszy od nowa,tworzy nowy BoardController
+	 * z plansza i podaje sie jako listenera.
+	 */
 	private void loadBoardAgain () {
 		BoardModel board = config.getLevelsList().get(currentBoardIndex);
 		BoardController controller = new BoardController(board, this);
